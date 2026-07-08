@@ -1,6 +1,6 @@
-# CardDoc — Internal Build List (Engineering)
+# Flip Locker — Internal Build List (Engineering)
 
-Internal checklist for the dev team. Client-facing scope lives in `EXHIBIT-A-SCOPE.md`; dates in `EXHIBIT-B-TIMELINE.md`. Keep this doc updated as tasks land.
+Internal checklist for the dev team. Client-facing scope lives in `APPENDIX-A-FUNCTIONALITY.md`; dates in `FlipLocker-Project-Timeline.md`. Keep this doc updated as tasks land.
 
 ## Proposed stack
 
