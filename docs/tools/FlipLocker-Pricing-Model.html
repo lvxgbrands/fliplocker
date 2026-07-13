@@ -57,7 +57,7 @@
     border-radius:8px;padding:7px 11px;font-size:12px;cursor:pointer;font-family:var(--sans)}
   .themebtn:hover{color:var(--ink);border-color:var(--accent)}
 
-  .grid{display:grid;grid-template-columns:300px 1fr;gap:18px;margin-top:22px}
+  .grid{display:grid;grid-template-columns:308px 1fr;gap:18px;margin-top:22px}
   @media (max-width:860px){.grid{grid-template-columns:1fr}}
 
   .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
@@ -72,7 +72,7 @@
   .field .inwrap{position:relative;display:flex;align-items:center}
   .field .pre,.field .post{position:absolute;color:var(--ink-faint);font-size:12px;font-family:var(--mono)}
   .field .pre{left:9px}.field .post{right:9px}
-  .field input[type=number]{width:104px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;
+  .field input[type=number]{width:96px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;
     background:var(--surface-2);color:var(--ink);font-family:var(--mono);font-size:13px;text-align:right;
     font-variant-numeric:tabular-nums}
   .field input.pre-pad{padding-left:20px}.field input.post-pad{padding-right:22px}
@@ -87,13 +87,16 @@
   input[type=checkbox]:checked + .track{background:var(--accent-wash);border-color:var(--accent)}
   input[type=checkbox]:checked + .track .knob{transform:translateX(17px);background:var(--accent)}
   input[type=checkbox]:focus-visible + .track{outline:2px solid var(--accent);outline-offset:2px}
+  .switchrow{margin:12px 0}
+  .switchrow .lab{font-size:13px;color:var(--ink-soft);display:block;margin-bottom:6px}
+  .switchrow .state{font-size:11.5px;color:var(--ink-faint);margin-left:10px}
 
   .right{display:flex;flex-direction:column;gap:18px;min-width:0}
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
   @media (max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
   .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 14px;box-shadow:var(--shadow)}
   .stat .k{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);font-weight:700}
-  .stat .v{font-size:22px;font-weight:750;margin-top:5px;font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+  .stat .v{font-size:21px;font-weight:750;margin-top:5px;font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
   .stat .cap{font-size:11.5px;color:var(--ink-soft);margin-top:3px}
   .stat.flag-warn{border-color:color-mix(in srgb,var(--warn) 45%,var(--line));background:var(--warn-wash)}
   .stat.flag-bad{border-color:color-mix(in srgb,var(--bad) 50%,var(--line));background:var(--bad-wash)}
@@ -110,7 +113,7 @@
   .swatch{width:11px;height:11px;border-radius:3px;flex:none}
 
   .tablescroll{overflow-x:auto}
-  table{border-collapse:collapse;width:100%;min-width:720px;font-size:13px}
+  table{border-collapse:collapse;width:100%;min-width:760px;font-size:13px}
   thead th{position:sticky;top:0;background:var(--surface-2);text-align:right;padding:10px 12px;
     font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;
     border-bottom:1px solid var(--line);white-space:nowrap}
@@ -121,16 +124,17 @@
   tbody tr:hover{background:var(--surface-2)}
   tr.crossrow td{background:var(--accent-wash)}
   tr.crossrow td:first-child::after{content:" • bridge";color:var(--accent);font-size:10px;font-weight:700;font-family:var(--sans)}
-  .chip{display:inline-block;min-width:64px;padding:3px 8px;border-radius:20px;font-size:12px;font-weight:700;font-family:var(--mono)}
+  tr.targetrow td:first-child::before{content:"◆ ";color:var(--warn);font-size:10px}
+  .chip{display:inline-block;min-width:66px;padding:3px 8px;border-radius:20px;font-size:12px;font-weight:700;font-family:var(--mono)}
   .chip.ok{background:var(--accent-wash);color:var(--accent-ink)}
   .chip.warn{background:var(--warn-wash);color:var(--warn)}
   .chip.bad{background:var(--bad-wash);color:var(--bad)}
-  .adv-pos{color:var(--ok)} .adv-neg{color:var(--bad)}
+  .eff{color:var(--ink-soft)}
 
   .callout{display:flex;gap:11px;padding:13px 15px;background:var(--surface-2);border:1px solid var(--line);
     border-radius:12px;font-size:13px;color:var(--ink-soft);line-height:1.55}
   .callout b{color:var(--ink)}
-  .callout .mk{color:var(--accent);font-weight:800;flex:none}
+  .callout .mk{color:var(--warn);font-weight:800;flex:none}
   footer{margin-top:26px;color:var(--ink-faint);font-size:11.5px;line-height:1.6;text-align:center}
   code{font-family:var(--mono);background:var(--surface-2);padding:1px 5px;border-radius:5px;font-size:.92em}
 </style>
@@ -139,7 +143,7 @@
   <header class="top">
     <div>
       <div class="brandline"><span class="dot"></span><h1>FlipLocker Pricing Model</h1></div>
-      <p class="sub">Turn the knobs on the left. Every card price recalculates live: what the buyer pays, what the seller keeps, and what you net after PayPal, shipping and insurance.</p>
+      <p class="sub">Your true margin per card, all costs in. The two switches at the bottom left are the ones that decide whether the low tier makes money — flip them and watch.</p>
     </div>
     <button class="themebtn" id="themebtn" type="button">◑ Theme</button>
   </header>
@@ -150,34 +154,46 @@
       <div class="panel-h">Inputs</div>
       <div class="controls">
         <fieldset class="fieldset">
-          <legend>Your fees</legend>
-          <div class="field"><label for="flat">Low-tier flat fee (buyer)</label>
-            <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="flat" value="25" min="0" step="0.5"></span></div>
-          <div class="field"><label for="sellerPct">Seller % (upper tier)</label>
-            <span class="inwrap"><input class="post-pad" type="number" id="sellerPct" value="8.5" min="0" step="0.1"><span class="post">%</span></span></div>
-          <div class="field"><label for="buyerPct">Buyer % (upper tier)</label>
-            <span class="inwrap"><input class="post-pad" type="number" id="buyerPct" value="4.0" min="0" step="0.1"><span class="post">%</span></span></div>
+          <legend>Fees (split 50/50)</legend>
+          <div class="field"><label for="flat">Low-tier flat fee (total)</label>
+            <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="flat" value="20" min="0" step="1"></span></div>
+          <div class="field"><label for="pct">Upper-tier fee (total)</label>
+            <span class="inwrap"><input class="post-pad" type="number" id="pct" value="8" min="0" step="0.5"><span class="post">%</span></span></div>
         </fieldset>
         <fieldset class="fieldset">
-          <legend>Real costs you absorb</legend>
-          <div class="field"><label for="inbound">Leg 1 label (seller→hub)</label>
-            <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="inbound" value="5.00" min="0" step="0.25"></span></div>
-          <div class="field"><label for="outbound">Leg 2 label (hub→buyer)</label>
-            <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="outbound" value="5.50" min="0" step="0.25"></span></div>
-          <div class="field"><label for="sig">Signature confirmation</label>
-            <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="sig" value="3.50" min="0" step="0.25"></span></div>
-          <div class="field"><label for="insRate">Insurance (of card, upper tier)</label>
-            <span class="inwrap"><input class="post-pad" type="number" id="insRate" value="1.0" min="0" step="0.1"><span class="post">%</span></span></div>
+          <legend>Costs you absorb</legend>
+          <div class="field"><label for="internal">Leg 1 label + signature</label>
+            <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="internal" value="10.15" min="0" step="0.25"></span></div>
+          <div class="field"><label for="labor">Hub labor per card</label>
+            <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="labor" value="3.50" min="0" step="0.25"></span></div>
+          <div class="field"><label for="outbound">Leg 2 outbound label</label>
+            <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="outbound" value="10.00" min="0" step="0.25"></span></div>
+          <div class="field"><label for="freeShip">Free outbound at / above</label>
+            <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="freeShip" value="750" min="0" step="5"></span></div>
+          <div class="field"><label for="insBelow">Insurance below step</label>
+            <span class="inwrap"><input class="post-pad" type="number" id="insBelow" value="2.0" min="0" step="0.1"><span class="post">%</span></span></div>
+          <div class="field"><label for="insAbove">Insurance at / above step</label>
+            <span class="inwrap"><input class="post-pad" type="number" id="insAbove" value="1.0" min="0" step="0.1"><span class="post">%</span></span></div>
+          <div class="field"><label for="insStep">Insurance step at</label>
+            <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="insStep" value="715" min="0" step="5"></span></div>
           <div class="field"><label for="ppPct">PayPal rate</label>
-            <span class="inwrap"><input class="post-pad" type="number" id="ppPct" value="3.49" min="0" step="0.01"><span class="post">%</span></span></div>
+            <span class="inwrap"><input class="post-pad" type="number" id="ppPct" value="2.99" min="0" step="0.01"><span class="post">%</span></span></div>
           <div class="field"><label for="ppFixed">PayPal fixed</label>
             <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="ppFixed" value="0.49" min="0" step="0.01"></span></div>
         </fieldset>
         <fieldset class="fieldset">
-          <legend>Options</legend>
-          <div class="field"><label for="sellerInbound">Seller buys own Leg 1 label</label>
-            <label class="switch"><input type="checkbox" id="sellerInbound"><span class="track"><span class="knob"></span></span></label></div>
-          <div class="field"><label for="ebayFee">eBay fee (for comparison)</label>
+          <legend>The two that matter</legend>
+          <div class="switchrow">
+            <span class="lab">Platform absorbs PayPal on the card value</span>
+            <label class="switch"><input type="checkbox" id="absorbCard"><span class="track"><span class="knob"></span></span>
+              <span class="state" id="absorbState"></span></label>
+          </div>
+          <div class="switchrow">
+            <span class="lab">Seller pays outbound label below free-ship</span>
+            <label class="switch"><input type="checkbox" id="sellerOut" checked><span class="track"><span class="knob"></span></span>
+              <span class="state" id="sellerOutState"></span></label>
+          </div>
+          <div class="field"><label for="ebayFee">eBay fee (comparison)</label>
             <span class="inwrap"><input class="post-pad" type="number" id="ebayFee" value="13.25" min="0" step="0.25"><span class="post">%</span></span></div>
         </fieldset>
       </div>
@@ -187,26 +203,25 @@
     <div class="right">
       <div class="stats" id="stats"></div>
 
+      <div class="callout"><span class="mk">▲</span><span id="insight"></span></div>
+
       <div class="card">
         <div class="card-h"><h2>Your net profit across card prices</h2><span class="note" id="chartnote"></span></div>
         <div class="chartbox"><svg class="chart" id="chart" viewBox="0 0 740 250" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Platform net profit versus card price"></svg></div>
         <div class="legend">
           <span><span class="swatch" style="background:var(--accent)"></span>Your net profit</span>
-          <span><span class="swatch" style="background:var(--warn);opacity:.7"></span>Thinnest-margin point</span>
-          <span><span class="swatch" style="border:1.5px dashed var(--ink-faint);background:transparent"></span>Bridge (flat→%)</span>
+          <span><span class="swatch" style="background:var(--warn);opacity:.25"></span>Target range $100–250</span>
+          <span><span class="swatch" style="border:1.5px dashed var(--ink-faint);background:transparent"></span>Crossover / free-ship</span>
         </div>
       </div>
 
-      <div class="callout"><span class="mk">▸</span><span id="insight"></span></div>
-
       <div class="card">
-        <div class="card-h"><h2>Deal-by-deal breakdown</h2><span class="note">chip = your net after all costs</span></div>
+        <div class="card-h"><h2>Deal-by-deal breakdown</h2><span class="note">◆ = your target range · chip = your net, all costs in</span></div>
         <div class="tablescroll">
           <table>
             <thead><tr>
-              <th>Card price</th><th>Buyer pays</th><th>Seller keeps</th>
-              <th>Seller on eBay</th><th>Seller gain</th>
-              <th>Your fees</th><th>PayPal</th><th>Ship+ins</th><th>Your net</th>
+              <th>Card price</th><th>Buyer pays</th><th>Seller keeps</th><th>Seller real %</th>
+              <th>Your fee</th><th>Your costs</th><th>Your net</th><th>vs eBay seller</th>
             </tr></thead>
             <tbody id="tbody"></tbody>
           </table>
@@ -214,7 +229,7 @@
       </div>
 
       <footer>
-        Modeling estimates only, for internal pricing decisions. PayPal, shipping, insurance and eBay figures are assumptions you set above and will vary by contract and zone. Not tax or financial advice.<br>
+        Modeling estimates only, for internal pricing decisions. Whether the seller or the platform absorbs PayPal on the card value, hub labor, and the real insurance rate materially change these numbers — set them honestly. Not tax or financial advice.<br>
         FlipLocker · LVXG Brand Group, LLC
       </footer>
     </div>
@@ -223,180 +238,156 @@
 
 <script>
 (function(){
-  var ids=['flat','sellerPct','buyerPct','inbound','outbound','sig','insRate','ppPct','ppFixed','ebayFee'];
-  var el={}; ids.forEach(function(i){el[i]=document.getElementById(i)});
-  var sellerInbound=document.getElementById('sellerInbound');
+  var numIds=['flat','pct','internal','labor','outbound','freeShip','insBelow','insAbove','insStep','ppPct','ppFixed','ebayFee'];
+  var el={}; numIds.forEach(function(i){el[i]=document.getElementById(i)});
+  var absorbCard=document.getElementById('absorbCard'), sellerOut=document.getElementById('sellerOut');
 
   function num(i){var v=parseFloat(el[i].value);return isFinite(v)?v:0;}
-  function money(n){var s=(n<0?'-':'')+'$'+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});return s;}
-  function sev(n){return n<0?'bad':(n<5?'warn':'ok');}
+  function money(n){return (n<0?'-$':'$')+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  function sev(n){return n<0?'bad':(n<4?'warn':'ok');}
 
-  function params(){
-    return {flat:num('flat'),sellerPct:num('sellerPct'),buyerPct:num('buyerPct'),
-      inbound:num('inbound'),outbound:num('outbound'),sig:num('sig'),insRate:num('insRate'),
-      ppPct:num('ppPct'),ppFixed:num('ppFixed'),ebayFee:num('ebayFee'),
-      sellerPaysInbound:sellerInbound.checked};
-  }
-  function crossover(P){var d=(P.sellerPct+P.buyerPct)/100;return d>0?P.flat/d:Infinity;}
+  function P(){return{
+    flat:num('flat'), pct:num('pct'), internal:num('internal'), labor:num('labor'),
+    outbound:num('outbound'), freeShip:num('freeShip'),
+    insBelow:num('insBelow'), insAbove:num('insAbove'), insStep:num('insStep'),
+    ppPct:num('ppPct'), ppFixed:num('ppFixed'), ebayFee:num('ebayFee'),
+    absorbCard:absorbCard.checked, sellerOut:sellerOut.checked
+  };}
+  function crossover(p){var d=p.pct/100;return d>0?p.flat/d:Infinity;}
 
-  function calc(price,P){
-    var cx=crossover(P),sellerFee,buyerFee,insCost;
-    if(price<cx){sellerFee=0;buyerFee=P.flat;insCost=0;}
-    else{sellerFee=price*P.sellerPct/100;buyerFee=price*P.buyerPct/100;insCost=price*P.insRate/100;}
-    var platformShip=P.outbound+P.sig+(P.sellerPaysInbound?0:P.inbound);
-    var sellerInb=P.sellerPaysInbound?P.inbound:0;
-    var totalCheckout=price+buyerFee;
-    var paypal=totalCheckout*P.ppPct/100+P.ppFixed;
-    var gross=sellerFee+buyerFee;
-    var net=gross-paypal-platformShip-insCost;
-    var shipins=platformShip+insCost;
-    var buyerTotal=price+buyerFee;
-    var sellerNet=price-sellerFee-sellerInb;
-    var ebayNet=price-price*P.ebayFee/100;
-    return {price:price,cx:cx,sellerFee:sellerFee,buyerFee:buyerFee,paypal:paypal,shipins:shipins,
-      gross:gross,net:net,buyerTotal:buyerTotal,sellerNet:sellerNet,ebayNet:ebayNet,adv:sellerNet-ebayNet};
+  function calc(price,p){
+    var cx=crossover(p);
+    var gross = price<cx ? p.flat : price*p.pct/100;
+    var buyerFee=gross/2, sellerFee=gross/2;
+    var belowFree = price < p.freeShip;
+    var platOut = belowFree ? 0 : p.outbound;
+    var sellerOutPocket = (belowFree && p.sellerOut) ? p.outbound : 0;
+    var buyerOutPocket  = (belowFree && !p.sellerOut) ? p.outbound : 0;
+    var insRate = price < p.insStep ? p.insBelow : p.insAbove;
+    var insurance = insRate/100*price;
+    var cardProc = price*p.ppPct/100;
+    var paypalPlat, sellerCardProc;
+    if(p.absorbCard){ paypalPlat=(price+buyerFee)*p.ppPct/100 + p.ppFixed; sellerCardProc=0; }
+    else{ paypalPlat=gross*p.ppPct/100 + p.ppFixed; sellerCardProc=cardProc; }
+    var costs = p.internal + p.labor + platOut + insurance + paypalPlat;
+    var net = gross - costs;
+    var sellerNet = price - sellerFee - sellerOutPocket - sellerCardProc;
+    var buyerTotal = price + buyerFee + buyerOutPocket;
+    var sellerRealPct = price>0 ? (price-sellerNet)/price*100 : 0;
+    var ebayNet = price - price*p.ebayFee/100;
+    return {price:price,cx:cx,gross:gross,net:net,costs:costs,sellerNet:sellerNet,
+      buyerTotal:buyerTotal,sellerRealPct:sellerRealPct,ebayNet:ebayNet,adv:sellerNet-ebayNet};
   }
 
-  function scanWorst(P){
-    var lo=Math.max(5,P.flat*0.5),hi=3000,worst=Infinity,at=lo;
-    for(var pr=lo;pr<=hi;pr+=2){var n=calc(pr,P).net;if(n<worst){worst=n;at=pr;}}
-    return {worst:worst,at:at};
-  }
+  function avgTarget(p){var s=0,n=0;for(var pr=100;pr<=250;pr+=5){s+=calc(pr,p).net;n++;}return s/n;}
+  function minRange(p,lo,hi){var w=Infinity,at=lo;for(var pr=lo;pr<=hi;pr+=2){var v=calc(pr,p).net;if(v<w){w=v;at=pr;}}return{w:w,at:at};}
 
   function render(){
-    var P=params(),cx=crossover(P);
-    // stats
-    var w=scanWorst(P);
-    var m500=calc(500,P).net,m1000=calc(1000,P).net;
-    var sellerUpfront=P.sellerPaysInbound?P.inbound:0;
-    var statHtml='';
-    statHtml+='<div class="stat"><div class="k">Bridge point</div><div class="v">'+(isFinite(cx)?money(cx):'—')+'</div><div class="cap">flat below, % above</div></div>';
-    var ws=sev(w.worst);
-    statHtml+='<div class="stat '+(ws==='ok'?'':('flag-'+ws))+'"><div class="k">Thinnest margin</div><div class="v '+ws+'">'+money(w.worst)+'</div><div class="cap">at a '+money(w.at)+' card</div></div>';
-    statHtml+='<div class="stat"><div class="k">Net @ $500 / $1k</div><div class="v">'+money(m500)+'</div><div class="cap">'+money(m1000)+' at $1,000</div></div>';
-    statHtml+='<div class="stat"><div class="k">Seller upfront cost</div><div class="v '+(sellerUpfront>0?'warn':'ok')+'">'+money(sellerUpfront)+'</div><div class="cap">'+(sellerUpfront>0?'seller buys label':'nothing out of pocket')+'</div></div>';
-    document.getElementById('stats').innerHTML=statHtml;
+    var p=P(),cx=crossover(p);
+    document.getElementById('absorbState').textContent = p.absorbCard ? 'ON — seller truly pays ~4%, you eat card fees' : 'OFF — seller absorbs card processing (~7% real)';
+    document.getElementById('sellerOutState').textContent = p.sellerOut ? 'seller buys own label under free-ship' : 'buyer buys own label under free-ship';
 
-    document.getElementById('chartnote').textContent=isFinite(cx)?('bridge at '+money(cx)):'set a % to enable bridge';
+    // stats
+    var at=avgTarget(p), tSev=sev(at);
+    var n1000=calc(1000,p).net, n5000=calc(5000,p).net;
+    var s200=calc(200,p);
+    var s='';
+    s+='<div class="stat"><div class="k">Crossover</div><div class="v">'+(isFinite(cx)?money(cx):'—')+'</div><div class="cap">flat below, % above</div></div>';
+    s+='<div class="stat '+(tSev==='ok'?'':'flag-'+tSev)+'"><div class="k">Avg net · $100–250</div><div class="v '+tSev+'">'+money(at)+'</div><div class="cap">your target range</div></div>';
+    s+='<div class="stat"><div class="k">Seller real rate @ $200</div><div class="v '+(s200.sellerRealPct>6?'warn':'')+'">'+s200.sellerRealPct.toFixed(1)+'%</div><div class="cap">vs "4%" marketing</div></div>';
+    s+='<div class="stat"><div class="k">Net @ $1k / $5k</div><div class="v">'+money(n1000)+'</div><div class="cap">'+money(n5000)+' at $5,000</div></div>';
+    document.getElementById('stats').innerHTML=s;
+    document.getElementById('chartnote').textContent = isFinite(cx)?('crossover '+money(cx)+' · free ship '+money(p.freeShip)):'set a % to enable crossover';
 
     // insight
-    var ins=document.getElementById('insight');
-    if(w.worst<0){
-      ins.innerHTML='<b>Heads up: you lose money</b> on deals around '+money(w.at)+'. That dip is PayPal taking '+P.ppPct+'% of the <b>card price</b> you’re absorbing, which quietly eats a flat fee as cards get pricier. Either lift the flat fee, turn on “seller buys own label”, or drop the bridge so the % kicks in sooner.';
-    }else if(w.worst<5){
-      ins.innerHTML='Your <b>thinnest margin is '+money(w.worst)+'</b> near '+money(w.at)+'. It’s tight because PayPal takes '+P.ppPct+'% of the card price you absorb, so a flat fee shrinks as cards climb toward the bridge. Nudging the flat up or letting the seller buy their own label fattens this zone.';
+    var mr=minRange(p,100,250), ins=document.getElementById('insight');
+    if(mr.w<0){
+      ins.innerHTML='<b>You lose money in your target range.</b> At '+money(mr.at)+' you net '+money(mr.w)+'. With this switch set, the platform is eating PayPal on the card price on top of a fixed ~'+money(p.internal+p.labor)+' of postage and labor per card — a flat $'+p.flat+' fee can’t cover it. Either the seller absorbs card processing (first switch off), the flat fee goes up, or the low tier is a deliberate loss-leader.';
+    }else if(at<4){
+      ins.innerHTML='<b>Your target range barely breaks even</b> — averaging '+money(at)+' net across $100–250, thinnest '+money(mr.w)+' near '+money(mr.at)+'. A fixed ~'+money(p.internal+p.labor)+' of postage and labor eats most of a flat $'+p.flat+' fee. This is the band you said you want to live in, so decide now: nudge the flat fee up, or run it as customer acquisition funded by the high tier.';
     }else{
-      ins.innerHTML='Margins hold up across the board — thinnest is <b>'+money(w.worst)+'</b> near '+money(w.at)+'. The bridge at '+money(cx)+' keeps the flat→percent hand-off seamless, so there’s no cliff for a buyer to game.';
+      ins.innerHTML='Target range ($100–250) averages <b>'+money(at)+'</b> net, thinnest '+money(mr.w)+' near '+money(mr.at)+'. Healthy — but note the seller’s <b>real</b> rate is '+s200.sellerRealPct.toFixed(1)+'% at $200 once card processing is counted, not the 4% on the marketing page.';
     }
 
-    // table rows
-    var pts=[20,50,100,150];
-    if(isFinite(cx)){pts.push(Math.max(1,+(cx-0.01).toFixed(2)));pts.push(+cx.toFixed(2));}
-    pts=pts.concat([300,500,1000,2000,5000]);
+    // table
+    var pts=[50,100,150,200,250];
+    if(isFinite(cx)){pts.push(+cx.toFixed(2));}
+    pts=pts.concat([500,p.freeShip,1000,5000,10000]);
     pts=pts.filter(function(v,i,a){return v>0&&a.indexOf(v)===i;}).sort(function(a,b){return a-b;});
-    var tb=document.getElementById('tbody'),rows='';
+    var rows='';
     pts.forEach(function(pr){
-      var r=calc(pr,P),s=sev(r.net);
-      var isCx=isFinite(cx)&&Math.abs(pr-cx)<0.02;
-      rows+='<tr'+(isCx?' class="crossrow"':'')+'>'
+      var r=calc(pr,p),sv=sev(r.net);
+      var isCx=isFinite(cx)&&Math.abs(pr-cx)<0.5;
+      var isT=pr>=100&&pr<=250;
+      var cls=isCx?'crossrow':(isT?'targetrow':'');
+      rows+='<tr'+(cls?' class="'+cls+'"':'')+'>'
         +'<td>'+money(pr)+'</td>'
         +'<td>'+money(r.buyerTotal)+'</td>'
         +'<td>'+money(r.sellerNet)+'</td>'
-        +'<td>'+money(r.ebayNet)+'</td>'
-        +'<td class="'+(r.adv>=0?'adv-pos':'adv-neg')+'">'+(r.adv>=0?'+':'')+money(r.adv)+'</td>'
+        +'<td class="eff">'+r.sellerRealPct.toFixed(1)+'%</td>'
         +'<td>'+money(r.gross)+'</td>'
-        +'<td>'+money(r.paypal)+'</td>'
-        +'<td>'+money(r.shipins)+'</td>'
-        +'<td><span class="chip '+s+'">'+money(r.net)+'</span></td>'
+        +'<td>'+money(r.costs)+'</td>'
+        +'<td><span class="chip '+sv+'">'+money(r.net)+'</span></td>'
+        +'<td class="'+(r.adv>=0?'':'')+'" style="color:'+(r.adv>=0?'var(--ok)':'var(--bad)')+'">'+(r.adv>=0?'+':'')+money(r.adv)+'</td>'
         +'</tr>';
     });
-    tb.innerHTML=rows;
+    document.getElementById('tbody').innerHTML=rows;
 
-    drawChart(P);
+    drawChart(p);
   }
 
   function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+  function niceTicks(min,max,count){
+    var span=max-min||1,step=Math.pow(10,Math.floor(Math.log10(span/count)));
+    var err=(span/count)/step; if(err>=7.5)step*=10;else if(err>=3.5)step*=5;else if(err>=1.5)step*=2;
+    var start=Math.ceil(min/step)*step,out=[];
+    for(var v=start;v<=max+1e-9;v+=step)out.push(+v.toFixed(6)); return out;
+  }
 
-  function drawChart(P){
-    var svg=document.getElementById('chart');
-    var W=740,H=250,padL=52,padR=16,padT=16,padB=30;
+  function drawChart(p){
+    var svg=document.getElementById('chart'),W=740,H=250,padL=54,padR=16,padT=16,padB=30;
     var x0=padL,x1=W-padR,y0=H-padB,y1=padT;
-    var loP=Math.log10(20),hiP=Math.log10(5000);
-    var xs=function(p){return x0+(Math.log10(p)-loP)/(hiP-loP)*(x1-x0);};
-    // sample
-    var N=140,data=[],minN=0,maxN=0;
-    for(var i=0;i<=N;i++){
-      var lp=loP+(hiP-loP)*i/N,pr=Math.pow(10,lp),n=calc(pr,P).net;
-      data.push({p:pr,n:n});if(n<minN)minN=n;if(n>maxN)maxN=n;
-    }
-    var pad=(maxN-minN)*0.12||1;var yMin=minN-pad,yMax=maxN+pad;
+    var loP=Math.log10(20),hiP=Math.log10(10000);
+    var xs=function(v){return x0+(Math.log10(v)-loP)/(hiP-loP)*(x1-x0);};
+    var N=160,data=[],minN=0,maxN=0;
+    for(var i=0;i<=N;i++){var lp=loP+(hiP-loP)*i/N,pr=Math.pow(10,lp),n=calc(pr,p).net;
+      data.push({p:pr,n:n});if(n<minN)minN=n;if(n>maxN)maxN=n;}
+    var pad=(maxN-minN)*0.12||1,yMin=minN-pad,yMax=maxN+pad;
     var ys=function(v){return y0-(v-yMin)/(yMax-yMin)*(y0-y1);};
-    var accent=css('--accent'),line=css('--line'),faint=css('--ink-faint'),warn=css('--warn'),wash=css('--accent-wash');
-
+    var accent=css('--accent'),line=css('--line'),faint=css('--ink-faint'),warn=css('--warn'),wash=css('--accent-wash'),bad=css('--bad');
     var s='';
-    // y gridlines + labels
-    var ticks=niceTicks(yMin,yMax,5);
-    ticks.forEach(function(t){
-      var y=ys(t);
-      s+='<line x1="'+x0+'" y1="'+y.toFixed(1)+'" x2="'+x1+'" y2="'+y.toFixed(1)+'" stroke="'+line+'" stroke-width="1"'+(Math.abs(t)<1e-9?' stroke-dasharray="0"':'')+'/>';
-      s+='<text x="'+(x0-8)+'" y="'+(y+3.5).toFixed(1)+'" text-anchor="end" font-size="10" font-family="'+css('--mono')+'" fill="'+faint+'">'+(t<0?'-$':'$')+Math.abs(Math.round(t))+'</text>';
-    });
-    // zero line emphasis
-    if(yMin<0&&yMax>0){var yz=ys(0);s+='<line x1="'+x0+'" y1="'+yz.toFixed(1)+'" x2="'+x1+'" y2="'+yz.toFixed(1)+'" stroke="'+faint+'" stroke-width="1.2"/>';}
-    // x ticks
-    [20,50,100,200,500,1000,2000,5000].forEach(function(p){
-      var x=xs(p);
-      s+='<text x="'+x.toFixed(1)+'" y="'+(y0+18)+'" text-anchor="middle" font-size="10" font-family="'+css('--mono')+'" fill="'+faint+'">'+(p>=1000?('$'+p/1000+'k'):('$'+p))+'</text>';
-    });
-    // bridge marker
-    var cx=crossover(P);
-    if(isFinite(cx)&&cx>=20&&cx<=5000){var xc=xs(cx);
-      s+='<line x1="'+xc.toFixed(1)+'" y1="'+y1+'" x2="'+xc.toFixed(1)+'" y2="'+y0+'" stroke="'+faint+'" stroke-width="1.2" stroke-dasharray="4 4"/>';}
-    // area + line path
-    var lp='',ap='';
-    data.forEach(function(d,i){
-      var X=xs(d.p).toFixed(1),Y=ys(d.n).toFixed(1);
-      lp+=(i?'L':'M')+X+' '+Y+' ';
-      ap+=(i?'L':'M')+X+' '+Y+' ';
-    });
+    // target band shading
+    var tx0=xs(100),tx1=xs(250);
+    s+='<rect x="'+tx0.toFixed(1)+'" y="'+y1+'" width="'+(tx1-tx0).toFixed(1)+'" height="'+(y0-y1).toFixed(1)+'" fill="'+warn+'" opacity="0.10"/>';
+    // y grid
+    niceTicks(yMin,yMax,5).forEach(function(t){var y=ys(t);
+      s+='<line x1="'+x0+'" y1="'+y.toFixed(1)+'" x2="'+x1+'" y2="'+y.toFixed(1)+'" stroke="'+line+'" stroke-width="1"/>';
+      s+='<text x="'+(x0-8)+'" y="'+(y+3.5).toFixed(1)+'" text-anchor="end" font-size="10" font-family="'+css('--mono')+'" fill="'+faint+'">'+(t<0?'-$':'$')+Math.abs(Math.round(t))+'</text>';});
+    if(yMin<0&&yMax>0){var yz=ys(0);s+='<line x1="'+x0+'" y1="'+yz.toFixed(1)+'" x2="'+x1+'" y2="'+yz.toFixed(1)+'" stroke="'+bad+'" stroke-width="1.2" opacity="0.6"/>';}
+    [20,50,100,250,500,1000,2500,10000].forEach(function(v){var x=xs(v);
+      s+='<text x="'+x.toFixed(1)+'" y="'+(y0+18)+'" text-anchor="middle" font-size="10" font-family="'+css('--mono')+'" fill="'+faint+'">'+(v>=1000?('$'+v/1000+'k'):('$'+v))+'</text>';});
+    // crossover + free-ship dashed
+    [crossover(p),p.freeShip].forEach(function(v){if(isFinite(v)&&v>=20&&v<=10000){var x=xs(v);
+      s+='<line x1="'+x.toFixed(1)+'" y1="'+y1+'" x2="'+x.toFixed(1)+'" y2="'+y0+'" stroke="'+faint+'" stroke-width="1.1" stroke-dasharray="4 4"/>';}});
+    // area + line
+    var lp='';data.forEach(function(d,i){lp+=(i?'L':'M')+xs(d.p).toFixed(1)+' '+ys(d.n).toFixed(1)+' ';});
     var baseY=ys(Math.max(yMin,0)).toFixed(1);
-    ap='M'+xs(data[0].p).toFixed(1)+' '+baseY+' '+ap.replace(/^M/,'L')+'L'+xs(data[data.length-1].p).toFixed(1)+' '+baseY+' Z';
+    var ap='M'+xs(data[0].p).toFixed(1)+' '+baseY+' '+lp.replace(/^M/,'L')+'L'+xs(data[data.length-1].p).toFixed(1)+' '+baseY+' Z';
     s+='<path d="'+ap+'" fill="'+wash+'"/>';
     s+='<path d="'+lp+'" fill="none" stroke="'+accent+'" stroke-width="2.4" stroke-linejoin="round"/>';
-    // thinnest point marker
-    var w=scanWorst(P);
-    if(w.at>=20&&w.at<=5000){var mx=xs(w.at),my=ys(w.worst);
-      s+='<circle cx="'+mx.toFixed(1)+'" cy="'+my.toFixed(1)+'" r="4.5" fill="'+warn+'" stroke="'+css('--surface')+'" stroke-width="2"/>';
-      var lx=Math.min(mx+8,x1-70);
-      s+='<text x="'+lx.toFixed(1)+'" y="'+(my-9).toFixed(1)+'" font-size="10.5" font-family="'+css('--mono')+'" fill="'+warn+'" font-weight="700">'+ (w.worst<0?'-$':'$')+Math.abs(w.worst).toFixed(2)+'</text>';
-    }
-    // endpoint dot
     var last=data[data.length-1];
     s+='<circle cx="'+xs(last.p).toFixed(1)+'" cy="'+ys(last.n).toFixed(1)+'" r="3.5" fill="'+accent+'"/>';
     svg.innerHTML=s;
   }
 
-  function niceTicks(min,max,count){
-    var span=max-min,step=Math.pow(10,Math.floor(Math.log10(span/count)));
-    var err=(span/count)/step;
-    if(err>=7.5)step*=10;else if(err>=3.5)step*=5;else if(err>=1.5)step*=2;
-    var start=Math.ceil(min/step)*step,out=[];
-    for(var v=start;v<=max+1e-9;v+=step)out.push(+v.toFixed(6));
-    return out;
-  }
-
-  // theme toggle
   var tb=document.getElementById('themebtn');
   tb.addEventListener('click',function(){
     var cur=document.documentElement.getAttribute('data-theme');
     var next=cur==='dark'?'light':(cur==='light'?'dark':(matchMedia('(prefers-color-scheme:dark)').matches?'light':'dark'));
-    document.documentElement.setAttribute('data-theme',next);
-    render();
-  });
+    document.documentElement.setAttribute('data-theme',next);render();});
   matchMedia('(prefers-color-scheme:dark)').addEventListener('change',render);
-
-  ids.forEach(function(i){el[i].addEventListener('input',render);});
-  sellerInbound.addEventListener('change',render);
+  numIds.forEach(function(i){el[i].addEventListener('input',render);});
+  absorbCard.addEventListener('change',render); sellerOut.addEventListener('change',render);
   render();
 })();
 </script>
