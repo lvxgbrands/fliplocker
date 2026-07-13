@@ -1,4 +1,4 @@
-# APPENDIX A — Flip Locker Platform: Functionality List
+# APPENDIX A — FlipLocker Platform: Functionality List
 
 **Referenced by and made part of the Software Development Agreement between Don Smith ("Client") and LVXG Brand Group, LLC ("Developer").**
 
@@ -6,17 +6,17 @@
 
 ## A-1. Overview
 
-Flip Locker is a web platform that verifies and documents peer-to-peer graded trading card deals negotiated off-platform (e.g., on social media). Buyers and sellers bring an agreed deal to Flip Locker; the platform handles payment collection, physical verification at the Flip Locker hub, insured two-leg shipping with signature delivery, and release of the seller's funds on completion.
+FlipLocker is a web platform that verifies and documents peer-to-peer graded trading card deals negotiated off-platform (e.g., on social media). Buyers and sellers bring an agreed deal to FlipLocker; the platform handles payment collection, physical verification at the FlipLocker hub, insured two-leg shipping with signature delivery, and release of the seller's funds on completion.
 
 **Core rules:**
 
-- Buyer payments are collected and **held by PayPal** (the payment processor) and released to the seller when delivery is signed for and the buyer review window closes. Flip Locker's account receives only its service fee.
-- Flip Locker hosts no inventory and lists nothing for sale; deals are private and invitation-only. There is no public browsing, search, or listing of items.
+- Buyer payments are collected and **held by PayPal** (the payment processor) and released to the seller when delivery is signed for and the buyer review window closes. FlipLocker's account receives only its service fee.
+- FlipLocker hosts no inventory and lists nothing for sale; deals are private and invitation-only. There is no public browsing, search, or listing of items.
 - The service fee is a flat amount determined solely by the card's sale price tier. Card market/comp value is not collected or used.
 
 ## A-2. Brand & design
 
-Logo and brand identity (colors, typography) for the Flip Locker name provided by Client; clean, modern, mobile-friendly UI applied across all portals and notifications; domain setup support.
+Logo and brand identity (colors, typography) for the FlipLocker name provided by Client; clean, modern, mobile-friendly UI applied across all portals and notifications; domain setup support.
 
 ## A-3. Deal creation & Seller Portal
 
@@ -37,7 +37,7 @@ Logo and brand identity (colors, typography) for the Flip Locker name provided b
 
 ## A-5. Payments
 
-- **PayPal platform/marketplace (multiparty) checkout:** buyer funds held by PayPal and released to the seller automatically upon signature-confirmed delivery plus the 48-hour review window; Flip Locker's service fee routed to Flip Locker at the same time.
+- **PayPal platform/marketplace (multiparty) checkout:** buyer funds held by PayPal and released to the seller automatically upon signature-confirmed delivery plus the 48-hour review window; FlipLocker's service fee routed to FlipLocker at the same time.
 - **Flat-tier service fee engine** driven by sale price brackets (e.g., $5–$30), fully configurable by Admin without code changes, including who pays the fee (seller, buyer, or split).
 - Configurable **insurance line** ($0.50 per $100 of sale price) passed through from the shipping provider's declared-value coverage.
 - **Sales tax line** configurable by delivery state per Client's tax policy.

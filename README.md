@@ -1,11 +1,11 @@
-# Flip Locker
+# FlipLocker
 
-**Flip Locker** is a transaction verification and logistics platform for peer-to-peer graded trading card deals negotiated off-platform (e.g., on social media). It provides the payment, physical-verification, and shipping infrastructure so a buyer and seller who agreed on a price can close the deal safely — with the card physically verified at the Flip Locker hub before it reaches the buyer.
+**FlipLocker** (fliplocker.app) is a transaction verification and logistics platform for peer-to-peer graded trading card deals negotiated off-platform (e.g., on social media). It provides the payment, physical-verification, and shipping infrastructure so a buyer and seller who agreed on a price can close the deal safely — with the card physically verified at the FlipLocker hub before it reaches the buyer.
 
 ## Core principles
 
-1. **Flip Locker never touches the purchase money.** Buyer funds are held by the payment processor (PayPal) and released to the seller; Flip Locker's account receives only its service fee.
-2. **No inventory, no marketplace.** Deals are private and invitation-only — there is no public browsing, search, or listing of cards. Flip Locker is a pass-through verification hub.
+1. **FlipLocker never touches the purchase money.** Buyer funds are held by the payment processor (PayPal) and released to the seller; FlipLocker's account receives only its service fee.
+2. **No inventory, no marketplace.** Deals are private and invitation-only — there is no public browsing, search, or listing of cards. FlipLocker is a pass-through verification hub.
 3. **The service fee is based strictly on the sale price.** The card's comp/market value is irrelevant and is never collected or used.
 
 ## The deal flow
@@ -13,11 +13,11 @@
 1. Seller and buyer agree on a price off-platform (social media).
 2. Seller creates the deal in the **Seller Portal**: card details, front/rear photos, description, sale price, and buyer's email ($160 minimum).
 3. Buyer is invited by email, logs into the **Buyer Portal**, reviews the deal, and hits **Accept & Pay**.
-4. Buyer pays via **PayPal** — funds held by PayPal, not by Flip Locker.
+4. Buyer pays via **PayPal** — funds held by PayPal, not by FlipLocker.
 5. Seller is alerted that payment cleared; a **USPS Leg 1 label** (seller → hub) is generated. A 72-hour ship timer applies.
 6. The package is tracked on the portal end-to-end for 100% transparency.
 7. At the hub, a **Facilitator** records a 15-second inspection video, uploads two reference photos, logs the tamper-seal serial, repacks, and ships to the buyer via **USPS with Signature Confirmation** (Leg 2).
-8. On signature-confirmed delivery plus a 48-hour buyer review window, the system **releases the seller's payout and Flip Locker's service fee**.
+8. On signature-confirmed delivery plus a 48-hour buyer review window, the system **releases the seller's payout and FlipLocker's service fee**.
 
 ## Repository layout
 

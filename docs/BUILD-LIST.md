@@ -1,4 +1,4 @@
-# Flip Locker — Internal Build List (Engineering)
+# FlipLocker — Internal Build List (Engineering)
 
 Internal checklist for the dev team. Client-facing scope lives in `APPENDIX-A-FUNCTIONALITY.md`; dates in `FlipLocker-Project-Timeline.md`. Keep this doc updated as tasks land.
 
