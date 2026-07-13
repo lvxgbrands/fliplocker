@@ -27,7 +27,14 @@ _Last updated: July 8, 2026. Client: Don Smith / FlipLocker (entity being formed
 - **Open decision for Client's attorney:** LLC vs. corporation, given the investor intentions in the Client's business plan. Decide before filing; changing structure later is costly.
 - **Action for LVXG:** once the entity is filed, obtain its exact legal name and update the Software Development Agreement and PayPal configuration so the name matches everywhere. (The current signed/draft agreement names Don Smith as an individual; if the contracting party becomes the entity, the agreement should be reissued in the entity's name.)
 
-## 4. Other Client-owned items
+## 4. Verification scope & fraud limits
+
+- **What the verification proves:** that a physical card matching the seller's listing, in a slab bearing a certificate number that is valid and active in the grading company's registry, passed through the FlipLocker hub and was documented on video and photos. It is an administrative data-match and documentation service.
+- **What it does NOT prove:** authenticity of the card, or that the slab has not been tampered with. Two known fraud vectors survive a label-plus-registry check: (a) a **cloned/copied cert number** — a real cert number from a genuine card printed onto a counterfeit slab holding a different card (the registry lookup passes because the number is real); and (b) **slab-popping** — a genuine slab opened, the card swapped, and resealed. FlipLocker is not a grader or authenticator and does not perform forensic (chemical, paper, ink, microscopic) authentication.
+- **Software mitigations (in scope):** AI label read (Ximilar) + registry status check; **physical-card comparison against the registry's stored card image** where the registry provides one (e.g., PSA), which defeats most cloned-cert attempts; 15-second video + two photos as evidence and deterrent; tamper-seal serial logging; condition-mismatch flag/refund path.
+- **Client responsibility / language rule:** marketing and site copy must NOT claim "guaranteed authentic," "fraud-proof," or equivalent. Approved framing: cards are "verified and documented," not authenticated. The Terms of Service disclaimer (administrative data-match only; no forensic authentication; liability capped at the verification fee paid) is the Client's primary liability shield and must be (a) reviewed by the Client's attorney and (b) affirmatively accepted by users via the acknowledgment checkbox before a deal proceeds. LVXG builds the verification and documentation workflow; it does not warrant card authenticity.
+
+## 5. Other Client-owned items
 
 - Insurance line ($0.50/$100) is presented as pass-through of the shipping carrier's declared-value coverage; FlipLocker is not selling its own insurance product. Any change to that requires review to avoid insurance-licensing exposure.
 - Terms of Service, Privacy Policy, and all business policies are Client-provided/Client-approved content; LVXG implements them but does not author legal terms.
