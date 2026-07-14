@@ -1,0 +1,308 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------- Users & auth ----------
+
+enum Role {
+  SELLER
+  BUYER
+  FACILITATOR
+  ADMIN
+}
+
+enum PlanTier {
+  FREE
+  PRO
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  name          String?
+  role          Role      @default(SELLER)
+  plan          PlanTier  @default(FREE)
+  emailVerified DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  sessions     Session[]
+  tokens       AuthToken[]
+  sellerDeals  Deal[]      @relation("SellerDeals")
+  buyerDeals   Deal[]      @relation("BuyerDeals")
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+enum AuthTokenKind {
+  EMAIL_VERIFY
+  PASSWORD_RESET
+}
+
+model AuthToken {
+  id        String        @id @default(cuid())
+  token     String        @unique
+  kind      AuthTokenKind
+  userId    String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime      @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("auth_tokens")
+}
+
+// ---------- Deals ----------
+
+enum DealStatus {
+  DRAFT
+  CREATED
+  BUYER_NOTIFIED
+  ACCEPTED
+  PAID
+  AWAITING_SELLER_SHIPMENT
+  IN_TRANSIT_TO_HUB
+  RECEIVED_AT_HUB
+  VERIFIED
+  REPACKED
+  IN_TRANSIT_TO_BUYER
+  DELIVERED_SIGNED
+  FUNDS_RELEASED
+  COMPLETE
+  DECLINED
+  CANCELLED
+  REFUNDED
+  FLAGGED
+}
+
+model Deal {
+  id          String     @id @default(cuid())
+  shortCode   String     @unique // human-friendly reference, e.g. FL-7G2K9Q
+  sellerId    String
+  buyerEmail  String
+  buyerId     String? // null until the buyer claims the invite
+  inviteToken String     @unique
+  status      DealStatus @default(CREATED)
+
+  // Card details (NOTE: no comp/market value column — fee is f(sale_price) only)
+  sport          String
+  cardYear       Int
+  playerName     String
+  gradingCompany String
+  certNumber     String
+  description    String?
+
+  // Money (all cents). Line items snapshotted at creation from FeeConfig.
+  salePriceCents     Int
+  feeTotalCents      Int // total service fee
+  feeBuyerCents      Int // buyer's share per who-pays config
+  feeSellerCents     Int // seller's share per who-pays config
+  shippingCents      Int // flat outbound shipping & signature line (buyer pays)
+  insuranceCents     Int
+  taxCents           Int
+  buyerTotalCents    Int // what the buyer is charged at checkout
+  sellerPayoutCents  Int // what the seller receives on release
+  feeConfigSnapshot  Json // the config rows used, for the transaction record
+
+  acceptedAt DateTime?
+  declinedAt DateTime?
+  paidAt     DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  seller    User        @relation("SellerDeals", fields: [sellerId], references: [id])
+  buyer     User?       @relation("BuyerDeals", fields: [buyerId], references: [id])
+  media     DealMedia[]
+  payments  Payment[]
+  shipments Shipment[]
+  events    DealEvent[]
+
+  @@index([sellerId])
+  @@index([buyerId])
+  @@map("deals")
+}
+
+enum MediaKind {
+  FRONT_PHOTO
+  REAR_PHOTO
+  HUB_VIDEO
+  HUB_PHOTO_1
+  HUB_PHOTO_2
+}
+
+model DealMedia {
+  id          String    @id @default(cuid())
+  dealId      String
+  kind        MediaKind
+  storageKey  String
+  contentType String
+  createdAt   DateTime  @default(now())
+
+  deal Deal @relation(fields: [dealId], references: [id], onDelete: Cascade)
+
+  @@unique([dealId, kind])
+  @@map("deal_media")
+}
+
+// ---------- Payments ----------
+
+enum PaymentState {
+  CREATED
+  APPROVED
+  CAPTURED
+  VOIDED
+  REFUNDED
+  FAILED
+}
+
+model Payment {
+  id              String       @id @default(cuid())
+  dealId          String
+  provider        String       @default("PAYPAL") // PAYPAL | PAYPAL_SIM
+  paypalOrderId   String       @unique
+  authorizationId String?
+  captureId       String?
+  state           PaymentState @default(CREATED)
+  // Amount breakdown (cents) as sent to the processor
+  grossCents      Int // buyer total charged
+  platformFeeCents Int // FlipLocker's service fee (the ONLY money routed to the platform)
+  sellerNetCents  Int // held by the processor for the seller
+  currency        String       @default("USD")
+  rawCreate       Json?
+  rawCapture      Json?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  deal Deal @relation(fields: [dealId], references: [id], onDelete: Cascade)
+
+  @@index([dealId])
+  @@map("payments")
+}
+
+// ---------- Shipping (built out in Week 3; schema landed now) ----------
+
+enum ShipmentLeg {
+  TO_HUB
+  TO_BUYER
+}
+
+model Shipment {
+  id                String      @id @default(cuid())
+  dealId            String
+  leg               ShipmentLeg
+  carrier           String      @default("USPS")
+  trackingNumber    String?
+  labelUrl          String?
+  signatureRequired Boolean     @default(false)
+  status            String      @default("PENDING")
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  deal Deal @relation(fields: [dealId], references: [id], onDelete: Cascade)
+
+  @@index([dealId])
+  @@map("shipments")
+}
+
+// ---------- Events (append-only transparency timeline) ----------
+
+model DealEvent {
+  id        String   @id @default(cuid())
+  dealId    String
+  type      String // e.g. DEAL_CREATED, BUYER_INVITED, INVITE_CLAIMED, ACCEPTED, PAYMENT_CAPTURED, ...
+  actor     String // system | seller | buyer | facilitator | admin
+  message   String // human-readable line shown on the timeline
+  payload   Json?
+  createdAt DateTime @default(now())
+
+  deal Deal @relation(fields: [dealId], references: [id], onDelete: Cascade)
+
+  @@index([dealId, createdAt])
+  @@map("deal_events")
+}
+
+// ---------- Fee & checkout configuration (Admin-editable; NO hardcoded numbers) ----------
+// Fee model per plan tier: below crossoverPriceCents the fee is flat floorCents;
+// at/above it the fee is percentBps of the sale price. Fee depends on sale price ONLY.
+
+enum FeePayer {
+  BUYER
+  SELLER
+  SPLIT
+}
+
+model FeeConfig {
+  id                 String   @id @default(cuid())
+  plan               PlanTier @unique
+  floorCents         Int // flat fee below the crossover price
+  percentBps         Int // basis points applied at/above the crossover
+  crossoverPriceCents Int // sale price at which % takes over from the floor
+  whoPays            FeePayer
+  active             Boolean  @default(true)
+  updatedAt          DateTime @updatedAt
+
+  @@map("fee_config")
+}
+
+// Singleton row of platform-wide checkout settings (id fixed to "default").
+model CheckoutConfig {
+  id                     String   @id @default("default")
+  minSalePriceCents      Int // minimum allowed sale price
+  outboundShippingCents  Int // flat outbound shipping & signature line, charged to buyer
+  insuranceEnabled       Boolean  @default(true)
+  insuranceCentsPer100   Int // pass-through declared-value coverage, per $100 of sale price
+  taxEnabled             Boolean  @default(false)
+  defaultTaxBps          Int      @default(0) // used when no per-state row matches
+  updatedAt              DateTime @updatedAt
+
+  taxRates TaxRate[]
+
+  @@map("checkout_config")
+}
+
+model TaxRate {
+  id        String @id @default(cuid())
+  configId  String
+  state     String // two-letter delivery state
+  rateBps   Int
+  active    Boolean @default(true)
+
+  config CheckoutConfig @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@unique([configId, state])
+  @@map("tax_rates")
+}
+
+// ---------- Dev email outbox (captures transactional mail when no Resend key) ----------
+
+model EmailOutbox {
+  id        String   @id @default(cuid())
+  toEmail   String
+  subject   String
+  html      String
+  provider  String // resend | dev-outbox
+  sentAt    DateTime @default(now())
+
+  @@map("email_outbox")
+}
