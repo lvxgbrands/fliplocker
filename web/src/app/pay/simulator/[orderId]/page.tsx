@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { paypalMode } from "@/lib/paypal";
 import { formatCents } from "@/lib/fees";
@@ -22,16 +22,10 @@ export default async function SimulatorCheckoutPage({
   if (!payment) notFound();
   const deal = payment.deal;
 
-  async function approve() {
-    "use server";
-    // Mirrors PayPal's return redirect: ?token={orderId}
-    redirect(`/pay/return?dealId=${deal.id}&token=${orderId}`);
-  }
-
-  async function cancel() {
-    "use server";
-    redirect(`/pay/cancel?dealId=${deal.id}&token=${orderId}`);
-  }
+  // Full-page links, exactly like PayPal's own return/cancel redirects:
+  // ?token={orderId} appended to the configured return_url / cancel_url.
+  const returnUrl = `/pay/return?dealId=${deal.id}&token=${orderId}`;
+  const cancelUrl = `/pay/cancel?dealId=${deal.id}&token=${orderId}`;
 
   return (
     <div className="min-h-screen bg-[#f5f7fa] flex flex-col items-center justify-center px-4">
@@ -61,19 +55,15 @@ export default async function SimulatorCheckoutPage({
               seller net {formatCents(payment.sellerNetCents)}
             </p>
           </div>
-          <form action={approve}>
-            <button
-              type="submit"
-              className="w-full rounded-full bg-[#ffc439] hover:bg-[#f2ba36] px-6 py-3 font-bold text-slate-900"
-            >
-              Pay {formatCents(payment.grossCents)}
-            </button>
-          </form>
-          <form action={cancel}>
-            <button type="submit" className="w-full text-sm text-slate-500 hover:underline">
-              Cancel and return to FlipLocker
-            </button>
-          </form>
+          <a
+            href={returnUrl}
+            className="block w-full rounded-full bg-[#ffc439] hover:bg-[#f2ba36] px-6 py-3 font-bold text-slate-900 text-center"
+          >
+            Pay {formatCents(payment.grossCents)}
+          </a>
+          <a href={cancelUrl} className="block w-full text-sm text-slate-500 hover:underline text-center">
+            Cancel and return to FlipLocker
+          </a>
           <p className="text-[11px] leading-relaxed text-slate-400 border-t border-slate-100 pt-3">
             This page simulates the PayPal sandbox approval step for staging demos without sandbox
             credentials. Set PAYPAL_MODE=sandbox with API credentials to run real PayPal sandbox

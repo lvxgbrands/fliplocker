@@ -51,26 +51,26 @@ All transitions write a `deal_events` row. Guard transitions server-side (no sta
 
 - [ ] Kickoff w/ client: fee schedule values, hub ship-from address, PayPal business account, final-name shortlist
 - [ ] Start PayPal Commerce Platform / delayed-disbursement application ← **DO THIS DAY 1**
-- [ ] Repo scaffold: Next.js + TS + Prisma + CI (lint, typecheck, test on push)
+- [x] Repo scaffold: Next.js + TS + Prisma + CI (lint, typecheck, test on push)
 - [ ] Staging environment + Postgres + S3 buckets (staging/prod)
-- [ ] Schema v1 migrated (tables above)
-- [ ] Auth: register, login, email verification, password reset, role guard middleware
-- [ ] Seller portal shell + Create Deal flow (front/rear photo presigned upload, description, price, buyer email, validation)
-- [ ] Deal dashboard (seller) with status chips
-- [ ] Buyer invitation email on deal creation (email service wired, first template)
+- [x] Schema v1 migrated (tables above)
+- [x] Auth: register, login, email verification, password reset, role guard middleware
+- [x] Seller portal shell + Create Deal flow (front/rear photo presigned upload, description, price, buyer email, validation)
+- [x] Deal dashboard (seller) with status chips
+- [x] Buyer invitation email on deal creation (email service wired, first template)
 - [ ] Brand: name candidates + domain screening deck; logo/color/type direction
 - [ ] **Demo Fri 7/10:** brand deck + live create-deal on staging
 
 ## Week 2 — Buyer Flow & Payments (7/13–7/19)
 
-- [ ] Buyer invitation claim → registration → deal binds to buyer_id
-- [ ] Buyer deal review page (photos, description, cost breakdown incl. fee + shipping)
-- [ ] Accept / Decline endpoints + state transitions + seller notifications
-- [ ] Fee engine + `fee_schedule` config table
-- [ ] PayPal sandbox: order create (authorize) → capture on accept; webhook handler (PAYMENT.CAPTURE.COMPLETED etc.)
+- [x] Buyer invitation claim → registration → deal binds to buyer_id
+- [x] Buyer deal review page (photos, description, cost breakdown incl. fee + shipping)
+- [x] Accept / Decline endpoints + state transitions + seller notifications
+- [x] Fee engine + `fee_schedule` config table
+- [x] PayPal sandbox: order create (authorize) → capture on accept; webhook handler (PAYMENT.CAPTURE.COMPLETED etc.)
 - [ ] Void-on-decline / void-on-timeout job
-- [ ] "Payment received — ship now" seller alert
-- [ ] Transparency timeline component (both portals) reading `deal_events`
+- [x] "Payment received — ship now" seller alert
+- [x] Transparency timeline component (both portals) reading `deal_events`
 - [ ] Apply final brand: name, logo, palette, email templates restyled
 - [ ] **Demo Fri 7/17:** core loop end-to-end in sandbox
 - [ ] **★ 7/21 client View Demo milestone** — rehearse Monday 7/20
