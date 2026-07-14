@@ -84,6 +84,9 @@
     font-variant-numeric:tabular-nums}
   .field input.pre-pad{padding-left:20px}.field input.post-pad{padding-right:22px}
   .field input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+  .field select{width:118px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;
+    background:var(--surface-2);color:var(--ink);font-family:var(--sans);font-size:12.5px}
+  .field select:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
 
   .switch{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
   .track{width:40px;height:23px;border-radius:12px;background:var(--surface-3);border:1px solid var(--line);
@@ -161,11 +164,17 @@
       <div class="panel-h">Inputs</div>
       <div class="controls">
         <fieldset class="fieldset">
-          <legend>Fees (split 50/50)</legend>
-          <div class="field"><label for="flat">Low-tier flat fee (total)</label>
-            <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="flat" value="20" min="0" step="1"></span></div>
-          <div class="field"><label for="pct">Upper-tier fee (total)</label>
-            <span class="inwrap"><input class="post-pad" type="number" id="pct" value="8" min="0" step="0.5"><span class="post">%</span></span></div>
+          <legend>Plans (fee per side)</legend>
+          <div class="field"><label for="buyerPlan">Buyer plan</label>
+            <select id="buyerPlan"><option value="free" selected>Free 4% / $10</option><option value="pro">Pro 2% / $5</option></select></div>
+          <div class="field"><label for="sellerPlan">Seller plan</label>
+            <select id="sellerPlan"><option value="free">Free 4% / $10</option><option value="pro" selected>Pro 2% / $5</option></select></div>
+          <div class="field"><label for="freeRate">Free rate / floor</label>
+            <span class="inwrap"><input class="post-pad" type="number" id="freeRate" value="4" min="0" step="0.5" style="width:64px"><span class="post">%</span></span>
+            <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="freeFloor" value="10" min="0" step="0.5" style="width:64px"></span></div>
+          <div class="field"><label for="proRate">Pro rate / floor</label>
+            <span class="inwrap"><input class="post-pad" type="number" id="proRate" value="2" min="0" step="0.5" style="width:64px"><span class="post">%</span></span>
+            <span class="inwrap"><span class="pre">$</span><input class="pre-pad" type="number" id="proFloor" value="5" min="0" step="0.5" style="width:64px"></span></div>
         </fieldset>
         <fieldset class="fieldset">
           <legend>Costs you absorb</legend>
@@ -245,27 +254,36 @@
 
 <script>
 (function(){
-  var numIds=['flat','pct','internal','labor','outbound','freeShip','insBelow','insAbove','insStep','ppPct','ppFixed','ebayFee'];
+  var numIds=['freeRate','freeFloor','proRate','proFloor','internal','labor','outbound','freeShip','insBelow','insAbove','insStep','ppPct','ppFixed','ebayFee'];
   var el={}; numIds.forEach(function(i){el[i]=document.getElementById(i)});
   var absorbCard=document.getElementById('absorbCard'), sellerOut=document.getElementById('sellerOut');
+  var buyerPlan=document.getElementById('buyerPlan'), sellerPlan=document.getElementById('sellerPlan');
 
   function num(i){var v=parseFloat(el[i].value);return isFinite(v)?v:0;}
   function money(n){return (n<0?'-$':'$')+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
   function sev(n){return n<0?'bad':(n<4?'warn':'ok');}
 
   function P(){return{
-    flat:num('flat'), pct:num('pct'), internal:num('internal'), labor:num('labor'),
+    freeRate:num('freeRate'), freeFloor:num('freeFloor'), proRate:num('proRate'), proFloor:num('proFloor'),
+    internal:num('internal'), labor:num('labor'),
     outbound:num('outbound'), freeShip:num('freeShip'),
     insBelow:num('insBelow'), insAbove:num('insAbove'), insStep:num('insStep'),
     ppPct:num('ppPct'), ppFixed:num('ppFixed'), ebayFee:num('ebayFee'),
-    absorbCard:absorbCard.checked, sellerOut:sellerOut.checked
+    absorbCard:absorbCard.checked, sellerOut:sellerOut.checked,
+    buyerPlan:buyerPlan.value, sellerPlan:sellerPlan.value
   };}
-  function crossover(p){var d=p.pct/100;return d>0?p.flat/d:Infinity;}
+  function planRF(p,plan){return plan==='pro'?{r:p.proRate/100,f:p.proFloor}:{r:p.freeRate/100,f:p.freeFloor};}
+  function sideFee(price,p,plan){var q=planRF(p,plan);var piv=q.r>0?q.f/q.r:Infinity;return price<piv?q.f:price*q.r;}
+  function crossover(p){
+    var a=planRF(p,p.buyerPlan),b=planRF(p,p.sellerPlan);
+    var pa=a.r>0?a.f/a.r:Infinity, pb=b.r>0?b.f/b.r:Infinity;
+    return Math.max(pa,pb);
+  }
 
   function calc(price,p){
     var cx=crossover(p);
-    var gross = price<cx ? p.flat : price*p.pct/100;
-    var buyerFee=gross/2, sellerFee=gross/2;
+    var buyerFee=sideFee(price,p,p.buyerPlan), sellerFee=sideFee(price,p,p.sellerPlan);
+    var gross=buyerFee+sellerFee;
     var belowFree = price < p.freeShip;
     var platOut = belowFree ? 0 : p.outbound;
     var sellerOutPocket = (belowFree && p.sellerOut) ? p.outbound : 0;
@@ -287,6 +305,8 @@
   }
 
   function avgTarget(p){var s=0,n=0;for(var pr=100;pr<=250;pr+=5){s+=calc(pr,p).net;n++;}return s/n;}
+  function avgTargetPlans(p,bp,sp){var q=Object.assign({},p,{buyerPlan:bp,sellerPlan:sp});
+    var s=0,n=0;for(var pr=100;pr<=250;pr+=5){s+=calc(pr,q).net;n++;}return s/n;}
   function minRange(p,lo,hi){var w=Infinity,at=lo;for(var pr=lo;pr<=hi;pr+=2){var v=calc(pr,p).net;if(v<w){w=v;at=pr;}}return{w:w,at:at};}
 
   function render(){
@@ -298,22 +318,28 @@
     var at=avgTarget(p), tSev=sev(at);
     var n1000=calc(1000,p).net, n5000=calc(5000,p).net;
     var s200=calc(200,p);
+    var bothPro=avgTargetPlans(p,'pro','pro');
+    var bpSev=sev(bothPro);
     var s='';
-    s+='<div class="stat"><div class="k">Crossover</div><div class="v">'+(isFinite(cx)?money(cx):'—')+'</div><div class="cap">flat below, % above</div></div>';
-    s+='<div class="stat '+(tSev==='ok'?'':'flag-'+tSev)+'"><div class="k">Avg net · $100–250</div><div class="v '+tSev+'">'+money(at)+'</div><div class="cap">your target range</div></div>';
-    s+='<div class="stat"><div class="k">Seller real rate @ $200</div><div class="v '+(s200.sellerRealPct>6?'warn':'')+'">'+s200.sellerRealPct.toFixed(1)+'%</div><div class="cap">vs "4%" marketing</div></div>';
+    s+='<div class="stat"><div class="k">Crossover</div><div class="v">'+(isFinite(cx)?money(cx):'—')+'</div><div class="cap">floor below, % above</div></div>';
+    s+='<div class="stat '+(tSev==='ok'?'':'flag-'+tSev)+'"><div class="k">Avg net · $100–250</div><div class="v '+tSev+'">'+money(at)+'</div><div class="cap">selected plan mix</div></div>';
+    s+='<div class="stat '+(bpSev==='ok'?'':'flag-'+bpSev)+'"><div class="k">Both-Pro avg · $100–250</div><div class="v '+bpSev+'">'+money(bothPro)+'</div><div class="cap">subscriber ↔ subscriber</div></div>';
     s+='<div class="stat"><div class="k">Net @ $1k / $5k</div><div class="v">'+money(n1000)+'</div><div class="cap">'+money(n5000)+' at $5,000</div></div>';
     document.getElementById('stats').innerHTML=s;
     document.getElementById('chartnote').textContent = isFinite(cx)?('crossover '+money(cx)+' · free ship '+money(p.freeShip)):'set a % to enable crossover';
 
     // insight
     var mr=minRange(p,100,250), ins=document.getElementById('insight');
+    var bothProAvg=avgTargetPlans(p,'pro','pro');
     if(mr.w<0){
       ins.innerHTML='<b>You lose money in your target range.</b> At '+money(mr.at)+' you net '+money(mr.w)+'. With this switch set, the platform is eating PayPal on the card price on top of a fixed ~'+money(p.internal+p.labor)+' of postage and labor per card — a flat $'+p.flat+' fee can’t cover it. Either the seller absorbs card processing (first switch off), the flat fee goes up, or the low tier is a deliberate loss-leader.';
     }else if(at<4){
       ins.innerHTML='<b>Your target range barely breaks even</b> — averaging '+money(at)+' net across $100–250, thinnest '+money(mr.w)+' near '+money(mr.at)+'. A fixed ~'+money(p.internal+p.labor)+' of postage and labor eats most of a flat $'+p.flat+' fee. This is the band you said you want to live in, so decide now: nudge the flat fee up, or run it as customer acquisition funded by the high tier.';
     }else{
-      ins.innerHTML='Target range ($100–250) averages <b>'+money(at)+'</b> net, thinnest '+money(mr.w)+' near '+money(mr.at)+'. Healthy — but note the seller’s <b>real</b> rate is '+s200.sellerRealPct.toFixed(1)+'% at $200 once card processing is counted, not the 4% on the marketing page.';
+      ins.innerHTML='Target range ($100–250) averages <b>'+money(at)+'</b> net for this plan mix, thinnest '+money(mr.w)+' near '+money(mr.at)+'. Seller’s <b>real</b> rate at $200 is '+s200.sellerRealPct.toFixed(1)+'% once card processing is counted.';
+    }
+    if(bothProAvg<0){
+      ins.innerHTML+=' <b>Subscriber warning:</b> when BOTH parties are Pro, the $100–250 range averages <b>'+money(bothProAvg)+'</b> per deal — the heaviest traders (the ones who subscribe) become the money-losing deals. The subscription price has to cover that gap.';
     }
 
     // table
@@ -395,6 +421,7 @@
   matchMedia('(prefers-color-scheme:dark)').addEventListener('change',render);
   numIds.forEach(function(i){el[i].addEventListener('input',render);});
   absorbCard.addEventListener('change',render); sellerOut.addEventListener('change',render);
+  buyerPlan.addEventListener('change',render); sellerPlan.addEventListener('change',render);
   render();
 })();
 </script>
