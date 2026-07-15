@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "check:copy": "node scripts/check-copy.mjs",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "seed:demo": "tsx prisma/seed-demo.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1086.0",

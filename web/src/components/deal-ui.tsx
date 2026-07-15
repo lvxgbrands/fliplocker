@@ -32,6 +32,7 @@ export function Timeline({ events }: { events: DealEvent[] }) {
       {events.map((e, i) => (
         <li key={e.id} className="ms-5">
           <span
+            aria-hidden
             className={`absolute -start-[7px] mt-1.5 h-3 w-3 rounded-full border-2 border-white ${
               i === events.length - 1 ? "bg-teal-500 ring-4 ring-teal-100" : "bg-teal-300"
             }`}
