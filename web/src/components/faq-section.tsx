@@ -7,7 +7,6 @@ import type { QA } from "@/lib/faqs";
 export function FaqSection({
   items,
   title = "Frequently asked questions",
-  kicker = "Questions",
   intro,
   id = "faq",
   className = "",
@@ -26,7 +25,6 @@ export function FaqSection({
     <section id={id} className={`mx-auto max-w-3xl px-4 py-20 ${className}`} aria-labelledby={`${id}-title`}>
       {emitJsonLd ? <JsonLd data={faqPageLd(items)} /> : null}
       <div className="mb-10 text-center">
-        {kicker ? <p className="kicker mb-3 text-[12px] text-brand-600">{kicker}</p> : null}
         <h2 id={`${id}-title`} className="text-3xl font-bold tracking-tight sm:text-4xl">
           {title}
         </h2>

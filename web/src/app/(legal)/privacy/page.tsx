@@ -5,11 +5,11 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
   description:
-    "How FlipLocker collects, uses, retains, and shares information to operate its documentation and logistics service — including 30-day auto-purge of hub inspection media.",
+    "How FlipLocker collects, uses, retains, and shares information to operate its documentation and logistics service, including 30-day auto-purge of hub inspection media.",
   path: "/privacy",
 });
 
-// PLACEHOLDER CONTENT — pending the Client's attorney review and approval.
+// PLACEHOLDER CONTENT, pending the Client's attorney review and approval.
 export default function PrivacyPage() {
   return (
     <>
@@ -28,19 +28,19 @@ export default function PrivacyPage() {
 
       <h2>1. Information we collect</h2>
       <ul>
-        <li><strong>Account details</strong> — name, email, and an optional phone number for SMS alerts.</li>
-        <li><strong>Deal details</strong> — card information, photos, sale price, grade, certificate number, and the counterparty&apos;s email.</li>
-        <li><strong>Transaction records</strong> — the timestamped events, shipping tracking, and documentation needed to process a deal.</li>
-        <li><strong>Newsletter</strong> — if you opt in, your email address and the source of the signup.</li>
-        <li><strong>Contact messages</strong> — anything you send us through the contact form or by email.</li>
-        <li><strong>Technical data</strong> — basic session and device information needed to keep the service secure.</li>
+        <li><strong>Account details</strong>, name, email, and an optional phone number for SMS alerts.</li>
+        <li><strong>Deal details</strong>, card information, photos, sale price, grade, certificate number, and the counterparty&apos;s email.</li>
+        <li><strong>Transaction records</strong>, the timestamped events, shipping tracking, and documentation needed to process a deal.</li>
+        <li><strong>Newsletter</strong>, if you opt in, your email address and the source of the signup.</li>
+        <li><strong>Contact messages</strong>, anything you send us through the contact form or by email.</li>
+        <li><strong>Technical data</strong>, basic session and device information needed to keep the service secure.</li>
       </ul>
 
       <h2>2. How we use it</h2>
       <p>
         To operate the documentation and logistics service: create and track deals, send lifecycle
         notifications by email and text, process payments through our payment processor, produce transaction
-        records for the parties, provide support, and — if you opt in — send you our newsletter. We use
+        records for the parties, provide support, and, if you opt in, send you our newsletter. We use
         technical data to keep accounts and deals secure.
       </p>
 
@@ -66,8 +66,8 @@ export default function PrivacyPage() {
 
       <h2>6. Sharing</h2>
       <p>
-        We share information only as needed to complete a deal — for example, shipping details with the carrier
-        and payment details with the payment processor — or as required by law. Deals are private and
+        We share information only as needed to complete a deal, for example, shipping details with the carrier
+        and payment details with the payment processor, or as required by law. Deals are private and
         invitation-only; FlipLocker does not publish listings or sell your personal information.
       </p>
 

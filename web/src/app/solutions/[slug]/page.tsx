@@ -67,7 +67,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
         </div>
       </article>
 
-      <FaqSection items={sol.faqs} kicker="Questions" title={`${leaf?.label ?? sol.title} — FAQ`} />
+      <FaqSection items={sol.faqs} kicker="Questions" title={`${leaf?.label ?? sol.title}, FAQ`} />
 
       {related.length ? <RelatedGrid title="Other solutions" items={related} /> : null}
 

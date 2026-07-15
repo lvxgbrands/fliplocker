@@ -19,9 +19,9 @@ export function DevControls({ dealId, status }: { dealId: string; status: DealSt
   if (buttons.length === 0) return null;
 
   return (
-    <div className="rounded-xl border border-dashed border-amber-300 bg-amber-50/60 p-3">
-      <p className="text-xs font-bold uppercase tracking-wide text-amber-700 mb-2">
-        Staging simulator — carrier &amp; timers
+    <div className="rounded-xl border border-dashed border-ink-300 bg-ink-50 p-3">
+      <p className="text-xs font-bold uppercase tracking-wide text-ink-600 mb-2">
+        Staging simulator, carrier &amp; timers
       </p>
       <div className="flex flex-wrap gap-2">
         {buttons.map((b) => (
@@ -29,7 +29,7 @@ export function DevControls({ dealId, status }: { dealId: string; status: DealSt
             <input type="hidden" name="dealId" value={dealId} />
             <button
               type="submit"
-              className="rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-600"
+              className="rounded-lg bg-brand-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-700"
             >
               {b.label}
             </button>

@@ -27,10 +27,10 @@ export const SOLUTIONS: Solution[] = [
     eyebrow: "For sellers",
     title: "FlipLocker for social sellers",
     description:
-      "Close the graded-card deal you negotiated on Instagram, X, or Discord without the DM-payment gamble — held payment, hub documentation, and signature delivery.",
+      "Close the graded-card deal you negotiated on Instagram, X, or Discord without the DM-payment gamble, held payment, hub documentation, and signature delivery.",
     audience: "Instagram / X / Discord sellers",
     answer:
-      "FlipLocker lets social sellers close the deal they negotiated in DMs safely: agree the price on social, then move the money and the card through FlipLocker. The buyer's payment is held by our payment processor, the card is documented at our hub, and it's delivered with a signature — so you get paid without shipping into the unknown or accepting a risky Friends & Family payment.",
+      "FlipLocker lets social sellers close the deal they negotiated in DMs safely: agree the price on social, then move the money and the card through FlipLocker. The buyer's payment is held by our payment processor, the card is documented at our hub, and it's delivered with a signature, so you get paid without shipping into the unknown or accepting a risky Friends & Family payment.",
     intro:
       "You found the buyer on social. That's what social is great at. It's a terrible place to settle a four-figure payment or ship a slab on a promise. FlipLocker is where the deal you made in the DMs gets closed safely.",
     sections: [
@@ -65,10 +65,10 @@ export const SOLUTIONS: Solution[] = [
         body: p(
           {
             list: [
-              "**You get paid.** The payment is real and held before you ship — no phantom buyers.",
+              "**You get paid.** The payment is real and held before you ship, no phantom buyers.",
               "**No Friends & Family risk.** You never have to ask a buyer to waive their protection, which builds trust and closes more deals.",
               "**A record that backs you up.** Hub documentation and a logged tamper seal protect you against 'that's not what you sent' claims.",
-              "**Fees you control.** Who pays the per-deal fee — buyer, seller, or split — is configurable, and it's based on the sale price only.",
+              "**Fees you control.** Who pays the per-deal fee, buyer, seller, or split, is configurable, and it's based on the sale price only.",
             ],
           },
           "New to this? Read [How to sell graded cards safely on Instagram](/insights/how-to-sell-graded-cards-safely-on-instagram)."
@@ -78,11 +78,11 @@ export const SOLUTIONS: Solution[] = [
     faqs: [
       {
         q: "Do I need the buyer to have an account?",
-        a: "You create the deal and invite the buyer by email. They claim the private invitation to review the checkout and pay — so they'll create an account as part of accepting, but you start the deal.",
+        a: "You create the deal and invite the buyer by email. They claim the private invitation to review the checkout and pay, so they'll create an account as part of accepting, but you start the deal.",
       },
       {
         q: "Can I set the buyer to pay the fee?",
-        a: "Yes. Who pays the per-deal service fee — buyer, seller, or split 50/50 — is configurable, and it's shown on the checkout before anyone pays.",
+        a: "Yes. Who pays the per-deal service fee, buyer, seller, or split 50/50, is configurable, and it's shown on the checkout before anyone pays.",
       },
       {
         q: "What if the buyer backs out?",
@@ -92,7 +92,7 @@ export const SOLUTIONS: Solution[] = [
     related: ["first-time-deals", "high-value-cards", "breakers"],
     cta: {
       title: "Close the deal you made on social",
-      body: "Bring the buyer you already found — FlipLocker handles the payment, documentation, and delivery.",
+      body: "Bring the buyer you already found, FlipLocker handles the payment, documentation, and delivery.",
     },
   },
 
@@ -104,7 +104,7 @@ export const SOLUTIONS: Solution[] = [
       "Buy the graded card you negotiated with a documented, signature-delivered handoff and a payment that's held until the card is in your hands.",
     audience: "Collectors buying from private sellers",
     answer:
-      "For collectors buying from a private seller, FlipLocker holds your payment with our payment processor until the card is documented at the hub and delivered to you with a signature. If it fails inspection, you're refunded automatically — so you can buy the card you negotiated without wiring money to a stranger and hoping.",
+      "For collectors buying from a private seller, FlipLocker holds your payment with our payment processor until the card is documented at the hub and delivered to you with a signature. If it fails inspection, you're refunded automatically, so you can buy the card you negotiated without wiring money to a stranger and hoping.",
     intro:
       "When you're the buyer, the fear is simple: you send the money and the card is wrong, damaged, or never comes. FlipLocker is built to make that fear irrelevant.",
     sections: [
@@ -125,9 +125,9 @@ export const SOLUTIONS: Solution[] = [
       },
       {
         id: "what-documentation-means",
-        heading: "Know what documentation does — and doesn't",
+        heading: "Know what documentation does, and doesn't",
         body: p(
-          "FlipLocker documents cards; it does not grade them or judge whether they're genuine. That means you get a neutral record of the card's identity, condition, and chain of custody — not a guarantee that a slab is genuine. It's an honest, useful protection, and knowing its edges makes you a smarter buyer.",
+          "FlipLocker documents cards; it does not grade them or judge whether they're genuine. That means you get a neutral record of the card's identity, condition, and chain of custody, not a guarantee that a slab is genuine. It's an honest, useful protection, and knowing its edges makes you a smarter buyer.",
           "Read [What card documentation actually means](/insights/what-card-documentation-actually-means) and the full [Security & limits](/security)."
         ),
       },
@@ -166,18 +166,18 @@ export const SOLUTIONS: Solution[] = [
     eyebrow: "By stakes",
     title: "FlipLocker for high-value cards",
     description:
-      "Four- and five-figure deals with a held payment, insured legs, white-glove documentation, and a logged tamper seal — structure that scales with the stakes.",
+      "Four- and five-figure deals with a held payment, insured legs, white-glove documentation, and a logged tamper seal, structure that scales with the stakes.",
     audience: "Four- and five-figure deals",
     answer:
       "For high-value cards, FlipLocker replaces trust with structure at every step: the buyer's payment is held by our payment processor, the card gets white-glove documentation at the hub, both shipping legs are insured with a signature that's never waived, and a numbered tamper seal is logged to the deal. The higher the value, the more that structure matters.",
     intro:
-      "At four and five figures, 'I trust them' is not a plan. High-value deals need the money held, the card documented, and every leg insured — no exceptions.",
+      "At four and five figures, 'I trust them' is not a plan. High-value deals need the money held, the card documented, and every leg insured, no exceptions.",
     sections: [
       {
         id: "structure-over-trust",
         heading: "Structure over trust",
         body: p(
-          "The core idea of FlipLocker matters most at the top of the market. When a card is worth as much as a car, you don't want to rely on goodwill — you want a process that would protect you even if the other person had bad intentions.",
+          "The core idea of FlipLocker matters most at the top of the market. When a card is worth as much as a car, you don't want to rely on goodwill, you want a process that would protect you even if the other person had bad intentions.",
           {
             list: [
               "The payment is held by the processor until documented, signed-for delivery.",
@@ -192,7 +192,7 @@ export const SOLUTIONS: Solution[] = [
         id: "white-glove",
         heading: "White-glove handling on Pro",
         body: p(
-          "The [Pro package](/pricing) adds white-glove documentation for high-value slabs, extended declared-value coverage options, and priority hub handling with a dedicated contact — for dealers and collectors who move serious cards regularly.",
+          "The [Pro package](/pricing) adds white-glove documentation for high-value slabs, extended declared-value coverage options, and priority hub handling with a dedicated contact, for dealers and collectors who move serious cards regularly.",
           "The per-deal service fee is still a function of the sale price only, never the card's comp or market value."
         ),
       },
@@ -201,14 +201,14 @@ export const SOLUTIONS: Solution[] = [
         heading: "A record that holds up",
         body: p(
           "On a high-value card, the documentation is as valuable as the shipping. Video, photos, a logged tamper seal, and a signature create a neutral, timestamped record on the [transparency timeline](/platform/transparency-timeline) that makes disputes and coverage claims straightforward.",
-          "Just remember the honest boundary: this is documentation, not a guarantee of genuineness — see [Security & limits](/security)."
+          "Just remember the honest boundary: this is documentation, not a guarantee of genuineness, see [Security & limits](/security)."
         ),
       },
     ],
     faqs: [
       {
         q: "Does a more expensive card cost more in fees?",
-        a: "The per-deal service fee is based on the sale price only — never the card's comp or market value. Pro accounts use the lowest fee schedule. Exact figures are shown at checkout.",
+        a: "The per-deal service fee is based on the sale price only, never the card's comp or market value. Pro accounts use the lowest fee schedule. Exact figures are shown at checkout.",
       },
       {
         q: "How is a high-value card insured in transit?",
@@ -234,7 +234,7 @@ export const SOLUTIONS: Solution[] = [
       "Never dealt with a stranger before? Here's the safe, guided way to do your first peer-to-peer graded-card deal without getting burned.",
     audience: "First-time private dealers",
     answer:
-      "If it's your first time dealing with a stranger, FlipLocker gives you guardrails: agree the price wherever you met, then let FlipLocker hold the payment, document the card at a neutral hub, and deliver it with a signature. You don't have to know how to structure a safe deal — the process does it for you.",
+      "If it's your first time dealing with a stranger, FlipLocker gives you guardrails: agree the price wherever you met, then let FlipLocker hold the payment, document the card at a neutral hub, and deliver it with a signature. You don't have to know how to structure a safe deal, the process does it for you.",
     intro:
       "Everyone's first deal with a stranger is nerve-wracking. It should be. FlipLocker turns that anxiety into a checklist you can follow step by step.",
     sections: [
@@ -260,7 +260,7 @@ export const SOLUTIONS: Solution[] = [
         body: p(
           {
             list: [
-              "**Never pay or accept Friends & Family** for a purchase — it waives protection. See [Goods & Services vs Friends & Family](/insights/paypal-goods-and-services-vs-friends-and-family).",
+              "**Never pay or accept Friends & Family** for a purchase, it waives protection. See [Goods & Services vs Friends & Family](/insights/paypal-goods-and-services-vs-friends-and-family).",
               "**Don't ship first** to a stranger. Let a neutral hub sit in the middle.",
               "**Slow down on urgency.** 'Pay in the next ten minutes' is a pressure tactic.",
               "**Match the certificate number** to the grading registry before you commit.",
@@ -274,13 +274,13 @@ export const SOLUTIONS: Solution[] = [
         heading: "Confidence, built in",
         body: p(
           "Because the payment is held and the card is documented, your first deal has the same protections as a seasoned dealer's hundredth. You can learn the ropes without paying tuition to a scammer.",
-          "When you're ready for bigger cards, the same process scales — see [high-value cards](/solutions/high-value-cards)."
+          "When you're ready for bigger cards, the same process scales, see [high-value cards](/solutions/high-value-cards)."
         ),
       },
     ],
     faqs: [
       {
-        q: "I've never done this — is it complicated?",
+        q: "I've never done this, is it complicated?",
         a: "No. You agree the price, create the deal (or claim an invite), and follow the steps. FlipLocker handles the payment holding, documentation, and shipping legs for you.",
       },
       {
@@ -295,7 +295,7 @@ export const SOLUTIONS: Solution[] = [
     related: ["social-sellers", "collectors", "high-value-cards"],
     cta: {
       title: "Do your first deal the safe way",
-      body: "Guardrails built in — hold the payment, document the card, deliver with a signature.",
+      body: "Guardrails built in, hold the payment, document the card, deliver with a signature.",
     },
   },
 
@@ -304,12 +304,12 @@ export const SOLUTIONS: Solution[] = [
     eyebrow: "By use case",
     title: "FlipLocker for breakers & group buys",
     description:
-      "Settle post-break hits and group-buy payouts with a clean, documented paper trail — held payments, hub documentation, and signature delivery for every hand-off.",
+      "Settle post-break hits and group-buy payouts with a clean, documented paper trail, held payments, hub documentation, and signature delivery for every hand-off.",
     audience: "Breakers & group-buy organizers",
     answer:
       "Breakers and group-buy organizers use FlipLocker to settle individual hits cleanly: each buyer's payment is held by our payment processor, the specific card is documented at the hub, and it's delivered with a signature. Instead of a tangle of DMs and payment apps, every hand-off has its own held payment and neutral record.",
     intro:
-      "Breaks and group buys generate a flurry of individual settlements — this hit to that buyer, that slab to this member. FlipLocker gives each one a clean, documented close.",
+      "Breaks and group buys generate a flurry of individual settlements, this hit to that buyer, that slab to this member. FlipLocker gives each one a clean, documented close.",
     sections: [
       {
         id: "the-mess",
@@ -328,7 +328,7 @@ export const SOLUTIONS: Solution[] = [
               "**Held payments per buyer.** Each member's payment is held until their card is documented and delivered.",
               "**The right card to the right person.** Hub documentation and a logged tamper seal tie a specific slab to a specific deal.",
               "**Signature delivery.** Every hand-off is confirmed, so 'I never got mine' is a solved problem.",
-              "**A paper trail.** Each deal has its own transparency timeline — your records, not a screenshot pile.",
+              "**A paper trail.** Each deal has its own transparency timeline, your records, not a screenshot pile.",
             ],
           },
           "The [Pro package](/pricing) adds group-buy and breaker settlement tools plus team seats for organizers running volume."
@@ -338,7 +338,7 @@ export const SOLUTIONS: Solution[] = [
         id: "trust",
         heading: "Trust that scales your audience",
         body: p(
-          "For breakers, reputation is the whole business. Offering documented, held-payment settlement signals to your community that their hits and their money are handled properly — which is exactly what keeps people coming back to your breaks.",
+          "For breakers, reputation is the whole business. Offering documented, held-payment settlement signals to your community that their hits and their money are handled properly, which is exactly what keeps people coming back to your breaks.",
           "It's the same protection a one-off collector gets, applied at the pace a breaker needs."
         ),
       },
@@ -350,7 +350,7 @@ export const SOLUTIONS: Solution[] = [
       },
       {
         q: "How does a member know their specific card shipped?",
-        a: "Each settlement is its own deal with its own transparency timeline, hub documentation, tamper seal, and signature delivery — so every member can watch their own card's journey.",
+        a: "Each settlement is its own deal with its own transparency timeline, hub documentation, tamper seal, and signature delivery, so every member can watch their own card's journey.",
       },
       {
         q: "Does each buyer pay their own fee?",

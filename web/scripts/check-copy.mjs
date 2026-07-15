@@ -33,5 +33,15 @@ for (const word of FORBIDDEN_P) {
     }
   } catch { /* grep exits 1 when no match — that's a pass */ }
 }
+// No em (—) or en (–) dashes in user-facing copy — client preference. Use
+// commas, colons, or hyphens instead.
+try {
+  const out = execSync(`grep -rnE '—|–' src prisma --include='*.ts' --include='*.tsx'`, { encoding: "utf8" });
+  if (out.trim()) {
+    console.error(`EM/EN DASH found (use commas, colons, or hyphens instead):\n${out}`);
+    failed = true;
+  }
+} catch { /* grep exits 1 when no match — that's a pass */ }
+
 if (failed) process.exit(1);
 console.log("Copy check passed — no forbidden terminology in src/ or prisma/.");

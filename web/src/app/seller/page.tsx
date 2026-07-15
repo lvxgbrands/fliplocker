@@ -38,9 +38,9 @@ export default async function SellerDashboard({
       <SuccessNote
         message={
           params.documented
-            ? "Email confirmed — you're all set."
+            ? "Email confirmed, you're all set."
             : params.verification_sent
-              ? "Confirmation email sent — check your inbox."
+              ? "Confirmation email sent, check your inbox."
               : params.welcome
                 ? "Welcome to FlipLocker! We sent a confirmation link to your email."
                 : undefined
@@ -55,7 +55,7 @@ export default async function SellerDashboard({
             </span>
             <div>
               <p className="font-bold text-brand-900">
-                Payment received on {shipNow.length === 1 ? "a deal" : `${shipNow.length} deals`} — time to ship!
+                Payment received on {shipNow.length === 1 ? "a deal" : `${shipNow.length} deals`}, time to ship!
               </p>
               <ul className="mt-1 space-y-0.5 text-sm text-brand-800">
                 {shipNow.map((d) => (
@@ -64,7 +64,7 @@ export default async function SellerDashboard({
                       className="inline-flex items-center gap-1 font-semibold underline decoration-brand-300 underline-offset-2 hover:decoration-brand-500"
                       href={`/seller/deals/${d.id}`}
                     >
-                      {d.shortCode} — {cardTitle(d)}
+                      {d.shortCode}, {cardTitle(d)}
                       <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2.5} />
                     </Link>
                   </li>
@@ -94,7 +94,7 @@ export default async function SellerDashboard({
         <EmptyState
           icon={PackageOpen}
           title="No deals yet"
-          body="Agreed a price with a buyer? Lock it in — we'll handle payment, documentation, and delivery."
+          body="Agreed a price with a buyer? Lock it in, we'll handle payment, documentation, and delivery."
           action={{ label: "Create your first deal", href: "/seller/deals/new" }}
         />
       ) : (

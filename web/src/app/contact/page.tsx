@@ -10,7 +10,7 @@ import { CONTACT_FAQS } from "@/lib/faqs";
 export const metadata: Metadata = pageMetadata({
   title: "Contact FlipLocker",
   description:
-    "Get in touch with the FlipLocker team about a deal, selling, buying, press, or partnerships. Email support@fliplocker.app or send a message — we reply within one business day.",
+    "Get in touch with the FlipLocker team about a deal, selling, buying, press, or partnerships. Email support@fliplocker.app or send a message, we reply within one business day.",
   path: "/contact",
   keywords: ["contact FlipLocker", "FlipLocker support"],
 });

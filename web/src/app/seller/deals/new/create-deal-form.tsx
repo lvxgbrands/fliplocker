@@ -70,7 +70,7 @@ async function uploadViaPresign(file: File): Promise<string> {
   if (!presign.ok) throw new Error("Could not start the photo upload.");
   const { key, url } = await presign.json();
   const put = await fetch(url, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
-  if (!put.ok) throw new Error("Photo upload failed — please try again.");
+  if (!put.ok) throw new Error("Photo upload failed, please try again.");
   return key;
 }
 

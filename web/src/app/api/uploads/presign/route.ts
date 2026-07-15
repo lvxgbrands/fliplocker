@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
   // Cap presign requests per user (each deal needs 2, each inspection 3).
   if (!rateLimit(`presign:${user.id}`, 60, 60_000).ok) {
-    return NextResponse.json({ error: "Too many uploads — slow down." }, { status: 429 });
+    return NextResponse.json({ error: "Too many uploads, slow down." }, { status: 429 });
   }
 
   const { filename, contentType, purpose = "deal-photo" } = await req.json();

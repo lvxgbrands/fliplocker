@@ -11,7 +11,7 @@ import { pageMetadata } from "@/lib/seo";
 import { HOW_IT_WORKS_FAQS } from "@/lib/faqs";
 
 export const metadata: Metadata = pageMetadata({
-  title: "How it works — from social handshake to signed delivery",
+  title: "How it works, from social handshake to signed delivery",
   description:
     "The eight steps of a FlipLocker deal: agree off-platform, invite the buyer, hold the payment, ship to the hub, document the card, deliver with a signature, and release the seller's payout after a review window.",
   path: "/how-it-works",
@@ -19,13 +19,13 @@ export const metadata: Metadata = pageMetadata({
 });
 
 const STEPS = [
-  { icon: MessageSquareText, t: "Agree the deal off-platform", b: "Buyer and seller settle on the card and price wherever they met — social media, a show, a group chat. FlipLocker never lists or brokers the sale." },
+  { icon: MessageSquareText, t: "Agree the deal off-platform", b: "Buyer and seller settle on the card and price wherever they met, social media, a show, a group chat. FlipLocker never lists or brokers the sale." },
   { icon: FilePlus2, t: "Seller creates the deal", b: "Card details, front and rear photos, grade, certificate number, agreed price, and the buyer's email. A minimum sale price applies." },
   { icon: Mail, t: "Buyer is invited privately", b: "The buyer receives a one-time invitation link, claims it, and reviews the full itemized checkout before deciding." },
-  { icon: CreditCard, t: "Buyer accepts & pays", b: "Payment runs through PayPal checkout. Funds are held securely by our payment processor — never by FlipLocker." },
+  { icon: CreditCard, t: "Buyer accepts & pays", b: "Payment runs through PayPal checkout. Funds are held securely by our payment processor, never by FlipLocker." },
   { icon: Tag, t: "Seller ships to the hub", b: "A prepaid, insured Leg 1 label is issued after a Terms acknowledgment. A 72-hour ship window keeps the deal moving." },
   { icon: Building2, t: "Hub inspects & documents", b: "The card is checked in, filmed for 15 seconds, photographed twice, and its tamper seal is logged and bound to the deal." },
-  { icon: Truck, t: "Delivered with a signature", b: "After a passing inspection the card is repacked and shipped to the buyer with Signature Confirmation — never waived." },
+  { icon: Truck, t: "Delivered with a signature", b: "After a passing inspection the card is repacked and shipped to the buyer with Signature Confirmation, never waived." },
   { icon: PartyPopper, t: "Payout released", b: "A 48-hour buyer review window opens on delivery. Approve it, or let it lapse, and the seller's payout plus FlipLocker's fee are released." },
 ];
 
@@ -41,7 +41,7 @@ export default function HowItWorks() {
       <section className="mx-auto max-w-3xl px-4 pt-14">
         <AnswerBlock label="The short version">
           A seller and buyer agree on a card off-platform. The seller creates the deal and invites the buyer,
-          who pays — with funds held by our payment processor. The seller ships to the FlipLocker hub, the card
+          who pays, with funds held by our payment processor. The seller ships to the FlipLocker hub, the card
           is documented, and it&apos;s delivered to the buyer with a required signature. After a 48-hour review
           window, the seller is paid.
         </AnswerBlock>
@@ -78,7 +78,7 @@ export default function HowItWorks() {
         </div>
       </section>
 
-      <FaqSection items={HOW_IT_WORKS_FAQS} kicker="How it works — FAQ" title="Common questions about the flow" />
+      <FaqSection items={HOW_IT_WORKS_FAQS} kicker="How it works, FAQ" title="Common questions about the flow" />
 
       <CtaBand
         title="Ready when your buyer is"

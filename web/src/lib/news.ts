@@ -1,4 +1,4 @@
-// News adapter — follows the FlipLocker simulator/real pattern used for PayPal,
+// News adapter, follows the FlipLocker simulator/real pattern used for PayPal,
 // shipping, SMS, and email.
 //
 //   Simulator mode (default): a curated set of REAL sports-card-market headlines
@@ -104,7 +104,7 @@ function decodeEntities(s: string): string {
     .trim();
 }
 
-/** Minimal RSS/Atom item extractor — no XML dependency. */
+/** Minimal RSS/Atom item extractor, no XML dependency. */
 function parseRss(xml: string, sourceName: string, limit: number): Headline[] {
   const out: Headline[] = [];
   const items = xml.split(/<item[\s>]|<entry[\s>]/i).slice(1);
@@ -174,7 +174,7 @@ export async function getNewsHeadlines(limit = 12): Promise<{
       const live = await fetchLiveHeadlines(limit);
       if (live.length >= 3) return { items: live, mode: "live" };
     } catch {
-      // Fall through to the seeded headlines — the ticker must never break.
+      // Fall through to the seeded headlines, the ticker must never break.
     }
   }
   return { items: SEEDED_HEADLINES.slice(0, limit), mode: "simulator" };

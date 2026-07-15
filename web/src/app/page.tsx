@@ -6,7 +6,6 @@ import {
   Lock,
   Video,
   ArrowRight,
-  ShieldCheck,
   Camera,
   Stamp,
   PenLine,
@@ -24,9 +23,9 @@ import { SHOWCASE } from "@/lib/marketing";
 import { HOME_FAQS } from "@/lib/faqs";
 
 const STEPS = [
-  { icon: MessageSquareText, title: "Agree your deal anywhere", body: "You and your buyer settle on the card and price off-platform. FlipLocker is invitation-only — no listings, no browsing." },
+  { icon: MessageSquareText, title: "Agree your deal anywhere", body: "You and your buyer settle on the card and price off-platform. FlipLocker is invitation-only, no listings, no browsing." },
   { icon: FilePlus2, title: "Create the deal, invite the buyer", body: "The seller enters the card, photos, and agreed price. The buyer gets a private email invitation to review and accept." },
-  { icon: Lock, title: "Payment held by our processor", body: "The buyer pays through PayPal checkout. Funds are held securely by our payment processor — never by FlipLocker." },
+  { icon: Lock, title: "Payment held by our processor", body: "The buyer pays through PayPal checkout. Funds are held securely by our payment processor, never by FlipLocker." },
   { icon: Video, title: "Documented, packed, delivered", body: "The card is inspected and documented on video at the hub, then delivered with signature confirmation before the seller is paid." },
 ];
 
@@ -34,7 +33,7 @@ const SECURITY = [
   { icon: Video, title: "15-second inspection video", body: "Every card is filmed at the hub and the clip is attached to the deal for both parties to watch." },
   { icon: Camera, title: "Two reference photos", body: "High-resolution front and rear captures documented alongside the seller's original listing images." },
   { icon: Stamp, title: "Tamper-seal serial", body: "A numbered tamper seal is logged and permanently bound to the deal record before the card ships onward." },
-  { icon: PenLine, title: "Signature delivery", body: "Leg 2 to the buyer always requires a signature — it is never waived — and both legs are insured." },
+  { icon: PenLine, title: "Signature delivery", body: "Leg 2 to the buyer always requires a signature, it is never waived, and both legs are insured." },
 ];
 
 function feeSummary(floorCents: number, percentBps: number, crossoverCents: number) {
@@ -64,9 +63,6 @@ export default async function Home() {
         <div className="dotgrid-blue absolute inset-0" aria-hidden />
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 pb-24 pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:pt-24">
           <div>
-            <p className="kicker mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[11px] text-brand-200">
-              <ShieldCheck className="h-3.5 w-3.5" /> Private &amp; invitation-only
-            </p>
             <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]">
               The safe way to close the card deal you{" "}
               <span className="bg-gradient-to-r from-brand-300 to-brand-500 bg-clip-text text-transparent">
@@ -129,7 +125,7 @@ export default async function Home() {
             <SectionKicker>Recent documented deals</SectionKicker>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Real cards, protected end-to-end</h2>
             <p className="mx-auto mt-3 max-w-xl text-ink-500">
-              Every deal is private and invitation-only — these are examples of the caliber of cards
+              Every deal is private and invitation-only, these are examples of the caliber of cards
               that move safely through FlipLocker. There is nothing to browse or buy here.
             </p>
           </div>
@@ -152,7 +148,7 @@ export default async function Home() {
               A service fee based only on the sale price
             </h2>
             <p className="mt-4 text-ink-500">
-              The card&apos;s market value is never used — the fee is a function of the agreed sale
+              The card&apos;s market value is never used, the fee is a function of the agreed sale
               price alone, shown in full at checkout. Minimum deal price {formatCents(checkout.minSalePriceCents)}.
             </p>
             <Link href="/pricing" className={buttonClass("secondary", "md", "mt-6")}>

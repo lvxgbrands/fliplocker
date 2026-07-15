@@ -85,7 +85,7 @@ export async function captureAndMarkPaid(orderId: string): Promise<{ dealId: str
   await transitionDeal(deal.id, "PAID", {
     actor: "system",
     type: "PAYMENT_CAPTURED",
-    message: `Payment of ${formatCents(deal.buyerTotalCents)} confirmed — held securely by the payment processor. FlipLocker receives only its ${formatCents(deal.feeTotalCents)} service fee.`,
+    message: `Payment of ${formatCents(deal.buyerTotalCents)} confirmed, held securely by the payment processor. FlipLocker receives only its ${formatCents(deal.feeTotalCents)} service fee.`,
     payload: { orderId, captureId: capture.captureId },
   });
   await db.deal.update({ where: { id: deal.id }, data: { paidAt: new Date() } });

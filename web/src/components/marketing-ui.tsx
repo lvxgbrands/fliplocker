@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { MarketingNav } from "@/components/marketing-nav";
 import { MarketingFooter } from "@/components/marketing-footer";
 import { NewsTicker } from "@/components/news-ticker";
@@ -10,7 +10,7 @@ import { breadcrumbLd } from "@/lib/seo";
 import type { Block } from "@/lib/insights";
 
 // ---------------------------------------------------------------------------
-// Page shell — nav (+ optional ticker) + <main> + footer + skip link.
+// Page shell, nav (+ optional ticker) + <main> + footer + skip link.
 // ---------------------------------------------------------------------------
 export function MarketingShell({
   children,
@@ -167,10 +167,9 @@ export function Breadcrumbs({ items, dark = false }: { items: { name: string; pa
 }
 
 // ---------------------------------------------------------------------------
-// Page hero — light or dark, with kicker/title/lede + optional actions.
+// Page hero, light or dark, with kicker/title/lede + optional actions.
 // ---------------------------------------------------------------------------
 export function PageHero({
-  kicker,
   title,
   lede,
   dark = false,
@@ -198,9 +197,6 @@ export function PageHero({
             <Breadcrumbs items={breadcrumbs} dark={dark} />
           </div>
         ) : null}
-        {kicker ? (
-          <p className={`kicker mb-3 text-[12px] ${dark ? "text-brand-300" : "text-brand-600"}`}>{kicker}</p>
-        ) : null}
         <h1
           className={`text-4xl font-extrabold tracking-tight sm:text-5xl ${dark ? "text-white" : "text-ink-950"}`}
         >
@@ -223,16 +219,12 @@ export function PageHero({
 }
 
 // ---------------------------------------------------------------------------
-// AEO answer block — a concise, quotable answer engines can extract.
+// AEO answer block, a concise, quotable answer engines can extract.
 // ---------------------------------------------------------------------------
-export function AnswerBlock({ children, label = "The short answer" }: { children: React.ReactNode; label?: string }) {
+export function AnswerBlock({ children }: { children: React.ReactNode; label?: string }) {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-brand-200 bg-gradient-to-br from-brand-50 to-white p-6 shadow-soft">
-      <div className="flex items-center gap-2">
-        <Sparkles className="h-4 w-4 text-brand-600" strokeWidth={2.2} />
-        <p className="kicker text-[11px] text-brand-600">{label}</p>
-      </div>
-      <p className="mt-3 text-[15px] leading-relaxed text-ink-700">{children}</p>
+      <p className="text-[15px] leading-relaxed text-ink-700">{children}</p>
     </div>
   );
 }
@@ -304,8 +296,7 @@ export function RelatedGrid({
                     <Icon className="h-5 w-5" strokeWidth={2} />
                   </span>
                 ) : null}
-                {it.eyebrow ? <p className="kicker text-[10px] text-brand-600">{it.eyebrow}</p> : null}
-                <h3 className="mt-1 font-bold text-ink-900">{it.title}</h3>
+                <h3 className="font-bold text-ink-900">{it.title}</h3>
                 <p className="mt-1.5 flex-1 text-sm leading-relaxed text-ink-500">{it.desc}</p>
                 <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">
                   Read more

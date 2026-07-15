@@ -33,7 +33,7 @@ export default async function AdminUsers({
             {users.map((u) => (
               <tr key={u.id}>
                 <td className="px-4 py-2.5">
-                  <p className="font-medium text-ink-900">{u.name || "—"}</p>
+                  <p className="font-medium text-ink-900">{u.name || "-"}</p>
                   <p className="text-xs text-ink-400">{u.email}</p>
                 </td>
                 <td className="px-4 py-2.5">

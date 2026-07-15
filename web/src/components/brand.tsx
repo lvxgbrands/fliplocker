@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 /**
- * FlipLocker shield mark — the official client-provided logo
+ * FlipLocker shield mark, the official client-provided logo
  * (public/brand/fliplocker-logo.svg), a two-blue crest with an "F" + check.
  * Sizing is controlled by the passed className (e.g. h-8 w-8).
  */

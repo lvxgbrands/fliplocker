@@ -4,7 +4,7 @@ import { subscribeEmail, isValidEmail } from "@/lib/newsletter";
 import { sendEmail, genericEmail } from "@/lib/email";
 
 // Server actions for the marketing site: newsletter opt-in + contact form.
-// Both follow the outbox/adapter pattern — captured locally in simulator mode,
+// Both follow the outbox/adapter pattern, captured locally in simulator mode,
 // sent for real when provider keys are present.
 
 export interface FormState {
@@ -16,7 +16,7 @@ export async function newsletterAction(
   _prev: FormState,
   formData: FormData
 ): Promise<FormState> {
-  // Honeypot — bots fill hidden fields; humans don't.
+  // Honeypot, bots fill hidden fields; humans don't.
   if (String(formData.get("company") || "").trim()) {
     return { status: "success", message: "You're in. Watch your inbox for FlipLocker updates." };
   }
@@ -25,7 +25,7 @@ export async function newsletterAction(
   const res = await subscribeEmail(email, source);
   if (!res.ok) return { status: "error", message: res.error };
   return res.status === "already"
-    ? { status: "info", message: "You're already on the list — thanks for the enthusiasm!" }
+    ? { status: "info", message: "You're already on the list, thanks for the enthusiasm!" }
     : { status: "success", message: "You're in. Watch your inbox for FlipLocker updates." };
 }
 
@@ -34,7 +34,7 @@ export async function contactAction(
   formData: FormData
 ): Promise<FormState> {
   if (String(formData.get("company") || "").trim()) {
-    return { status: "success", message: "Thanks — your message is on its way. We'll reply within one business day." };
+    return { status: "success", message: "Thanks, your message is on its way. We'll reply within one business day." };
   }
   const name = String(formData.get("name") || "").trim();
   const email = String(formData.get("email") || "").trim();
@@ -48,7 +48,7 @@ export async function contactAction(
 
   const esc = (s: string) => s.replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c] as string));
   const { subject, html } = genericEmail(
-    `New contact message — ${topic}`,
+    `New contact message, ${topic}`,
     "New contact message",
     [
       `<strong>From:</strong> ${esc(name)} (${esc(email)})`,
@@ -65,6 +65,6 @@ export async function contactAction(
   }
   return {
     status: "success",
-    message: "Thanks — your message is on its way. We'll reply within one business day.",
+    message: "Thanks, your message is on its way. We'll reply within one business day.",
   };
 }

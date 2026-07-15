@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 
 // Transactional email. With RESEND_API_KEY set, mail goes out via Resend.
 // Without it (local/staging demo), every message is captured in the
-// email_outbox table and viewable at /dev/mailbox — same templates, same flow.
+// email_outbox table and viewable at /dev/mailbox, same templates, same flow.
 
 interface SendArgs {
   to: string;
@@ -29,7 +29,7 @@ export async function sendEmail({ to, subject, html, dealId }: SendArgs): Promis
 }
 
 // ---------------------------------------------------------------------------
-// Templates — Bold Blue FlipLocker brand, table-based for email clients.
+// Templates, Bold Blue FlipLocker brand, table-based for email clients.
 // Copy rules: the forbidden terms in scripts/check-copy.mjs must never appear;
 // funds language is always "held securely by our payment processor".
 // ---------------------------------------------------------------------------
@@ -64,7 +64,7 @@ function layout(title: string, bodyHtml: string, cta?: { label: string; url: str
         </td></tr>
         <tr><td style="padding:18px 32px;background:${BRAND.bg};border-top:1px solid ${BRAND.border}">
           <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#6b7280">
-            FlipLocker — inspected &amp; documented card deals, invitation-only.
+            FlipLocker, inspected &amp; documented card deals, invitation-only.
             Buyer payments are held securely by our payment processor until documentation and delivery are complete.
           </p>
         </td></tr>
@@ -121,7 +121,7 @@ export function buyerInviteTemplate(args: {
   shortCode: string;
 }) {
   return {
-    subject: `You're invited to a documented card deal — ${args.cardTitle}`,
+    subject: `You're invited to a documented card deal, ${args.cardTitle}`,
     html: layout(
       `${args.sellerName} sent you a deal`,
       `<p style="font-size:14px;line-height:1.6">
@@ -132,7 +132,7 @@ export function buyerInviteTemplate(args: {
          <p style="margin:6px 0 0;font-size:14px">Agreed price: <strong>${money(args.salePriceCents)}</strong></p>
        </div>
        <p style="font-size:14px;line-height:1.6">Review the card photos and full cost breakdown, then accept or decline.
-       Your payment is held securely by our payment processor while the card is documented at the FlipLocker hub — it isn't released to the seller until delivery is complete.</p>`,
+       Your payment is held securely by our payment processor while the card is documented at the FlipLocker hub, it isn't released to the seller until delivery is complete.</p>`,
       { label: "Review this deal", url: args.url }
     ),
   };
@@ -145,9 +145,9 @@ export function paymentReceivedSellerTemplate(args: {
   sellerPayoutCents: number;
 }) {
   return {
-    subject: `Payment received — ship now (deal ${args.shortCode})`,
+    subject: `Payment received, ship now (deal ${args.shortCode})`,
     html: layout(
-      "Payment received — time to ship 📦",
+      "Payment received, time to ship 📦",
       `<p style="font-size:14px;line-height:1.6">The buyer's payment for <strong>${args.cardTitle}</strong> (deal <strong>${args.shortCode}</strong>) has cleared and is held securely by our payment processor.</p>
        <p style="font-size:14px;line-height:1.6">Your payout of <strong>${money(args.sellerPayoutCents)}</strong> is released after the card is documented at the hub and delivery is signed for.</p>
        <p style="font-size:14px;line-height:1.6"><strong>Next step:</strong> your prepaid Leg&nbsp;1 shipping label to the FlipLocker hub is being prepared. A 72-hour ship window applies once the label is issued.</p>`,
@@ -163,7 +163,7 @@ export function buyerReceiptTemplate(args: {
   buyerTotalCents: number;
 }) {
   return {
-    subject: `Payment confirmed — deal ${args.shortCode}`,
+    subject: `Payment confirmed, deal ${args.shortCode}`,
     html: layout(
       "Payment confirmed ✔",
       `<p style="font-size:14px;line-height:1.6">Your payment of <strong>${money(args.buyerTotalCents)}</strong> for <strong>${args.cardTitle}</strong> is confirmed and held securely by our payment processor.</p>

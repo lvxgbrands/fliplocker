@@ -5,11 +5,11 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Terms & Conditions",
   description:
-    "The terms governing use of FlipLocker — a documentation and logistics service for private, invitation-only peer-to-peer trading-card deals. FlipLocker documents and ships cards; it does not grade them or hold buyer funds.",
+    "The terms governing use of FlipLocker, a documentation and logistics service for private, invitation-only peer-to-peer trading-card deals. FlipLocker documents and ships cards; it does not grade them or hold buyer funds.",
   path: "/terms",
 });
 
-// PLACEHOLDER CONTENT — pending the Client's attorney review and approval.
+// PLACEHOLDER CONTENT, pending the Client's attorney review and approval.
 // Written to the approved framing in docs/COMPLIANCE-NOTES.md: FlipLocker is a
 // documentation and logistics service (not a grader, not a fund custodian).
 // Wording intentionally avoids terms restricted by the copy rules.
@@ -41,10 +41,10 @@ export default function TermsPage() {
 
       <h2>2. Definitions</h2>
       <ul>
-        <li><strong>Deal</strong> — a single transaction between a seller and an invited buyer for a specific card at an agreed price.</li>
-        <li><strong>Hub</strong> — the FlipLocker documentation facility where a card is inspected, documented, and tamper-sealed.</li>
-        <li><strong>Documentation</strong> — the neutral record (video, photos, tamper seal, registry match) created for a deal.</li>
-        <li><strong>Payment processor</strong> — the third party (PayPal) that collects and holds buyer funds for a deal.</li>
+        <li><strong>Deal</strong>, a single transaction between a seller and an invited buyer for a specific card at an agreed price.</li>
+        <li><strong>Hub</strong>, the FlipLocker documentation facility where a card is inspected, documented, and tamper-sealed.</li>
+        <li><strong>Documentation</strong>, the neutral record (video, photos, tamper seal, registry match) created for a deal.</li>
+        <li><strong>Payment processor</strong>, the third party (PayPal) that collects and holds buyer funds for a deal.</li>
       </ul>
 
       <h2>3. Eligibility &amp; accounts</h2>
@@ -67,7 +67,7 @@ export default function TermsPage() {
         signature-confirmed delivery and the close of the buyer review window. <strong>FlipLocker does not
         take possession or control of buyers&apos; purchase funds and is not a money transmitter;</strong>{" "}
         FlipLocker&apos;s account receives only its service fee. The service fee is determined solely by the
-        card&apos;s sale price — never a card&apos;s comp or market value — and is itemized at checkout
+        card&apos;s sale price, never a card&apos;s comp or market value, and is itemized at checkout
         before anyone pays. Who pays the fee (buyer, seller, or split) is configurable per deal.
       </p>
 
@@ -111,7 +111,7 @@ export default function TermsPage() {
 
       <h2>10. Cancellations, refunds &amp; flagged deals</h2>
       <p>
-        If a card fails inspection at the hub — it does not match the seller&apos;s listing — the deal is
+        If a card fails inspection at the hub, it does not match the seller&apos;s listing, the deal is
         flagged, the buyer is refunded from the held funds, the documentation is shared with both parties, and
         a return label is issued to the seller. A deal not paid for does not proceed and may be cancelled.
       </p>

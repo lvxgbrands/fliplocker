@@ -37,7 +37,7 @@ function fee(overrides: Partial<FeeConfig>): FeeConfig {
   };
 }
 
-describe("computeQuote — fee model", () => {
+describe("computeQuote, fee model", () => {
   it("applies the flat floor below the crossover price", () => {
     const q = computeQuote({ salePriceCents: 20000, feeConfig: fee({ whoPays: "BUYER" }), checkout, taxRateBps: 0 });
     expect(q.feeTotalCents).toBe(1000); // $10 floor, below $250 crossover
@@ -78,7 +78,7 @@ describe("computeQuote — fee model", () => {
   });
 });
 
-describe("computeQuote — lines & totals", () => {
+describe("computeQuote, lines & totals", () => {
   it("computes insurance per started $100 of sale price", () => {
     const q = computeQuote({ salePriceCents: 45000, feeConfig: fee({}), checkout, taxRateBps: 0 });
     expect(q.insuranceCents).toBe(Math.ceil(45000 / 10000) * 50); // 5 * 50 = 250
@@ -107,7 +107,7 @@ describe("computeQuote — lines & totals", () => {
   });
 });
 
-describe("computeQuote — guards", () => {
+describe("computeQuote, guards", () => {
   it("rejects a price below the configured minimum", () => {
     expect(() => computeQuote({ salePriceCents: 15999, feeConfig: fee({}), checkout, taxRateBps: 0 })).toThrow();
   });

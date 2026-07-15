@@ -27,7 +27,7 @@ export default async function AdminConfig({
       <div>
         <h1 className="text-2xl font-bold">Fees &amp; configuration</h1>
         <p className="text-sm text-ink-500 mt-1">
-          Every checkout number lives here — edit it without a code change. Fees depend on sale
+          Every checkout number lives here, edit it without a code change. Fees depend on sale
           price only; the card&apos;s market value is never used.
         </p>
       </div>

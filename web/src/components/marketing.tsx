@@ -7,11 +7,14 @@ import type { ShowcaseCard } from "@/lib/marketing";
 export { MarketingNav } from "@/components/marketing-nav";
 export { MarketingFooter } from "@/components/marketing-footer";
 
+// Section eyebrows have been removed site-wide (no small all-caps labels above
+// headings). Kept as a no-op so existing call sites stay valid.
 export function SectionKicker({ children }: { children: React.ReactNode }) {
-  return <p className="kicker mb-3 text-[12px] text-brand-600">{children}</p>;
+  void children;
+  return null;
 }
 
-/** Marketing product-showcase card — slab-framed roster card with price & stat. */
+/** Marketing product-showcase card, slab-framed roster card with price & stat. */
 export function ShowcaseSlab({ card }: { card: ShowcaseCard }) {
   return (
     <div className="group overflow-hidden rounded-2xl border border-ink-200/70 bg-white shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lift">
@@ -23,13 +26,20 @@ export function ShowcaseSlab({ card }: { card: ShowcaseCard }) {
         <span className="kicker text-[10px] text-brand-200">Inspected &amp; documented</span>
       </div>
       <div className="bg-ink-100 p-3">
-        <div className="overflow-hidden rounded-lg shadow-inner">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={`/cards/${card.slug}.jpg`}
-            alt={`${card.player} — ${card.meta}`}
-            className="aspect-[3/4] w-full object-cover"
-          />
+        <div className="grid grid-cols-2 gap-2">
+          {([["", "Front"], ["-back", "Back"]] as const).map(([face, label]) => (
+            <figure key={label} className="m-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`/cards/${card.slug}${face}.jpg`}
+                alt={`${card.player}, ${label.toLowerCase()} of the graded slab`}
+                className="aspect-[3/4] w-full rounded-lg object-cover shadow-inner"
+              />
+              <figcaption className="mt-1.5 text-center text-[10px] font-medium text-ink-500">
+                {label}
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </div>
       <div className="px-4 pb-4">

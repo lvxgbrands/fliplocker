@@ -74,6 +74,6 @@ describe("code + token generation", () => {
 describe("cardTitle", () => {
   it("composes a readable title", () => {
     const title = cardTitle({ cardYear: 2018, playerName: "Luka Dončić", sport: "Basketball", gradingCompany: "PSA", certNumber: "82345678" });
-    expect(title).toBe("2018 Luka Dončić (Basketball) — PSA #82345678");
+    expect(title).toBe("2018 Luka Dončić (Basketball), PSA #82345678");
   });
 });

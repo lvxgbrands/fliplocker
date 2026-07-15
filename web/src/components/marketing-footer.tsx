@@ -22,7 +22,7 @@ export function MarketingFooter() {
             <Wordmark />
             <p className="mt-4 text-sm leading-relaxed text-ink-500">
               The safe way to close the graded-card deal you made on social. Held payment,
-              hub documentation, insured signature delivery — invitation-only.
+              hub documentation, insured signature delivery, invitation-only.
             </p>
             <p className="kicker mt-6 text-[11px] text-ink-400">Get the FlipLocker newsletter</p>
             <div className="mt-2">
@@ -74,7 +74,7 @@ export function MarketingFooter() {
 
         {/* Compliance blurb */}
         <p className="mt-12 max-w-3xl text-xs leading-relaxed text-ink-400">
-          FlipLocker is a documentation and logistics service for private, peer-to-peer deals — not a
+          FlipLocker is a documentation and logistics service for private, peer-to-peer deals, not a
           marketplace. Cards are documented; FlipLocker does not grade cards or guarantee a slab is
           genuine. Buyer payments are held by our payment processor and released to the seller after
           signature-confirmed delivery. Baseball cards only, for now.

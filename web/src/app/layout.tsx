@@ -33,8 +33,8 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "FlipLocker — documented, invitation-only card deals",
-    template: "%s — FlipLocker",
+    default: "FlipLocker, documented, invitation-only card deals",
+    template: "%s, FlipLocker",
   },
   description: SITE.description,
   applicationName: SITE.name,
@@ -43,13 +43,13 @@ export const metadata: Metadata = {
     type: "website",
     siteName: SITE.name,
     url: SITE.url,
-    title: "FlipLocker — documented, invitation-only card deals",
+    title: "FlipLocker, documented, invitation-only card deals",
     description: SITE.description,
   },
   twitter: {
     card: "summary_large_image",
     site: SITE.twitter,
-    title: "FlipLocker — documented, invitation-only card deals",
+    title: "FlipLocker, documented, invitation-only card deals",
     description: SITE.description,
   },
   robots: { index: true, follow: true },

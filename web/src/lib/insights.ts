@@ -1,4 +1,4 @@
-// Insights content hub — original long-form articles. This is the SEO engine:
+// Insights content hub, original long-form articles. This is the SEO engine:
 // each article leads with a concise, quotable answer (AEO), uses clear entity
 // naming and internal links (GEO), and carries its own FAQ + Article JSON-LD.
 //
@@ -41,7 +41,7 @@ export const ARTICLES: Article[] = [
     slug: "how-to-sell-graded-cards-safely-on-instagram",
     title: "How to Sell Graded Cards Safely on Instagram Without Getting Scammed",
     description:
-      "A practical, step-by-step guide to closing a graded baseball-card sale you negotiated in Instagram DMs — without trusting a stranger with your card or your money.",
+      "A practical, step-by-step guide to closing a graded baseball-card sale you negotiated in Instagram DMs, without trusting a stranger with your card or your money.",
     category: "Selling",
     date: "2026-01-14",
     updated: "2026-06-02",
@@ -52,7 +52,7 @@ export const ARTICLES: Article[] = [
       "To sell a graded card safely on Instagram, agree the price in DMs but never settle the payment there. Move the money and the card through a neutral process that holds the buyer's payment until the card is documented and delivered with a signature. That removes the two moments a social-media deal usually goes wrong: an unprotected payment, and a card that ships before anyone is accountable for it.",
     keyTakeaways: [
       "Instagram is great for finding a buyer and terrible for settling the payment.",
-      "Friends & Family payments waive the protection you would otherwise have — never accept one for a sale.",
+      "Friends & Family payments waive the protection you would otherwise have, never accept one for a sale.",
       "The safest structure holds the buyer's money until the card is documented and signed for on delivery.",
       "Screenshots of a chat are not a transaction record; a timestamped timeline is.",
     ],
@@ -79,7 +79,7 @@ export const ARTICLES: Article[] = [
               "Decide your minimum acceptable price and who covers fees and shipping before you name a number.",
             ],
           },
-          "Being able to state the card precisely — and show it matches the registry — is the single biggest trust signal you can send a serious buyer.",
+          "Being able to state the card precisely, and show it matches the registry, is the single biggest trust signal you can send a serious buyer.",
         ],
       },
       {
@@ -87,7 +87,7 @@ export const ARTICLES: Article[] = [
         heading: "The safe way to settle the money and the card",
         body: [
           "Once you have a price, stop negotiating and start structuring. A safe settlement has three properties: the buyer's payment is **held** rather than handed over, the card is **documented** by someone neutral before it reaches the buyer, and every step is **timestamped** so neither side can rewrite history.",
-          "This is exactly the structure FlipLocker was built for. You create the deal, invite your buyer by email, and the buyer pays through PayPal checkout. The funds are held by our payment processor — not by FlipLocker and not by you — until the card has been documented at our hub and delivered to the buyer with a required signature.",
+          "This is exactly the structure FlipLocker was built for. You create the deal, invite your buyer by email, and the buyer pays through PayPal checkout. The funds are held by our payment processor, not by FlipLocker and not by you, until the card has been documented at our hub and delivered to the buyer with a required signature.",
           { steps: [
             "Agree the card and price in DMs.",
             "Create the deal on FlipLocker and invite the buyer.",
@@ -112,7 +112,7 @@ export const ARTICLES: Article[] = [
               "**Overpayment.** An \"accidental\" overpayment followed by a refund request is a classic reversal scam.",
             ],
           },
-          "None of these are a problem when the payment is held by a processor and released only on documented delivery — there is nothing to reverse and nothing to chase.",
+          "None of these are a problem when the payment is held by a processor and released only on documented delivery, there is nothing to reverse and nothing to chase.",
         ],
       },
       {
@@ -120,7 +120,7 @@ export const ARTICLES: Article[] = [
         heading: "Keep a record you could actually stand behind",
         body: [
           "If a card is ever questioned after delivery, screenshots of a friendly chat won't help you much. What helps is an independent, timestamped record: photos and video captured at a neutral hub, a logged tamper seal, and carrier tracking that ends in a signature.",
-          "That record is generated automatically for every FlipLocker deal and shared with both parties. It is documentation, not a grade or a guarantee of genuineness — read exactly what it does and doesn't cover on [Security & limits](/security).",
+          "That record is generated automatically for every FlipLocker deal and shared with both parties. It is documentation, not a grade or a guarantee of genuineness, read exactly what it does and doesn't cover on [Security & limits](/security).",
         ],
       },
     ],
@@ -131,7 +131,7 @@ export const ARTICLES: Article[] = [
       },
       {
         q: "Does FlipLocker confirm the card is genuine?",
-        a: "No. FlipLocker documents the card — it films, photographs, and tamper-seals it and confirms the certificate number is active in the grading company's registry. It does not grade cards, does not judge whether a card is genuine, and does not guarantee a slab is genuine. The card is described as documented, not as guaranteed genuine.",
+        a: "No. FlipLocker documents the card, it films, photographs, and tamper-seals it and confirms the certificate number is active in the grading company's registry. It does not grade cards, does not judge whether a card is genuine, and does not guarantee a slab is genuine. The card is described as documented, not as guaranteed genuine.",
       },
       {
         q: "Who pays the fees when I sell?",
@@ -156,7 +156,7 @@ export const ARTICLES: Article[] = [
     author: { name: "The FlipLocker Team", role: "Deal safety" },
     tags: ["scams", "safety", "buyer protection", "seller protection"],
     answer:
-      "Most peer-to-peer card scams rely on one of two things: an irreversible payment, or a card that changes hands before anyone neutral has documented it. Remove those two levers — hold the payment and document the card at a neutral hub — and the common scams stop working, because there is nothing to reverse and nothing to dispute after the fact.",
+      "Most peer-to-peer card scams rely on one of two things: an irreversible payment, or a card that changes hands before anyone neutral has documented it. Remove those two levers, hold the payment and document the card at a neutral hub, and the common scams stop working, because there is nothing to reverse and nothing to dispute after the fact.",
     keyTakeaways: [
       "Almost every scam is an attempt to make you pay irreversibly or ship unprotected.",
       "Urgency and 'trust me' are tools, not courtesies.",
@@ -178,7 +178,7 @@ export const ARTICLES: Article[] = [
           {
             list: [
               "**Friends & Family requests.** The buyer offers extra to cover the F&F 'savings.' You lose recourse; they keep the option to walk.",
-              "**Overpayment and refund.** They 'accidentally' send too much and ask you to refund the difference — then reverse the original.",
+              "**Overpayment and refund.** They 'accidentally' send too much and ask you to refund the difference, then reverse the original.",
               "**Unfamiliar apps or gift cards.** Any push toward an irreversible or untraceable rail is a push away from your protection.",
               "**Chargeback bait.** A card payment made specifically to be disputed after the item ships.",
             ],
@@ -200,7 +200,7 @@ export const ARTICLES: Article[] = [
             ],
           },
           "Neutral documentation is the counter here. When a hub films and photographs the exact card, logs a numbered tamper seal, and ships it with a required signature, a later 'that's not what I sent / not what I got' argument runs into a timestamped record instead of a stalemate.",
-          { note: "Documentation is not a genuineness guarantee. It cannot prove a slab is genuine and does not detect every resealed slab — read the honest limits on [Security & limits](/security)." },
+          { note: "Documentation is not a genuineness guarantee. It cannot prove a slab is genuine and does not detect every resealed slab, read the honest limits on [Security & limits](/security)." },
         ],
       },
       {
@@ -224,7 +224,7 @@ export const ARTICLES: Article[] = [
       },
       {
         q: "Does holding the payment make FlipLocker a financial custodian?",
-        a: "No. FlipLocker never takes possession or control of the purchase funds — they are held by our payment processor. FlipLocker is not a money transmitter; its account receives only its service fee.",
+        a: "No. FlipLocker never takes possession or control of the purchase funds, they are held by our payment processor. FlipLocker is not a money transmitter; its account receives only its service fee.",
       },
     ],
     related: [
@@ -236,7 +236,7 @@ export const ARTICLES: Article[] = [
 
   {
     slug: "what-card-documentation-actually-means",
-    title: "What 'Card Documentation' Actually Means — and What It Doesn't",
+    title: "What 'Card Documentation' Actually Means, and What It Doesn't",
     description:
       "A precise, honest definition of card documentation: what a neutral hub can confirm about a graded card, what it deliberately does not claim, and why that distinction protects you.",
     category: "Explainers",
@@ -245,10 +245,10 @@ export const ARTICLES: Article[] = [
     author: { name: "The FlipLocker Team", role: "Documentation hub" },
     tags: ["documentation", "definitions", "grading", "trust"],
     answer:
-      "Card documentation is an administrative record that a specific physical card — in a slab whose certificate number is active in the grading company's registry — passed through a neutral hub and was filmed, photographed, and tamper-sealed. It is not grading and not a guarantee of genuineness: it does not chemically or microscopically examine the card and cannot guarantee a slab is genuine. Documentation proves what happened to a card in transit; it does not re-judge the card itself.",
+      "Card documentation is an administrative record that a specific physical card, in a slab whose certificate number is active in the grading company's registry, passed through a neutral hub and was filmed, photographed, and tamper-sealed. It is not grading and not a guarantee of genuineness: it does not chemically or microscopically examine the card and cannot guarantee a slab is genuine. Documentation proves what happened to a card in transit; it does not re-judge the card itself.",
     keyTakeaways: [
       "Documentation = a neutral, timestamped record of a card's identity and condition in transit.",
-      "It confirms the certificate number is active in the grading registry — an administrative data match.",
+      "It confirms the certificate number is active in the grading registry, an administrative data match.",
       "It is explicitly not grading and not a guarantee of genuineness.",
       "The honesty of that boundary is what makes the record trustworthy.",
     ],
@@ -285,11 +285,11 @@ export const ARTICLES: Article[] = [
             list: [
               "It is **not a genuineness guarantee**. The hub does not perform a forensic (chemical, paper, ink, or microscopic) examination and does not judge whether the card itself is genuine.",
               "It is **not grading**. The grade printed on the slab is the grading company's opinion, not FlipLocker's.",
-              "A genuine certificate number **reprinted onto a counterfeit slab** can pass a registry lookup — a data match is not a guarantee of genuineness.",
+              "A genuine certificate number **reprinted onto a counterfeit slab** can pass a registry lookup, a data match is not a guarantee of genuineness.",
               "A slab that was **opened and resealed** may not be detectable by inspection alone.",
             ],
           },
-          { note: "Because of these limits we always say a card is 'documented' — never 'graded' or 'guaranteed genuine.'" },
+          { note: "Because of these limits we always say a card is 'documented', never 'graded' or 'guaranteed genuine.'" },
         ],
       },
       {
@@ -297,14 +297,14 @@ export const ARTICLES: Article[] = [
         heading: "Why the boundary actually protects you",
         body: [
           "A service that overpromises and claims to guarantee a card is genuine gives you false confidence and a weaker claim when something goes wrong. A service that documents honestly gives you a precise, defensible record and an accurate understanding of what you're relying on.",
-          "For most peer-to-peer deals, the real risks aren't exotic forgeries — they're bait-and-switch, condition disputes, and payments that vanish. Documentation plus a held payment addresses those directly. Learn how the record is built on [Hub documentation](/platform/hub-documentation) and where the money sits on [Payments held by the processor](/platform/payments-held-by-processor).",
+          "For most peer-to-peer deals, the real risks aren't exotic forgeries, they're bait-and-switch, condition disputes, and payments that vanish. Documentation plus a held payment addresses those directly. Learn how the record is built on [Hub documentation](/platform/hub-documentation) and where the money sits on [Payments held by the processor](/platform/payments-held-by-processor).",
         ],
       },
     ],
     faqs: [
       {
         q: "Is 'documented' just a softer word for 'guaranteed genuine'?",
-        a: "No — the difference is real, not cosmetic. A genuineness guarantee is a forensic judgment that a card is real. Documentation is a neutral record of a card's identity, condition, and chain of custody in transit. FlipLocker does the second and deliberately does not claim the first.",
+        a: "No, the difference is real, not cosmetic. A genuineness guarantee is a forensic judgment that a card is real. Documentation is a neutral record of a card's identity, condition, and chain of custody in transit. FlipLocker does the second and deliberately does not claim the first.",
       },
       {
         q: "If the certificate number checks out, is the card definitely real?",
@@ -333,9 +333,9 @@ export const ARTICLES: Article[] = [
     author: { name: "The FlipLocker Team", role: "Logistics" },
     tags: ["shipping", "packing", "insurance", "usps"],
     answer:
-      "To ship a graded card safely, immobilize the slab between rigid layers, waterproof it, and use a tracked, insured service with a required signature. For a deal with a stranger, route the card through a neutral hub instead of shipping direct: the seller ships to the hub, the card is documented, and the hub ships to the buyer with an insured, signature-required label — two accountable legs instead of one blind one.",
+      "To ship a graded card safely, immobilize the slab between rigid layers, waterproof it, and use a tracked, insured service with a required signature. For a deal with a stranger, route the card through a neutral hub instead of shipping direct: the seller ships to the hub, the card is documented, and the hub ships to the buyer with an insured, signature-required label, two accountable legs instead of one blind one.",
     keyTakeaways: [
-      "Immobilize, waterproof, and rigidly sandwich the slab — movement and moisture cause most damage.",
+      "Immobilize, waterproof, and rigidly sandwich the slab, movement and moisture cause most damage.",
       "Always use tracking, insurance, and a required signature for anything of value.",
       "A two-leg route through a neutral hub adds documentation and removes 'ship first' risk.",
       "Never waive the signature on a valuable card.",
@@ -351,7 +351,7 @@ export const ARTICLES: Article[] = [
               "A team bag or sleeve for the slab, so tape never touches the case.",
               "Two rigid pieces of cardboard cut larger than the slab, or a slab-sized cardboard shipping brace.",
               "Painter's tape (low-tack) to secure the sandwich without gumming anything.",
-              "A waterproof layer — a zip bag works — because mailers get wet.",
+              "A waterproof layer, a zip bag works, because mailers get wet.",
               "A bubble mailer or, for higher value, a small rigid box.",
             ],
           },
@@ -422,7 +422,7 @@ export const ARTICLES: Article[] = [
     author: { name: "The FlipLocker Team", role: "Payments" },
     tags: ["paypal", "payments", "buyer protection", "fees"],
     answer:
-      "For any card sale, use PayPal Goods & Services, never Friends & Family. Friends & Family is designed for gifts and reimbursements and waives purchase protection, so a buyer who pays that way has no recourse and a seller who requests it is a red flag. Goods & Services keeps protection but still ships the card before it's documented — which is the gap a held-payment, hub-documented process is designed to close.",
+      "For any card sale, use PayPal Goods & Services, never Friends & Family. Friends & Family is designed for gifts and reimbursements and waives purchase protection, so a buyer who pays that way has no recourse and a seller who requests it is a red flag. Goods & Services keeps protection but still ships the card before it's documented, which is the gap a held-payment, hub-documented process is designed to close.",
     keyTakeaways: [
       "Friends & Family = no purchase protection. Never use it to buy or sell a card.",
       "A seller asking for F&F 'to save fees' is asking you to give up recourse.",
@@ -434,8 +434,8 @@ export const ARTICLES: Article[] = [
         id: "the-difference",
         heading: "The actual difference",
         body: [
-          "**Friends & Family** is a way to move money between people who trust each other — splitting dinner, repaying a loan. It generally carries no purchase protection because it isn't meant for purchases. **Goods & Services** is the payment type for buying something; it carries a fee and, in exchange, the structured protection that comes with a commercial transaction.",
-          "For a card deal, that difference is the whole ballgame. If you pay a stranger by Friends & Family and the card never arrives — or isn't what was pictured — you've given up the very mechanism that would have helped you.",
+          "**Friends & Family** is a way to move money between people who trust each other, splitting dinner, repaying a loan. It generally carries no purchase protection because it isn't meant for purchases. **Goods & Services** is the payment type for buying something; it carries a fee and, in exchange, the structured protection that comes with a commercial transaction.",
+          "For a card deal, that difference is the whole ballgame. If you pay a stranger by Friends & Family and the card never arrives, or isn't what was pictured, you've given up the very mechanism that would have helped you.",
         ],
       },
       {
@@ -459,14 +459,14 @@ export const ARTICLES: Article[] = [
         heading: "Closing the gap with a held payment",
         body: [
           "FlipLocker uses PayPal checkout, but changes the timing and adds the missing piece. The buyer pays, and the funds are **held by the payment processor** rather than delivered to the seller. The card ships to a **neutral hub**, is **documented** on video and photos with a logged tamper seal, and only then goes to the buyer with a signature. The seller is paid after delivery and a 48-hour review window.",
-          "So you get the payment protection of a proper commercial transaction *and* a neutral record of the card — the two things a bare payment can't give you on its own. FlipLocker never takes possession or control of the purchase funds and is not a money transmitter; see [Payments held by the processor](/platform/payments-held-by-processor) and the [Disclaimer](/disclaimer).",
+          "So you get the payment protection of a proper commercial transaction *and* a neutral record of the card, the two things a bare payment can't give you on its own. FlipLocker never takes possession or control of the purchase funds and is not a money transmitter; see [Payments held by the processor](/platform/payments-held-by-processor) and the [Disclaimer](/disclaimer).",
         ],
       },
     ],
     faqs: [
       {
         q: "Is it against the rules to ask for Friends & Family on a sale?",
-        a: "It generally goes against the spirit of the payment type, which exists for personal transfers rather than purchases. More to the point, accepting F&F for a purchase means giving up purchase protection — a bad trade for a buyer regardless of the rules.",
+        a: "It generally goes against the spirit of the payment type, which exists for personal transfers rather than purchases. More to the point, accepting F&F for a purchase means giving up purchase protection, a bad trade for a buyer regardless of the rules.",
       },
       {
         q: "Does FlipLocker charge PayPal's fee on top of its own?",
@@ -488,7 +488,7 @@ export const ARTICLES: Article[] = [
     slug: "buying-a-four-figure-card-from-a-stranger",
     title: "Buying a Four-Figure Card From a Stranger: A Safety Checklist",
     description:
-      "A pre-flight checklist for high-value graded-card purchases from someone you don't know — from certificate checks to a held payment and signature delivery.",
+      "A pre-flight checklist for high-value graded-card purchases from someone you don't know, from certificate checks to a held payment and signature delivery.",
     category: "Buying",
     date: "2026-05-19",
     readMinutes: 9,
@@ -516,7 +516,7 @@ export const ARTICLES: Article[] = [
               "Agree in writing on price, who pays fees and shipping, and the exact process before paying anything.",
             ],
           },
-          { note: "A registry match is reassuring but not proof of genuineness — a real number can be printed on a counterfeit slab. Treat it as one signal, not the finish line. See [what documentation means](/insights/what-card-documentation-actually-means)." },
+          { note: "A registry match is reassuring but not proof of genuineness, a real number can be printed on a counterfeit slab. Treat it as one signal, not the finish line. See [what documentation means](/insights/what-card-documentation-actually-means)." },
         ],
       },
       {
@@ -524,7 +524,7 @@ export const ARTICLES: Article[] = [
         heading: "Structure the payment so it's held, not handed over",
         body: [
           "Never send a four-figure payment directly to a stranger, and never by a method with no recourse. The safest structure holds your money until the card is in your hands and documented.",
-          "With FlipLocker, you pay through PayPal checkout and the funds are held by the payment processor — not by the seller and not by FlipLocker — until the card has been documented at the hub and delivered to you with a required signature. If the card fails inspection, you're refunded automatically.",
+          "With FlipLocker, you pay through PayPal checkout and the funds are held by the payment processor, not by the seller and not by FlipLocker, until the card has been documented at the hub and delivered to you with a required signature. If the card fails inspection, you're refunded automatically.",
         ],
       },
       {
@@ -535,11 +535,11 @@ export const ARTICLES: Article[] = [
           {
             list: [
               "The card is filmed and photographed at a neutral hub, with a numbered tamper seal logged to the deal.",
-              "Leg 2 to you is insured to value and requires your signature — never waived.",
+              "Leg 2 to you is insured to value and requires your signature, never waived.",
               "Every step is timestamped on a shared timeline you can watch in real time.",
             ],
           },
-          "This is the standard flow for high-value deals on FlipLocker — see [Solutions for high-value cards](/solutions/high-value-cards) and [Insured signature delivery](/platform/signature-delivery).",
+          "This is the standard flow for high-value deals on FlipLocker, see [Solutions for high-value cards](/solutions/high-value-cards) and [Insured signature delivery](/platform/signature-delivery).",
         ],
       },
       {
@@ -547,14 +547,14 @@ export const ARTICLES: Article[] = [
         heading: "After delivery",
         body: [
           "When the card arrives, inspect it against the documentation immediately and within your review window. Compare the tamper seal, the card, and its condition to the hub's record. If something is off, raise it before the window closes rather than after.",
-          "On FlipLocker a 48-hour buyer review window opens on delivery; the seller is paid only after it passes. That window is your protection — use it deliberately.",
+          "On FlipLocker a 48-hour buyer review window opens on delivery; the seller is paid only after it passes. That window is your protection, use it deliberately.",
         ],
       },
     ],
     faqs: [
       {
         q: "Does FlipLocker hold my funds itself?",
-        a: "No. FlipLocker never takes possession or control of your purchase funds — they are held by our payment processor. FlipLocker is not a money transmitter, and its account receives only its service fee.",
+        a: "No. FlipLocker never takes possession or control of your purchase funds, they are held by our payment processor. FlipLocker is not a money transmitter, and its account receives only its service fee.",
       },
       {
         q: "What if the seller refuses a documented, held-payment process?",
@@ -562,7 +562,7 @@ export const ARTICLES: Article[] = [
       },
       {
         q: "Does higher value cost more in fees?",
-        a: "The FlipLocker service fee is a function of the sale price only — never the card's comp or market value — and it's shown at checkout before you pay. See Pricing for the packages.",
+        a: "The FlipLocker service fee is a function of the sale price only, never the card's comp or market value, and it's shown at checkout before you pay. See Pricing for the packages.",
       },
     ],
     related: [

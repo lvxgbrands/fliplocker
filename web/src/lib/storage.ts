@@ -55,6 +55,10 @@ export async function presignUpload(key: string, contentType: string): Promise<s
 
 /** Short-lived URL for viewing a stored object (media access is signed-URL only). */
 export async function mediaViewUrl(key: string): Promise<string> {
+  // Demo-seed media points at committed art under /public (e.g. the card
+  // roster). Serve it directly so demo deals render without S3 or local disk;
+  // this is the only path that works on a read-only serverless filesystem.
+  if (key.startsWith("demo-public:")) return `/${key.slice("demo-public:".length)}`;
   if (s3Configured()) {
     return getSignedUrl(
       s3(),
@@ -89,6 +93,8 @@ export async function localRead(key: string): Promise<Buffer> {
 
 /** Permanently delete a stored object (used by the 30-day media purge). */
 export async function mediaViewKeyDelete(key: string): Promise<void> {
+  // Never delete shared /public demo assets during the 30-day purge.
+  if (key.startsWith("demo-public:")) return;
   if (s3Configured()) {
     await s3().send(new DeleteObjectCommand({ Bucket: process.env.S3_BUCKET, Key: key }));
     return;

@@ -46,7 +46,7 @@ export async function releaseFunds(dealId: string, actor: Actor = "system", reas
   });
 
   const sellerMail = genericEmail(
-    `Payout released — deal ${deal.shortCode}`,
+    `Payout released, deal ${deal.shortCode}`,
     "Your payout has been released 🎉",
     [
       `The buyer review window for <strong>${cardTitle(deal)}</strong> has closed.`,
@@ -91,7 +91,7 @@ export async function refundDeal(dealId: string, { actor, reason, toStatus }: Re
 
   if (captured) {
     const buyerMail = genericEmail(
-      `Refund issued — deal ${deal.shortCode}`,
+      `Refund issued, deal ${deal.shortCode}`,
       "You've been refunded",
       [
         `${reason}`,
@@ -100,6 +100,6 @@ export async function refundDeal(dealId: string, { actor, reason, toStatus }: Re
       { label: "View deal", url: `${appUrl()}/buyer/deals/${dealId}` }
     );
     await sendEmail({ to: deal.buyerEmail, dealId, ...buyerMail });
-    await sendSms({ to: deal.buyer?.phone, dealId, body: `FlipLocker: deal ${deal.shortCode} — you were refunded ${formatCents(captured.grossCents)}.` });
+    await sendSms({ to: deal.buyer?.phone, dealId, body: `FlipLocker: deal ${deal.shortCode}, you were refunded ${formatCents(captured.grossCents)}.` });
   }
 }

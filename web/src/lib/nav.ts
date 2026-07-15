@@ -137,7 +137,7 @@ export const TOP_NAV: TopNavItem[] = [
       featured: {
         href: "/security",
         eyebrow: "Security & limits",
-        title: "What documentation proves — and what it doesn't",
+        title: "What documentation proves, and what it doesn't",
         body: "The honest version. Exactly what happens to a card at the hub, and the limits every buyer and seller should understand.",
       },
     },
@@ -229,7 +229,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
 // Icons re-exported so the mega-menu can map section headers to a glyph.
 export const SECTION_ICONS = { Tag, Layers, BookOpen, HelpCircle, Building2, Mail } as const;
 
-// Flat list of every indexable marketing route — used to build the sitemap.
+// Flat list of every indexable marketing route, used to build the sitemap.
 export const STATIC_MARKETING_ROUTES: string[] = [
   "/",
   "/platform",

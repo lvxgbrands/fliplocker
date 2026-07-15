@@ -15,9 +15,9 @@ export default async function LoginPage({
       <SuccessNote
         message={
           reset
-            ? "Password updated — sign in with your new password."
+            ? "Password updated, sign in with your new password."
             : documented
-              ? "Email confirmed — sign in to continue."
+              ? "Email confirmed, sign in to continue."
               : undefined
         }
       />

@@ -33,7 +33,7 @@ export default async function DevMailboxPage({
       <header className="bg-white border-b border-ink-200">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <Wordmark />
-          <span className="text-xs font-bold uppercase tracking-wide rounded bg-amber-100 text-amber-800 px-2 py-1">
+          <span className="text-xs font-bold uppercase tracking-wide rounded bg-brand-100 text-brand-800 px-2 py-1">
             Staging mailbox
           </span>
         </div>

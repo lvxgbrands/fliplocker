@@ -11,9 +11,9 @@ import { SOLUTIONS } from "@/lib/solutions";
 import { SOLUTIONS_FAQS } from "@/lib/faqs";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Solutions — safe card deals for every kind of dealer",
+  title: "Solutions, safe card deals for every kind of dealer",
   description:
-    "However you deal — social seller, serious collector, high-value trader, first-timer, or breaker — FlipLocker gives your peer-to-peer graded-card deal a held payment, hub documentation, and signature delivery.",
+    "However you deal, social seller, serious collector, high-value trader, first-timer, or breaker, FlipLocker gives your peer-to-peer graded-card deal a held payment, hub documentation, and signature delivery.",
   path: "/solutions",
   keywords: ["sell trading cards safely", "buy graded cards", "breakers", "high value cards"],
 });
@@ -24,7 +24,7 @@ export default function SolutionsPage() {
       <PageHero
         kicker="Solutions"
         title="Built for the way you actually deal"
-        lede="Instagram sellers, grail-chasing buyers, breakers, and first-timers all face the same two risks — an unprotected payment and an undocumented card. FlipLocker removes both, whatever your angle."
+        lede="Instagram sellers, grail-chasing buyers, breakers, and first-timers all face the same two risks, an unprotected payment and an undocumented card. FlipLocker removes both, whatever your angle."
         actions={
           <Link href="/register" className={buttonClass("primary", "lg")}>
             Start a deal <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
@@ -37,7 +37,7 @@ export default function SolutionsPage() {
           Every FlipLocker path shares the same core: the buyer&apos;s payment is <strong>held</strong> by our
           payment processor, the card is <strong>documented</strong> at a neutral hub, and it&apos;s delivered
           with an insured <strong>signature</strong>. What changes by audience is the volume, the stakes, and
-          the tools — not the underlying safety.
+          the tools, not the underlying safety.
         </AnswerBlock>
       </section>
 
@@ -65,7 +65,7 @@ export default function SolutionsPage() {
 
       <CtaBand
         title="Your deal, protected end to end"
-        body="Pick your path or just start a deal — the protection is the same either way."
+        body="Pick your path or just start a deal, the protection is the same either way."
         primary={{ href: "/register", label: "Create a deal" }}
         secondary={{ href: "/pricing", label: "See pricing" }}
       />

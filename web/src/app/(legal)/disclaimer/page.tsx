@@ -21,12 +21,12 @@ export default function DisclaimerPage() {
         </em>
       </p>
       <p>
-        Please read this Disclaimer carefully. It explains, in plain terms, what FlipLocker does and — just as
-        importantly — what it does not do. It works together with our <Link href="/terms">Terms &amp; Conditions</Link>{" "}
+        Please read this Disclaimer carefully. It explains, in plain terms, what FlipLocker does and, just as
+        importantly, what it does not do. It works together with our <Link href="/terms">Terms &amp; Conditions</Link>{" "}
         and <Link href="/privacy">Privacy Policy</Link>.
       </p>
 
-      <h2>1. We document and ship — we do not grade</h2>
+      <h2>1. We document and ship, we do not grade</h2>
       <p>
         FlipLocker is a documentation and logistics service. We inspect, film, photograph, tamper-seal, and ship
         cards, and we confirm that a slab&apos;s certificate number is active in the grading company&apos;s
@@ -40,7 +40,7 @@ export default function DisclaimerPage() {
         transit. It is not a forensic (chemical, paper, ink, or microscopic) examination. A genuine certificate
         number can be reprinted onto a counterfeit slab and still pass a registry lookup, and a slab that has been
         opened and resealed may not be detectable by inspection alone. For this reason we describe cards as{" "}
-        <strong>documented</strong> — never as guaranteed genuine. See <Link href="/security">Security &amp; limits</Link>{" "}
+        <strong>documented</strong>, never as guaranteed genuine. See <Link href="/security">Security &amp; limits</Link>{" "}
         for the full explanation.
       </p>
 

@@ -23,7 +23,7 @@ export default async function HubQueue({
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold">Hub — documentation queue</h1>
+        <h1 className="text-2xl font-bold">Hub, documentation queue</h1>
         <p className="text-sm text-ink-500 mt-1">Check in inbound packages and document each card.</p>
       </div>
 

@@ -4,13 +4,13 @@ import { randomBytes, createHmac } from "crypto";
 // Shipping adapter (EasyPost-style) with a simulator.
 //
 // SHIPPING_MODE:
-//   simulator (default) — no external calls; generates USPS-style tracking
+//   simulator (default), no external calls; generates USPS-style tracking
 //     numbers and a label URL that renders locally at /labels/{token}. Carrier
 //     scans are advanced by the logistics layer / dev controls / job tick.
-//   easypost — real EasyPost shipment + label buy (EASYPOST_API_KEY). Tracking
+//   easypost, real EasyPost shipment + label buy (EASYPOST_API_KEY). Tracking
 //     comes in via EasyPost webhooks. (Wired for parity; used post-credentials.)
 //
-// Leg 2 (hub → buyer) ALWAYS requires Signature Confirmation — never waived.
+// Leg 2 (hub → buyer) ALWAYS requires Signature Confirmation, never waived.
 // ---------------------------------------------------------------------------
 
 export type ShippingMode = "simulator" | "easypost";

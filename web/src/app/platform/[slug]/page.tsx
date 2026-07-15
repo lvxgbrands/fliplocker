@@ -72,7 +72,7 @@ export default async function PillarPage({ params }: { params: Promise<{ slug: s
         </div>
       </article>
 
-      <FaqSection items={pillar.faqs} kicker="Questions" title={`${label(slug)} — FAQ`} />
+      <FaqSection items={pillar.faqs} kicker="Questions" title={`${label(slug)}, FAQ`} />
 
       {related.length ? (
         <RelatedGrid title="Related platform pillars" items={related} />

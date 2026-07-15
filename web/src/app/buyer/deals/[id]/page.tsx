@@ -57,13 +57,13 @@ export default async function BuyerDealPage({
           notices.paid
             ? "Payment confirmed! It's held securely by our payment processor until your card is documented and delivered."
             : notices.declined
-              ? "You declined this deal. The seller has been notified — no payment was collected."
+              ? "You declined this deal. The seller has been notified, no payment was collected."
               : notices.cancelled
-                ? "Checkout was cancelled — no payment was collected. You can accept and pay whenever you're ready."
+                ? "Checkout was cancelled, no payment was collected. You can accept and pay whenever you're ready."
                 : notices.approved
-                  ? "Thanks! You approved the card — the seller's payout has been released and the deal is complete."
+                  ? "Thanks! You approved the card, the seller's payout has been released and the deal is complete."
                   : notices.reported
-                    ? "Issue reported. FlipLocker will review it and follow up — funds remain held by the payment processor."
+                    ? "Issue reported. FlipLocker will review it and follow up, funds remain held by the payment processor."
                     : undefined
         }
       />
@@ -149,13 +149,13 @@ export default async function BuyerDealPage({
               </form>
               <p className="text-xs text-ink-400 leading-relaxed">
                 Your payment goes through PayPal checkout and is held securely by our payment
-                processor — it is not released to the seller until the card passes hub inspection
+                processor, it is not released to the seller until the card passes hub inspection
                 and is delivered to you with signature confirmation.
               </p>
             </div>
           ) : inReview ? (
             <section className="rounded-xl border border-brand-300 bg-brand-50 p-4 space-y-3">
-              <p className="font-semibold text-brand-900">Delivered — review your card</p>
+              <p className="font-semibold text-brand-900">Delivered, review your card</p>
               <p className="text-xs text-brand-800">
                 You have 48 hours to approve or report an issue. If the window passes with no
                 report, the deal completes automatically and the seller is paid.

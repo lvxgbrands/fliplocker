@@ -107,12 +107,12 @@ model Deal {
   inviteToken String     @unique
   status      DealStatus @default(CREATED)
 
-  // Card details (NOTE: no comp/market value column — fee is f(sale_price) only)
+  // Card details (NOTE: no comp/market value column, fee is f(sale_price) only)
   sport          String
   cardYear       Int
   playerName     String
   gradingCompany String
-  grade          String? // e.g. "PSA 3" — display-only, shown on the slab plate
+  grade          String? // e.g. "PSA 3", display-only, shown on the slab plate
   certNumber     String
   description    String?
 
@@ -128,7 +128,7 @@ model Deal {
   sellerPayoutCents  Int // what the seller receives on release
   feeConfigSnapshot  Json // the config rows used, for the transaction record
 
-  // Terms of Service acknowledgment — required before a shipping label is generated.
+  // Terms of Service acknowledgment, required before a shipping label is generated.
   tosAcceptedAt DateTime?
 
   // Lifecycle timestamps + timer deadlines (all set as the deal advances).
