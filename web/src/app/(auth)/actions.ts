@@ -13,6 +13,7 @@ import {
   getCurrentUser,
 } from "@/lib/auth";
 import { sendEmail, verifyEmailTemplate, passwordResetTemplate } from "@/lib/email";
+import { limitByIp } from "@/lib/rate-limit";
 
 const appUrl = () => process.env.APP_URL || "http://localhost:3000";
 
@@ -29,6 +30,9 @@ const registerSchema = z.object({
 });
 
 export async function registerAction(formData: FormData) {
+  if (!(await limitByIp("register", 10, 60_000))) {
+    redirect(`/register?error=${encodeURIComponent("Too many attempts — please wait a minute and try again.")}`);
+  }
   const parsed = registerSchema.safeParse({
     name: formData.get("name"),
     email: String(formData.get("email") || "").trim().toLowerCase(),
@@ -53,6 +57,10 @@ export async function registerAction(formData: FormData) {
 }
 
 export async function loginAction(formData: FormData) {
+  const next0 = String(formData.get("next") || "") || "/dashboard";
+  if (!(await limitByIp("login", 15, 60_000))) {
+    redirect(`/login?error=${encodeURIComponent("Too many attempts — please wait a minute and try again.")}&next=${encodeURIComponent(next0)}`);
+  }
   const email = String(formData.get("email") || "").trim().toLowerCase();
   const password = String(formData.get("password") || "");
   const next = String(formData.get("next") || "") || "/dashboard";
@@ -78,6 +86,9 @@ export async function resendVerificationAction() {
 }
 
 export async function forgotPasswordAction(formData: FormData) {
+  if (!(await limitByIp("forgot", 5, 60_000))) {
+    redirect(`/forgot-password?sent=1`); // same response as success — no signal
+  }
   const email = String(formData.get("email") || "").trim().toLowerCase();
   const user = await db.user.findUnique({ where: { email } });
   if (user) {

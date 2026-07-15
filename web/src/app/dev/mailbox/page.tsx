@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { Wordmark } from "@/components/brand";
+import { devMailboxEnabled } from "@/lib/dev";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +19,7 @@ export default async function DevMailboxPage({
 }: {
   searchParams: Promise<{ open?: string }>;
 }) {
-  if (process.env.DEV_MAILBOX === "off") notFound();
+  if (!devMailboxEnabled()) notFound();
   const { open } = await searchParams;
 
   const [emails, texts] = await Promise.all([
