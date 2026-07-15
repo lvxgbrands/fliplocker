@@ -17,7 +17,15 @@ export const SHOWCASE: ShowcaseCard[] = [
     meta: "1989 Upper Deck · Seattle Mariners",
     grade: "PSA 8",
     price: "$425",
-    stat: "The Kid — 630 HR · 10× Gold Glove · HOF 2016 (99.3%)",
+    stat: "The Kid: 630 HR, 10x Gold Glove, HOF 2016 (99.3%)",
+  },
+  {
+    slug: "ohtani",
+    player: "Shohei Ohtani",
+    meta: "2024 Topps Chrome · Los Angeles Dodgers",
+    grade: "PSA 10",
+    price: "$520",
+    stat: "Unanimous 3x MVP; first 50-HR / 50-SB season in MLB history",
   },
   {
     slug: "bojackson",
@@ -25,7 +33,7 @@ export const SHOWCASE: ShowcaseCard[] = [
     meta: "1989 Donruss · Kansas City Royals",
     grade: "PSA 9",
     price: "$185",
-    stat: "Two-sport icon — 1989 MLB All-Star Game MVP",
+    stat: "Two-sport icon; 1989 MLB All-Star Game MVP",
   },
   {
     slug: "ripken",
@@ -33,14 +41,46 @@ export const SHOWCASE: ShowcaseCard[] = [
     meta: "1989 Upper Deck · Baltimore Orioles",
     grade: "PSA 9",
     price: "$165",
-    stat: "The Iron Man — 2,632 straight games · 3,184 hits · HOF 2007",
+    stat: "The Iron Man: 2,632 straight games, 3,184 hits, HOF 2007",
+  },
+  {
+    slug: "griffin",
+    player: "Konnor Griffin",
+    meta: "2025 Topps Now · Pittsburgh Pirates",
+    grade: "GEM MT 10",
+    price: "$310",
+    stat: "2025 Topps Now rookie; top-of-the-draft phenom prospect",
+  },
+  {
+    slug: "misiorowski",
+    player: "Jacob Misiorowski",
+    meta: "2025 Topps Now · Milwaukee Brewers",
+    grade: "GEM MT 10",
+    price: "$240",
+    stat: "2025 Topps Now rookie; 100+ mph flamethrower",
+  },
+  {
+    slug: "murakami",
+    player: "Munetaka Murakami",
+    meta: "2025 · Tokyo (NPB)",
+    grade: "PSA 9",
+    price: "$175",
+    stat: "NPB single-season home-run record holder",
+  },
+  {
+    slug: "valdez",
+    player: "Esmerlyn Valdez",
+    meta: "2025 Topps Now · Pittsburgh Pirates",
+    grade: "PSA 8",
+    price: "$160",
+    stat: "2025 Topps Now; go-ahead grand slam fuels a doubleheader sweep",
   },
 ];
 
 export const TICKER = [
   "Hub-documented on video",
   "Funds held by our payment processor",
-  "Signature delivery — never waived",
+  "Signature delivery, never waived",
   "Tamper-sealed & insured in transit",
   "Private & invitation-only",
   "Card documented",
@@ -49,15 +89,15 @@ export const TICKER = [
 export const FAQ: { q: string; a: string }[] = [
   {
     q: "How is my money held?",
-    a: "The buyer pays through PayPal checkout and the funds are held securely by our payment processor — never by FlipLocker. They're released to the seller only after the card passes hub inspection and is delivered with a confirmed signature, plus a 48-hour buyer review window. FlipLocker's account receives only its service fee.",
+    a: "The buyer pays through PayPal checkout and the funds are held securely by our payment processor, never by FlipLocker. They're released to the seller only after the card passes hub inspection and is delivered with a confirmed signature, plus a 48-hour buyer review window. FlipLocker's account receives only its service fee.",
   },
   {
-    q: "What does documentation cover — and what does it not?",
-    a: "The hub confirms a physical card matching the seller's listing, in a slab whose certificate number is valid and active in the grading company's registry, and documents it on a 15-second video and two photos with a logged tamper seal. This is an administrative data-match and documentation service. It is not a forensic examination: FlipLocker does not chemically or microscopically examine a card and cannot, for example, detect a genuine certificate number reprinted onto a counterfeit slab, or a slab that was opened and resealed. Cards are documented — not graded or guaranteed genuine.",
+    q: "What does documentation cover, and what does it not?",
+    a: "The hub confirms a physical card matching the seller's listing, in a slab whose certificate number is valid and active in the grading company's registry, and documents it on a 15-second video and two photos with a logged tamper seal. This is an administrative data-match and documentation service. It is not a forensic examination: FlipLocker does not chemically or microscopically examine a card and cannot, for example, detect a genuine certificate number reprinted onto a counterfeit slab, or a slab that was opened and resealed. Cards are documented, not graded or guaranteed genuine.",
   },
   {
     q: "What are the fees?",
-    a: "FlipLocker charges a service fee based solely on the card's sale price — the card's market value is never used. There are Free and Pro tiers, and who pays (buyer, seller, or split) is configurable. Every line item is shown transparently at checkout before anyone pays.",
+    a: "FlipLocker charges a service fee based solely on the card's sale price, the card's market value is never used. There are Free and Pro tiers, and who pays (buyer, seller, or split) is configurable. Every line item is shown transparently at checkout before anyone pays.",
   },
   {
     q: "How does shipping work?",

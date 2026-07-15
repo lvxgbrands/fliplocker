@@ -86,7 +86,7 @@ export function PricingCards() {
                 </div>
                 <p className={`mt-1 h-5 text-xs ${dark ? "text-brand-100/60" : "text-ink-400"}`}>
                   {free
-                    ? "No subscription — only the per-deal fee"
+                    ? "No subscription, only the per-deal fee"
                     : billing === "annual"
                       ? `${formatUsd(annualTotal(pkg))} billed yearly`
                       : `${formatUsd(pkg.priceMonthly * 12)} billed yearly`}

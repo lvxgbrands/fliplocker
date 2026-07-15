@@ -5,7 +5,7 @@ import { ShieldCheck, Check } from "lucide-react";
 
 // Premium hero visual: three real graded-slab cards fanned in 3D. As the cursor
 // approaches the cluster, the cards spin centrifugally (outward from the center)
-// and lift — a few degrees each, springing back smoothly on leave.
+// and lift, a few degrees each, springing back smoothly on leave.
 const CARDS = [
   { slug: "ripken", grade: "PSA 9", x: -132, y: 46, rot: -11, z: 10, dir: -1, w: 200 },
   { slug: "bojackson", grade: "PSA 9", x: 132, y: 58, rot: 10, z: 20, dir: 1, w: 200 },

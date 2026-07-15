@@ -4,7 +4,7 @@ import { getCheckoutConfig, getFeeConfig } from "@/lib/config";
 import { computeQuote } from "@/lib/fees";
 
 // Live checkout preview for the Create Deal form. Everything comes from the
-// config tables — no numbers in code.
+// config tables, no numbers in code.
 export async function GET(req: NextRequest) {
   const user = await getCurrentUser();
   if (!user) return NextResponse.json({ error: "Not signed in" }, { status: 401 });

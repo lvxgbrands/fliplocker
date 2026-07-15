@@ -34,7 +34,7 @@ export default async function SimulatorCheckoutPage({
           <span className="text-white font-bold italic text-xl">
             Pay<span className="text-[#009cde]">Pal</span>
           </span>
-          <span className="rounded bg-amber-400 px-2 py-0.5 text-[10px] font-bold text-ink-900 uppercase tracking-wide">
+          <span className="rounded bg-ink-800 px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-wide">
             Sandbox simulator
           </span>
         </div>
@@ -67,7 +67,7 @@ export default async function SimulatorCheckoutPage({
           <p className="text-[11px] leading-relaxed text-ink-400 border-t border-ink-100 pt-3">
             This page simulates the PayPal sandbox approval step for staging demos without sandbox
             credentials. Set PAYPAL_MODE=sandbox with API credentials to run real PayPal sandbox
-            checkout — the rest of the flow is identical.
+            checkout, the rest of the flow is identical.
           </p>
         </div>
       </div>

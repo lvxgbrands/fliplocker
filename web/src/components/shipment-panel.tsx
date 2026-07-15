@@ -49,7 +49,7 @@ export function ShipmentPanel({ shipments }: { shipments: Shipment[] }) {
 export function ShipDeadline({ deadline, chargeCents }: { deadline: Date | null; chargeCents?: number }) {
   if (!deadline) return null;
   return (
-    <p className="text-xs text-amber-700">
+    <p className="text-xs text-ink-600">
       Ship by <strong>{new Date(deadline).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" })}</strong>
       {typeof chargeCents === "number" && chargeCents > 0 ? ` · label charge ${formatCents(chargeCents)}` : ""}
     </p>

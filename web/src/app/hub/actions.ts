@@ -12,7 +12,7 @@ import { sendEmail, genericEmail } from "@/lib/email";
 
 const appUrl = () => process.env.APP_URL || "http://localhost:3000";
 
-/** Check in an inbound package by tracking number — opens the matching deal. */
+/** Check in an inbound package by tracking number, opens the matching deal. */
 export async function checkInAction(formData: FormData) {
   await requireUser("FACILITATOR");
   const tracking = String(formData.get("tracking") || "").replace(/\s/g, "");
@@ -55,10 +55,10 @@ export async function submitInspectionAction(input: InspectionInput): Promise<{ 
   const photoPrefix = `hub-photos/${user.id}/`;
   const videoPrefix = `hub-videos/${user.id}/`;
   if (!data.photo1Key.startsWith(photoPrefix) || !data.photo2Key.startsWith(photoPrefix)) {
-    return { error: "Reference photos could not be documented — please re-upload." };
+    return { error: "Reference photos could not be documented, please re-upload." };
   }
   if (data.videoKey && !data.videoKey.startsWith(videoPrefix)) {
-    return { error: "Inspection video could not be documented — please re-upload." };
+    return { error: "Inspection video could not be documented, please re-upload." };
   }
 
   // Bind media.
@@ -106,7 +106,7 @@ export async function submitInspectionAction(input: InspectionInput): Promise<{ 
     await db.deal.update({ where: { id: deal.id }, data: { verifiedAt: new Date() } });
     for (const to of [deal.seller.email, deal.buyerEmail]) {
       const mail = genericEmail(
-        `Documented — deal ${deal.shortCode}`,
+        `Documented, deal ${deal.shortCode}`,
         "Card inspected &amp; documented ✔",
         [
           `The card for deal <strong>${deal.shortCode}</strong> was inspected at the FlipLocker hub, documented on video and photos, and its tamper seal logged.`,

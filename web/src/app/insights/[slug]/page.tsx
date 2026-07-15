@@ -153,7 +153,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
       <CtaBand
         title="Close your next deal the safe way"
-        body="Held payment, hub documentation, and insured signature delivery — from the handshake to the payout."
+        body="Held payment, hub documentation, and insured signature delivery, from the handshake to the payout."
         primary={{ href: "/register", label: "Create a deal" }}
         secondary={{ href: "/insights", label: "More insights" }}
       />

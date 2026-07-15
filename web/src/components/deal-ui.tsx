@@ -32,7 +32,7 @@ const TONE_STYLES: Record<ChipTone, string> = {
   info: "bg-sky-50 text-sky-700 border-sky-200",
   progress: "bg-brand-50 text-brand-700 border-brand-200",
   success: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  warn: "bg-amber-50 text-amber-700 border-amber-200",
+  warn: "bg-ink-100 text-ink-700 border-ink-300",
   danger: "bg-rose-50 text-rose-700 border-rose-200",
   done: "bg-emerald-50 text-emerald-800 border-emerald-200",
 };

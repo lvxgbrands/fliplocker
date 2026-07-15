@@ -75,7 +75,7 @@ export function PortalShell({
       </main>
       <footer className="mx-auto max-w-5xl px-4 py-10">
         <div className="border-t border-ink-200/60 pt-6 text-xs leading-relaxed text-ink-400">
-          FlipLocker — private, invitation-only deals. Buyer payments are held securely by our
+          FlipLocker, private, invitation-only deals. Buyer payments are held securely by our
           payment processor until documentation and delivery are complete.
         </div>
       </footer>
@@ -86,8 +86,8 @@ export function PortalShell({
 export function VerifyEmailBanner({ user }: { user: User }) {
   if (user.emailVerified) return null;
   return (
-    <div className="mb-6 flex items-center justify-between gap-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-      <span>Please confirm your email address — check your inbox for the confirmation link.</span>
+    <div className="mb-6 flex items-center justify-between gap-4 rounded-xl border border-brand-200 bg-brand-50 px-4 py-3 text-sm text-brand-800">
+      <span>Please confirm your email address, check your inbox for the confirmation link.</span>
       <Link href="/resend-verification" className="whitespace-nowrap font-semibold underline">
         Resend link
       </Link>

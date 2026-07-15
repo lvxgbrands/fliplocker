@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 
 const db = new PrismaClient();
 
-// Seed values only — every number here is Admin-editable configuration.
+// Seed values only, every number here is Admin-editable configuration.
 // Fee numbers are NOT final; these mirror the client's current calculator
 // (Free 4% / $10 floor, Pro 2% / $5 floor) and can be changed without code.
 
@@ -39,7 +39,7 @@ async function main() {
       plan: "FREE",
       floorCents: 1000, // $10 flat below crossover
       percentBps: 400, // 4% at/above crossover
-      crossoverPriceCents: 25000, // $250 — where 4% overtakes the $10 floor
+      crossoverPriceCents: 25000, // $250, where 4% overtakes the $10 floor
       whoPays: "SPLIT",
     },
   });
@@ -56,7 +56,7 @@ async function main() {
     },
   });
 
-  // Demo accounts (staging only) — password: fliplocker-demo
+  // Demo accounts (staging only), password: fliplocker-demo
   const passwordHash = await bcrypt.hash("fliplocker-demo", 10);
   for (const [email, role, name] of [
     ["seller.demo@fliplocker.app", "SELLER", "Dana Seller"],

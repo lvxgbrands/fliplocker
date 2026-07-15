@@ -6,7 +6,7 @@ import { pageMetadata, faqPageLd } from "@/lib/seo";
 import { FAQ_HUB, faqHubFlat } from "@/lib/faqs";
 
 export const metadata: Metadata = pageMetadata({
-  title: "FAQ — payments, shipping, documentation & safety",
+  title: "FAQ, payments, shipping, documentation & safety",
   description:
     "Answers to the most common FlipLocker questions, grouped by topic: getting started, payments & fees, shipping & the hub, documentation & the card, safety & disputes, and account.",
   path: "/faq",
@@ -21,7 +21,7 @@ export default function FaqHub() {
       <PageHero
         kicker="FAQ"
         title="Questions, answered"
-        lede="Everything about closing a peer-to-peer card deal on FlipLocker — the payment, the hub, the documentation, and the safeguards — in one place."
+        lede="Everything about closing a peer-to-peer card deal on FlipLocker, the payment, the hub, the documentation, and the safeguards, in one place."
       />
 
       <div className="mx-auto max-w-4xl px-4 py-14">

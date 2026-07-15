@@ -7,6 +7,6 @@ export const contentType = OG_CONTENT_TYPE;
 export default function Image() {
   return renderOgImage({
     eyebrow: "Security & limits",
-    title: "What our documentation proves — and what it doesn't",
+    title: "What our documentation proves, and what it doesn't",
   });
 }

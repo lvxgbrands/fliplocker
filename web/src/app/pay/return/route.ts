@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { captureAndMarkPaid } from "@/lib/checkout";
 
 // PayPal (and the simulator) redirect the buyer here after approval with
-// ?token={orderId}. Capture is idempotent — safe if the webhook won the race.
+// ?token={orderId}. Capture is idempotent, safe if the webhook won the race.
 export async function GET(req: NextRequest) {
   const orderId = req.nextUrl.searchParams.get("token");
   const dealIdParam = req.nextUrl.searchParams.get("dealId");

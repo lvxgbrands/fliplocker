@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/auth";
 import { StatusChip, Timeline } from "@/components/deal-ui";
+import { DealPhotos } from "@/components/deal-photos";
 import { ShipmentPanel } from "@/components/shipment-panel";
 import { cardTitle } from "@/lib/deals";
 import { formatCents } from "@/lib/fees";
@@ -41,6 +42,7 @@ export default async function AdminDealDetail({
       shipments: { orderBy: { createdAt: "asc" } },
       payments: true,
       inspection: true,
+      media: true,
     },
   });
   if (!deal) notFound();
@@ -70,6 +72,13 @@ export default async function AdminDealDetail({
 
       <div className="grid gap-8 lg:grid-cols-[1fr_340px]">
         <div className="space-y-6">
+          {deal.media.some((m) => m.kind === "FRONT_PHOTO" || m.kind === "REAR_PHOTO") ? (
+            <section className="rounded-xl border border-ink-200 bg-white p-4">
+              <h2 className="text-sm font-semibold mb-3">Card</h2>
+              <DealPhotos media={deal.media} deal={deal} />
+            </section>
+          ) : null}
+
           <section className="rounded-xl border border-ink-200 bg-white p-4">
             <h2 className="text-sm font-semibold mb-3">Money</h2>
             <dl className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
@@ -93,7 +102,7 @@ export default async function AdminDealDetail({
           </section>
 
           {deal.flagReason ? (
-            <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+            <div className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800">
               <strong>Flag reason:</strong> {deal.flagReason}
             </div>
           ) : null}
@@ -110,7 +119,7 @@ export default async function AdminDealDetail({
           <section className="rounded-xl border border-ink-200 bg-white p-4 space-y-3">
             <h2 className="text-sm font-semibold">Manual overrides</h2>
             {terminal ? (
-              <p className="text-xs text-ink-400">This deal is closed — no overrides available.</p>
+              <p className="text-xs text-ink-400">This deal is closed, no overrides available.</p>
             ) : (
               <>
                 {canRegenLabel && (
@@ -123,7 +132,7 @@ export default async function AdminDealDetail({
                   <form action={adminResolveFlaggedAction} className="space-y-2">
                     <input type="hidden" name="dealId" value={deal.id} />
                     <input type="hidden" name="resolution" value="refund" />
-                    <button className="w-full rounded-lg border border-amber-300 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-800 hover:bg-amber-100">
+                    <button className="w-full rounded-lg border border-rose-300 bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-800 hover:bg-rose-100">
                       Resolve flag → refund buyer
                     </button>
                   </form>

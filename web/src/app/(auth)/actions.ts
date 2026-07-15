@@ -31,7 +31,7 @@ const registerSchema = z.object({
 
 export async function registerAction(formData: FormData) {
   if (!(await limitByIp("register", 10, 60_000))) {
-    redirect(`/register?error=${encodeURIComponent("Too many attempts — please wait a minute and try again.")}`);
+    redirect(`/register?error=${encodeURIComponent("Too many attempts, please wait a minute and try again.")}`);
   }
   const parsed = registerSchema.safeParse({
     name: formData.get("name"),
@@ -45,7 +45,7 @@ export async function registerAction(formData: FormData) {
 
   const existing = await db.user.findUnique({ where: { email } });
   if (existing) {
-    redirect(`/register?error=${encodeURIComponent("An account with that email already exists — sign in instead.")}`);
+    redirect(`/register?error=${encodeURIComponent("An account with that email already exists, sign in instead.")}`);
   }
 
   const user = await db.user.create({
@@ -59,7 +59,7 @@ export async function registerAction(formData: FormData) {
 export async function loginAction(formData: FormData) {
   const next0 = String(formData.get("next") || "") || "/dashboard";
   if (!(await limitByIp("login", 15, 60_000))) {
-    redirect(`/login?error=${encodeURIComponent("Too many attempts — please wait a minute and try again.")}&next=${encodeURIComponent(next0)}`);
+    redirect(`/login?error=${encodeURIComponent("Too many attempts, please wait a minute and try again.")}&next=${encodeURIComponent(next0)}`);
   }
   const email = String(formData.get("email") || "").trim().toLowerCase();
   const password = String(formData.get("password") || "");
@@ -87,7 +87,7 @@ export async function resendVerificationAction() {
 
 export async function forgotPasswordAction(formData: FormData) {
   if (!(await limitByIp("forgot", 5, 60_000))) {
-    redirect(`/forgot-password?sent=1`); // same response as success — no signal
+    redirect(`/forgot-password?sent=1`); // same response as success, no signal
   }
   const email = String(formData.get("email") || "").trim().toLowerCase();
   const user = await db.user.findUnique({ where: { email } });
@@ -96,7 +96,7 @@ export async function forgotPasswordAction(formData: FormData) {
     const { subject, html } = passwordResetTemplate(`${appUrl()}/reset-password/${token}`);
     await sendEmail({ to: email, subject, html });
   }
-  // Same response either way — no account enumeration.
+  // Same response either way, no account enumeration.
   redirect("/forgot-password?sent=1");
 }
 
@@ -108,7 +108,7 @@ export async function resetPasswordAction(formData: FormData) {
   }
   const row = await consumeAuthToken(token, "PASSWORD_RESET");
   if (!row) {
-    redirect(`/forgot-password?error=${encodeURIComponent("That reset link is invalid or expired — request a new one.")}`);
+    redirect(`/forgot-password?error=${encodeURIComponent("That reset link is invalid or expired, request a new one.")}`);
   }
   await db.user.update({ where: { id: row.userId }, data: { passwordHash: await hashPassword(password) } });
   await db.session.deleteMany({ where: { userId: row.userId } });

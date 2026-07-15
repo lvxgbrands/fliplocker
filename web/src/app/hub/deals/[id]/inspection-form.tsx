@@ -13,7 +13,7 @@ async function uploadViaPresign(file: File, purpose: "hub-photo" | "hub-video"):
   if (!presign.ok) throw new Error("Could not start the upload.");
   const { key, url } = await presign.json();
   const put = await fetch(url, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
-  if (!put.ok) throw new Error("Upload failed — please try again.");
+  if (!put.ok) throw new Error("Upload failed, please try again.");
   return key;
 }
 
@@ -102,7 +102,7 @@ export function InspectionForm({ dealId }: { dealId: string }) {
           disabled={busy !== null}
           className="rounded-lg bg-brand-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-brand-700 disabled:opacity-50"
         >
-          {busy === "PASS" ? "Submitting…" : "Pass — documented"}
+          {busy === "PASS" ? "Submitting…" : "Pass, documented"}
         </button>
         <button
           type="button"
@@ -110,7 +110,7 @@ export function InspectionForm({ dealId }: { dealId: string }) {
           onClick={(e) => submit("FAIL", e.currentTarget.form!)}
           className="rounded-lg border border-rose-300 bg-rose-50 px-6 py-2.5 text-sm font-semibold text-rose-700 hover:bg-rose-100 disabled:opacity-50"
         >
-          {busy === "FAIL" ? "Submitting…" : "Fail — flag mismatch"}
+          {busy === "FAIL" ? "Submitting…" : "Fail, flag mismatch"}
         </button>
       </div>
     </form>

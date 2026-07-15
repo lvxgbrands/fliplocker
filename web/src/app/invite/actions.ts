@@ -32,7 +32,7 @@ export async function claimWithNewAccountAction(formData: FormData) {
     redirect(`/login?next=${encodeURIComponent(`/invite/${token}`)}`);
   }
 
-  // The invite link was sent to this address — possession documents the email.
+  // The invite link was sent to this address, possession documents the email.
   const user = await db.user.create({
     data: {
       email: deal.buyerEmail,

@@ -33,7 +33,7 @@ export async function DealPhotos({ media, deal }: { media: DealMedia[]; deal?: S
   );
 }
 
-/** The graded-slab chrome — reusable for real photos or placeholder art. */
+/** The graded-slab chrome, reusable for real photos or placeholder art. */
 export function SlabFrame({
   children,
   deal,

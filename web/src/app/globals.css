@@ -13,7 +13,7 @@
   --font-cond: var(--font-barlow), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Brand — the two logo blues: royal #2D63D1 (600) + light #4F8CFC (400),
+  /* Brand, the two logo blues: royal #2D63D1 (600) + light #4F8CFC (400),
      deepening to #02135E (950). Ramp derived from fliplocker-logo.svg. */
   --color-brand-50: #eef4fe;
   --color-brand-100: #dce7fd;
@@ -27,13 +27,13 @@
   --color-brand-900: #0f327e;
   --color-brand-950: #02135e;
 
-  /* Navy — depth / dark surfaces. */
+  /* Navy, depth / dark surfaces. */
   --color-navy-700: #0d2b52;
   --color-navy-800: #0b2545;
   --color-navy-900: #09203f;
   --color-navy-950: #050e1d;
 
-  /* Ink — cool slate neutrals. Page bg off-white, cards white, borders light grey. */
+  /* Ink, cool slate neutrals. Page bg off-white, cards white, borders light grey. */
   --color-ink-50: #f7f8fa;
   --color-ink-100: #eef1f5;
   --color-ink-200: #e3e7ee;
@@ -46,7 +46,7 @@
   --color-ink-900: #171d28;
   --color-ink-950: #0b1220;
 
-  /* "Win" green — reserved for money-released / payout states only. */
+  /* "Win" green, reserved for money-released / payout states only. */
   --color-win-50: #ecfdf3;
   --color-win-500: #16a34a;
   --color-win-600: #12833c;
@@ -68,7 +68,7 @@ h1, h2, h3 {
   letter-spacing: -0.03em;
 }
 
-/* Kicker / ticker label utility — the signature sportsbook detail. */
+/* Kicker / ticker label utility, the signature sportsbook detail. */
 .kicker {
   font-family: var(--font-cond);
   font-weight: 600;
@@ -105,7 +105,7 @@ textarea:focus-visible,
   top: 8px;
 }
 
-/* Subtle entrance for page content — respects reduced motion. */
+/* Subtle entrance for page content, respects reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   .rise {
     animation: rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -138,7 +138,7 @@ textarea:focus-visible,
   }
 }
 
-/* Reduced motion: no marquee animation — show a readable, scrollable strip. */
+/* Reduced motion: no marquee animation, show a readable, scrollable strip. */
 @media (prefers-reduced-motion: reduce) {
   .news-ticker .ticker-track {
     flex-wrap: nowrap;
@@ -155,7 +155,7 @@ textarea:focus-visible,
     linear-gradient(to bottom, #fbfcfe, #f7f8fa);
 }
 
-/* Dark navy hero — the marketing/home + invite header surface. */
+/* Dark navy hero, the marketing/home + invite header surface. */
 .hero-dark {
   background:
     radial-gradient(48rem 30rem at 20% -10%, rgb(45 99 209 / 0.32), transparent 60%),

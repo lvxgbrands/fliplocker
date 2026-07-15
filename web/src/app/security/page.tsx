@@ -9,7 +9,7 @@ import { pageMetadata } from "@/lib/seo";
 import { SECURITY_FAQS } from "@/lib/faqs";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Security & limits — what documentation proves",
+  title: "Security & limits, what documentation proves",
   description:
     "The honest version of FlipLocker's documentation: what the hub confirms about a card, and the limits every buyer and seller should understand. We document cards; we do not grade them or guarantee they're genuine.",
   path: "/security",
@@ -25,9 +25,9 @@ const PROVES = [
 
 const LIMITS = [
   "FlipLocker is not a grading service and does not perform forensic (chemical, paper, ink, or microscopic) examination.",
-  "A genuine certificate number reprinted onto a counterfeit slab can pass a registry lookup — documentation is an administrative data-match, not a guarantee of genuineness.",
+  "A genuine certificate number reprinted onto a counterfeit slab can pass a registry lookup, documentation is an administrative data-match, not a guarantee of genuineness.",
   "A slab that has been opened and resealed may not be detectable by inspection alone.",
-  "Cards are described as documented — never as guaranteed genuine, fraud-proof, or forensically examined.",
+  "Cards are described as documented, never as guaranteed genuine, fraud-proof, or forensically examined.",
 ];
 
 export default function Security() {
@@ -38,7 +38,7 @@ export default function Security() {
         kicker="Security & documentation"
         title={
           <>
-            What our documentation proves —{" "}
+            What our documentation proves,{" "}
             <span className="bg-gradient-to-r from-brand-300 to-brand-500 bg-clip-text text-transparent">
               and what it doesn&apos;t
             </span>
@@ -49,10 +49,10 @@ export default function Security() {
 
       <section className="mx-auto max-w-3xl px-4 pt-16">
         <AnswerBlock label="The honest answer">
-          FlipLocker documents cards — it films, photographs, and tamper-seals them and confirms the slab&apos;s
+          FlipLocker documents cards, it films, photographs, and tamper-seals them and confirms the slab&apos;s
           certificate number is active in the grading company&apos;s registry. It does <strong>not</strong> grade
           cards, judge whether they&apos;re genuine, or perform forensic examination. Documentation is a neutral,
-          timestamped record of a card in transit — not a guarantee of genuineness.
+          timestamped record of a card in transit, not a guarantee of genuineness.
         </AnswerBlock>
       </section>
 
@@ -72,12 +72,12 @@ export default function Security() {
           ))}
         </div>
 
-        <div className="mt-10 rounded-2xl border border-amber-200 bg-amber-50/60 p-7">
-          <h2 className="text-xl font-bold text-amber-900">The limits — in plain terms</h2>
+        <div className="mt-10 rounded-2xl border border-ink-200 border-l-4 border-l-brand-500 bg-ink-50 p-7">
+          <h2 className="text-xl font-bold text-ink-900">The limits, in plain terms</h2>
           <ul className="mt-4 space-y-3">
             {LIMITS.map((l) => (
-              <li key={l} className="flex items-start gap-3 text-sm leading-relaxed text-amber-900/90">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+              <li key={l} className="flex items-start gap-3 text-sm leading-relaxed text-ink-700">
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" />
                 {l}
               </li>
             ))}
@@ -85,7 +85,7 @@ export default function Security() {
         </div>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-3">
-          <Pledge icon={Lock} t="Funds held by our processor" b="Buyer payments sit with our payment processor until delivery is signed for — FlipLocker never holds the purchase money." />
+          <Pledge icon={Lock} t="Funds held by our processor" b="Buyer payments sit with our payment processor until delivery is signed for, FlipLocker never holds the purchase money." />
           <Pledge icon={FileSignature} t="Terms acknowledged" b="Both parties affirmatively accept the Terms of Service, including these limits, before a deal proceeds." />
           <Pledge icon={Trash2} t="Media auto-purged" b="Inspection videos are automatically deleted 30 days after confirmed delivery." />
         </div>
@@ -102,7 +102,7 @@ export default function Security() {
 
       <section className="border-t border-ink-200/60 bg-ink-50">
         <div className="mx-auto max-w-4xl px-4 py-16 text-center">
-          <SectionKicker>Inspected &amp; documented — clearly</SectionKicker>
+          <SectionKicker>Inspected &amp; documented, clearly</SectionKicker>
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">No overclaiming, ever</h2>
           <p className="mx-auto mt-3 max-w-xl text-ink-500">
             You get a documented, insured, signature-delivered transaction and a full record of everything that

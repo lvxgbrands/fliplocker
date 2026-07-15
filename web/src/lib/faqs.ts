@@ -1,6 +1,6 @@
 // All marketing FAQ content. Per-page FAQs give each page its own contextual
 // Q&A (and FAQPage JSON-LD); FAQ_HUB powers the comprehensive /faq page.
-// Compliance: only approved framing — "documented", "inspection", "held by our
+// Compliance: only approved framing, "documented", "inspection", "held by our
 // payment processor", "confirm". Avoid the restricted terms enforced by
 // scripts/check-copy.mjs (see docs/COMPLIANCE-NOTES.md).
 
@@ -12,15 +12,15 @@ export interface QA {
 export const HOME_FAQS: QA[] = [
   {
     q: "How is my money held?",
-    a: "The buyer pays through PayPal checkout and the funds are held securely by our payment processor — never by FlipLocker. They're released to the seller only after the card passes hub inspection and is delivered with a confirmed signature, plus a 48-hour buyer review window. FlipLocker's account receives only its service fee.",
+    a: "The buyer pays through PayPal checkout and the funds are held securely by our payment processor, never by FlipLocker. They're released to the seller only after the card passes hub inspection and is delivered with a confirmed signature, plus a 48-hour buyer review window. FlipLocker's account receives only its service fee.",
   },
   {
-    q: "What does documentation cover — and what does it not?",
-    a: "The hub confirms a physical card matching the seller's listing, in a slab whose certificate number is valid and active in the grading company's registry, and documents it on a 15-second video and two photos with a logged tamper seal. This is an administrative data-match and documentation service, not a forensic examination. FlipLocker does not grade cards and does not guarantee a slab is genuine. Cards are documented — not graded or guaranteed genuine.",
+    q: "What does documentation cover, and what does it not?",
+    a: "The hub confirms a physical card matching the seller's listing, in a slab whose certificate number is valid and active in the grading company's registry, and documents it on a 15-second video and two photos with a logged tamper seal. This is an administrative data-match and documentation service, not a forensic examination. FlipLocker does not grade cards and does not guarantee a slab is genuine. Cards are documented, not graded or guaranteed genuine.",
   },
   {
     q: "What are the fees?",
-    a: "FlipLocker charges a service fee based solely on the card's sale price — the card's market value is never used. Three packages (Single, Plus, Pro) layer volume and features on top, and who pays the per-deal fee (buyer, seller, or split) is configurable. Every line item is shown transparently at checkout before anyone pays.",
+    a: "FlipLocker charges a service fee based solely on the card's sale price, the card's market value is never used. Three packages (Single, Plus, Pro) layer volume and features on top, and who pays the per-deal fee (buyer, seller, or split) is configurable. Every line item is shown transparently at checkout before anyone pays.",
   },
   {
     q: "How does shipping work?",
@@ -28,7 +28,7 @@ export const HOME_FAQS: QA[] = [
   },
   {
     q: "Is FlipLocker a marketplace?",
-    a: "No. FlipLocker is invitation-only and has no listings to browse or buy. Buyers and sellers agree on a card and price off-platform — on social media, at a show, in a group chat — and bring the deal to FlipLocker to close it safely.",
+    a: "No. FlipLocker is invitation-only and has no listings to browse or buy. Buyers and sellers agree on a card and price off-platform, on social media, at a show, in a group chat, and bring the deal to FlipLocker to close it safely.",
   },
   {
     q: "What happens if the card fails inspection?",
@@ -39,7 +39,7 @@ export const HOME_FAQS: QA[] = [
 export const HOW_IT_WORKS_FAQS: QA[] = [
   {
     q: "Do both people need a FlipLocker account?",
-    a: "The seller creates the deal and the buyer receives a private, one-time invitation link. The buyer claims the invite to review the itemized checkout and accept or decline — so both parties end up with an account, but only the seller starts the deal.",
+    a: "The seller creates the deal and the buyer receives a private, one-time invitation link. The buyer claims the invite to review the itemized checkout and accept or decline, so both parties end up with an account, but only the seller starts the deal.",
   },
   {
     q: "How long does a full deal take?",
@@ -62,14 +62,14 @@ export const PRICING_FAQS: QA[] = [
   },
   {
     q: "What's the difference between the subscription and the per-deal fee?",
-    a: "The subscription package (Single, Plus, or Pro) covers volume, tools, and support. The per-deal service fee is charged when a deal actually happens and is based on the sale price. Single has no subscription — you pay only the per-deal fee.",
+    a: "The subscription package (Single, Plus, or Pro) covers volume, tools, and support. The per-deal service fee is charged when a deal actually happens and is based on the sale price. Single has no subscription, you pay only the per-deal fee.",
   },
   {
     q: "How much does annual billing save?",
     a: "Annual billing saves 17% versus paying monthly on the Plus and Pro packages. The discounted effective monthly price and the annual total are both shown when you switch the billing toggle to Annual.",
   },
   {
-    q: "Who pays the fee — the buyer or the seller?",
+    q: "Who pays the fee, the buyer or the seller?",
     a: "That's configurable per deal: buyer, seller, or split 50/50. Whatever is chosen is itemized on the checkout both parties see before payment.",
   },
   {
@@ -81,7 +81,7 @@ export const PRICING_FAQS: QA[] = [
 export const SECURITY_FAQS: QA[] = [
   {
     q: "Does FlipLocker grade cards or confirm they're genuine?",
-    a: "No. FlipLocker documents cards — it films, photographs, and tamper-seals them and confirms the certificate number is active in the grading company's registry. It does not grade cards, does not judge whether a card is genuine, and does not perform forensic examination. The grade on the slab is the grading company's opinion, not FlipLocker's.",
+    a: "No. FlipLocker documents cards, it films, photographs, and tamper-seals them and confirms the certificate number is active in the grading company's registry. It does not grade cards, does not judge whether a card is genuine, and does not perform forensic examination. The grade on the slab is the grading company's opinion, not FlipLocker's.",
   },
   {
     q: "Can documentation be fooled?",
@@ -93,18 +93,18 @@ export const SECURITY_FAQS: QA[] = [
   },
   {
     q: "Is my payment ever held by FlipLocker?",
-    a: "No. Buyer payments are held by our payment processor until delivery is signed for. FlipLocker never takes possession or control of the purchase funds and is not a money transmitter — its account receives only its service fee.",
+    a: "No. Buyer payments are held by our payment processor until delivery is signed for. FlipLocker never takes possession or control of the purchase funds and is not a money transmitter, its account receives only its service fee.",
   },
 ];
 
 export const PLATFORM_FAQS: QA[] = [
   {
     q: "What does the FlipLocker platform actually do?",
-    a: "It handles the three risky parts of a private card deal: it holds the buyer's payment with our payment processor, documents the card at a neutral hub (video, photos, tamper seal, registry match), and delivers it with insured, signature-required shipping — all on a shared, timestamped timeline.",
+    a: "It handles the three risky parts of a private card deal: it holds the buyer's payment with our payment processor, documents the card at a neutral hub (video, photos, tamper seal, registry match), and delivers it with insured, signature-required shipping, all on a shared, timestamped timeline.",
   },
   {
     q: "Does the platform decide whether a card is genuine?",
-    a: "No. FlipLocker documents cards; it does not grade them or judge whether they're genuine. Documentation is a neutral record of a card's identity, condition, and chain of custody — not a guarantee of genuineness.",
+    a: "No. FlipLocker documents cards; it does not grade them or judge whether they're genuine. Documentation is a neutral record of a card's identity, condition, and chain of custody, not a guarantee of genuineness.",
   },
   {
     q: "Is any of this a marketplace feature?",
@@ -119,7 +119,7 @@ export const PLATFORM_FAQS: QA[] = [
 export const SOLUTIONS_FAQS: QA[] = [
   {
     q: "How do I know which package or path is right for me?",
-    a: "It depends on volume and stakes: social sellers and first-timers usually start with Single, active sellers and mid-volume collectors fit Plus, and breakers and high-value dealers fit Pro. Every path uses the same core protection — held payment, hub documentation, signature delivery.",
+    a: "It depends on volume and stakes: social sellers and first-timers usually start with Single, active sellers and mid-volume collectors fit Plus, and breakers and high-value dealers fit Pro. Every path uses the same core protection, held payment, hub documentation, signature delivery.",
   },
   {
     q: "Do buyers and sellers use FlipLocker differently?",
@@ -127,7 +127,7 @@ export const SOLUTIONS_FAQS: QA[] = [
   },
   {
     q: "Can FlipLocker handle a very expensive card?",
-    a: "Yes. High-value deals get insured legs, a logged tamper seal, and — on Pro — white-glove documentation and extended coverage options. The per-deal fee is still based on the sale price only.",
+    a: "Yes. High-value deals get insured legs, a logged tamper seal, and, on Pro, white-glove documentation and extended coverage options. The per-deal fee is still based on the sale price only.",
   },
   {
     q: "What if it's my first time dealing with a stranger?",
@@ -160,13 +160,13 @@ export const CONTACT_FAQS: QA[] = [
     a: "We aim to respond to support messages within one business day. Pro accounts have a dedicated contact for faster handling.",
   },
   {
-    q: "I was invited to a deal — where do I start?",
+    q: "I was invited to a deal, where do I start?",
     a: "Open the invitation link in your email and claim it. You'll see the card, the itemized checkout, and the option to accept or decline before any payment is made.",
   },
 ];
 
 // ---------------------------------------------------------------------------
-// Comprehensive FAQ hub — grouped by category (also emits FAQPage JSON-LD).
+// Comprehensive FAQ hub, grouped by category (also emits FAQPage JSON-LD).
 // ---------------------------------------------------------------------------
 
 export interface FaqCategory {
@@ -186,11 +186,11 @@ export const FAQ_HUB: FaqCategory[] = [
       },
       {
         q: "Is FlipLocker a marketplace?",
-        a: "No. There are no listings to browse or buy. FlipLocker only handles deals that two people have already agreed to elsewhere — on Instagram, X, Discord, at a show, or in person.",
+        a: "No. There are no listings to browse or buy. FlipLocker only handles deals that two people have already agreed to elsewhere, on Instagram, X, Discord, at a show, or in person.",
       },
       {
         q: "How do I start a deal?",
-        a: "The seller creates the deal — entering the card, photos, grade, certificate number, and agreed price — and invites the buyer by email. The buyer claims the private invitation, reviews the itemized checkout, and accepts or declines.",
+        a: "The seller creates the deal, entering the card, photos, grade, certificate number, and agreed price, and invites the buyer by email. The buyer claims the private invitation, reviews the itemized checkout, and accepts or declines.",
       },
       {
         q: "What cards can I use FlipLocker for?",
@@ -204,7 +204,7 @@ export const FAQ_HUB: FaqCategory[] = [
     items: [
       {
         q: "Where does my payment sit before the seller is paid?",
-        a: "With our payment processor. The buyer pays through PayPal checkout and the funds are held there — never by FlipLocker — until the card is documented and delivered with a confirmed signature, followed by a 48-hour review window.",
+        a: "With our payment processor. The buyer pays through PayPal checkout and the funds are held there, never by FlipLocker, until the card is documented and delivered with a confirmed signature, followed by a 48-hour review window.",
       },
       {
         q: "How is the service fee calculated?",
@@ -256,7 +256,7 @@ export const FAQ_HUB: FaqCategory[] = [
       },
       {
         q: "Does FlipLocker guarantee the card is genuine?",
-        a: "No. Documentation is an administrative data-match, not a guarantee of genuineness. A genuine certificate number can be reprinted onto a counterfeit slab, and a resealed slab may not be detectable by inspection alone. Cards are described as documented — never as graded or guaranteed genuine.",
+        a: "No. Documentation is an administrative data-match, not a guarantee of genuineness. A genuine certificate number can be reprinted onto a counterfeit slab, and a resealed slab may not be detectable by inspection alone. Cards are described as documented, never as graded or guaranteed genuine.",
       },
       {
         q: "What's the difference between documentation and grading?",
@@ -295,7 +295,7 @@ export const FAQ_HUB: FaqCategory[] = [
         a: "After you register, we email you a confirmation link. Click it to activate your account. You can request a new link if it expires.",
       },
       {
-        q: "I forgot my password — what now?",
+        q: "I forgot my password, what now?",
         a: "Use the 'forgot password' link on the sign-in page. We'll email you a secure link to choose a new password; it expires after two hours.",
       },
       {
@@ -304,7 +304,7 @@ export const FAQ_HUB: FaqCategory[] = [
       },
       {
         q: "How do I contact support?",
-        a: "Email support@fliplocker.app — include your deal's short code if your question is about a specific deal. See the Contact page for details.",
+        a: "Email support@fliplocker.app, include your deal's short code if your question is about a specific deal. See the Contact page for details.",
       },
     ],
   },

@@ -8,7 +8,7 @@ export async function getCheckoutConfig(): Promise<CheckoutConfig> {
   const config = await db.checkoutConfig.findUnique({ where: { id: "default" } });
   if (!config) {
     throw new Error(
-      "CheckoutConfig missing — run `npm run db:seed` to install the default configuration."
+      "CheckoutConfig missing, run `npm run db:seed` to install the default configuration."
     );
   }
   return config;
@@ -17,7 +17,7 @@ export async function getCheckoutConfig(): Promise<CheckoutConfig> {
 export async function getFeeConfig(plan: PlanTier): Promise<FeeConfig> {
   const config = await db.feeConfig.findUnique({ where: { plan } });
   if (!config || !config.active) {
-    throw new Error(`FeeConfig for plan ${plan} missing or inactive — run \`npm run db:seed\`.`);
+    throw new Error(`FeeConfig for plan ${plan} missing or inactive, run \`npm run db:seed\`.`);
   }
   return config;
 }

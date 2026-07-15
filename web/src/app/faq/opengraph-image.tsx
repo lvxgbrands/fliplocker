@@ -7,6 +7,6 @@ export const contentType = OG_CONTENT_TYPE;
 export default function Image() {
   return renderOgImage({
     eyebrow: "FAQ",
-    title: "Payments, shipping, documentation & safety — answered",
+    title: "Payments, shipping, documentation & safety, answered",
   });
 }

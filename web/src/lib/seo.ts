@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 
 // ---------------------------------------------------------------------------
 // Centralised SEO / AEO / GEO helpers.
-//   SEO  — canonical URLs, unique titles/descriptions, Open Graph + Twitter.
-//   AEO  — concise, quotable answer blocks + FAQPage structured data.
-//   GEO  — Organization/WebSite entities, clear internal linking, llms.txt.
+//   SEO , canonical URLs, unique titles/descriptions, Open Graph + Twitter.
+//   AEO , concise, quotable answer blocks + FAQPage structured data.
+//   GEO , Organization/WebSite entities, clear internal linking, llms.txt.
 // Production canonical is fixed to the live domain so it never depends on the
 // per-environment APP_URL (which is localhost in development).
 // ---------------------------------------------------------------------------
@@ -42,7 +42,7 @@ interface PageMetaInput {
 
 /**
  * Build a complete, unique Metadata object for a marketing page. Title is
- * templated to "<title> — FlipLocker" via the root layout's title.template,
+ * templated to "<title>, FlipLocker" via the root layout's title.template,
  * so pass the bare page title here.
  */
 export function pageMetadata({
@@ -184,7 +184,7 @@ export function articleLd(a: {
   };
 }
 
-/** Product with a set of Offers — used on the pricing page. */
+/** Product with a set of Offers, used on the pricing page. */
 export function productLd(offers: { name: string; price: string; description: string }[]) {
   return {
     "@context": "https://schema.org",

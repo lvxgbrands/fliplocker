@@ -11,9 +11,9 @@ import { PLATFORM_LINKS } from "@/lib/nav";
 import { PLATFORM_FAQS } from "@/lib/faqs";
 
 export const metadata: Metadata = pageMetadata({
-  title: "The Platform — how FlipLocker protects a card deal",
+  title: "The Platform, how FlipLocker protects a card deal",
   description:
-    "The FlipLocker platform holds the buyer's payment with our payment processor, documents every card at a neutral hub, and delivers it with insured signature shipping — on a shared, timestamped timeline.",
+    "The FlipLocker platform holds the buyer's payment with our payment processor, documents every card at a neutral hub, and delivers it with insured signature shipping, on a shared, timestamped timeline.",
   path: "/platform",
   keywords: ["card deal protection", "hub documentation", "held payment", "signature delivery"],
 });
@@ -45,7 +45,7 @@ export default function PlatformPage() {
             <span className="bg-gradient-to-r from-brand-300 to-brand-500 bg-clip-text text-transparent">safe</span>
           </>
         }
-        lede="FlipLocker turns a risky social-media handshake into a documented, protected transaction — the payment held, the card documented, the delivery signed for, every step on a shared timeline."
+        lede="FlipLocker turns a risky social-media handshake into a documented, protected transaction, the payment held, the card documented, the delivery signed for, every step on a shared timeline."
         actions={
           <>
             <Link href="/register" className={buttonClass("primary", "lg")}>
@@ -66,7 +66,7 @@ export default function PlatformPage() {
         <AnswerBlock label="What the platform does">
           The FlipLocker platform handles the three parts of a private card deal where things go wrong:
           it <strong>holds the buyer&apos;s payment</strong> with our payment processor, <strong>documents the card</strong>{" "}
-          at a neutral hub, and <strong>delivers it with an insured signature</strong> — all recorded on a
+          at a neutral hub, and <strong>delivers it with an insured signature</strong>, all recorded on a
           shared, timestamped timeline. It documents cards; it does not grade them or guarantee they&apos;re genuine.
         </AnswerBlock>
       </section>

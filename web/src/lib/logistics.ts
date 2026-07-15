@@ -77,11 +77,11 @@ export async function generateLeg1Label(dealId: string) {
   });
 
   const mail = genericEmail(
-    `Your shipping label is ready — deal ${deal.shortCode}`,
+    `Your shipping label is ready, deal ${deal.shortCode}`,
     "Your prepaid shipping label is ready 🏷️",
     [
       `Your Leg 1 label to the FlipLocker hub for <strong>${cardTitle(deal)}</strong> is ready to print.`,
-      `Please ship within <strong>${config.shipTimerHours} hours</strong> — if the package gets no carrier scan in that window, the deal auto-cancels and the buyer is refunded.`,
+      `Please ship within <strong>${config.shipTimerHours} hours</strong>, if the package gets no carrier scan in that window, the deal auto-cancels and the buyer is refunded.`,
       `Tracking: <strong>${label.trackingNumber}</strong>. A ${formatCents(config.sellerLabelChargeCents)} label charge applies.`,
     ],
     { label: "Print your label", url: `${appUrl()}/seller/deals/${dealId}` }
@@ -104,11 +104,11 @@ export async function scanLeg1Accepted(dealId: string) {
   await transitionDeal(dealId, "IN_TRANSIT_TO_HUB", {
     actor: "system",
     type: "LEG1_IN_TRANSIT",
-    message: `Package accepted by the carrier — in transit to the hub (${shipment.trackingNumber}).`,
+    message: `Package accepted by the carrier, in transit to the hub (${shipment.trackingNumber}).`,
   });
 }
 
-/** Package delivered to the hub — enters the facilitator inbound queue. */
+/** Package delivered to the hub, enters the facilitator inbound queue. */
 export async function receiveAtHub(dealId: string) {
   const deal = await db.deal.findUniqueOrThrow({ where: { id: dealId }, include: { seller: true } });
   if (deal.status !== "IN_TRANSIT_TO_HUB") throw new Error("Deal is not in transit to the hub.");
@@ -126,7 +126,7 @@ export async function receiveAtHub(dealId: string) {
     message: "Package received at the FlipLocker hub. Awaiting inspection.",
   });
   const mail = genericEmail(
-    `Your card arrived at the hub — deal ${deal.shortCode}`,
+    `Your card arrived at the hub, deal ${deal.shortCode}`,
     "Your card reached the hub 🏢",
     [
       `<strong>${cardTitle(deal)}</strong> has arrived at the FlipLocker hub and is queued for inspection and documentation.`,
@@ -182,11 +182,11 @@ export async function generateLeg2Label(dealId: string) {
   });
 
   const mail = genericEmail(
-    `On its way — deal ${deal.shortCode}`,
+    `On its way, deal ${deal.shortCode}`,
     "Your card is on its way ✈️",
     [
       `<strong>${cardTitle(deal)}</strong> passed hub inspection, was documented on video, and is now shipping to you.`,
-      `Delivery requires a signature — it is never waived. Tracking: <strong>${tracking}</strong>.`,
+      `Delivery requires a signature, it is never waived. Tracking: <strong>${tracking}</strong>.`,
     ],
     { label: "Track delivery", url: `${appUrl()}/buyer/deals/${dealId}` }
   );
@@ -215,8 +215,8 @@ export async function deliverToBuyer(dealId: string, signedBy: string) {
   });
 
   const buyerMail = genericEmail(
-    `Delivered — please review (deal ${deal.shortCode})`,
-    "Delivered ✔ — you have 48 hours to review",
+    `Delivered, please review (deal ${deal.shortCode})`,
+    "Delivered ✔, you have 48 hours to review",
     [
       `<strong>${cardTitle(deal)}</strong> was delivered and signed for.`,
       `You have <strong>${config.reviewWindowHours} hours</strong> to approve the card or report an issue. If the window passes with no report, the deal completes automatically and the seller is paid.`,
@@ -226,7 +226,7 @@ export async function deliverToBuyer(dealId: string, signedBy: string) {
   await sendEmail({ to: deal.buyerEmail, dealId, ...buyerMail });
 
   const sellerMail = genericEmail(
-    `Delivered — deal ${deal.shortCode}`,
+    `Delivered, deal ${deal.shortCode}`,
     "Your card was delivered 📬",
     [
       `<strong>${cardTitle(deal)}</strong> was delivered to the buyer with signature confirmation.`,

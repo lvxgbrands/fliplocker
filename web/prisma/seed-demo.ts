@@ -4,50 +4,49 @@ import fs from "fs";
 import path from "path";
 import { computeQuote } from "../src/lib/fees";
 
-// Populates a spread of deals across lifecycle states using the real baseball
-// card roster + generated card art, so the admin dashboard, hub queue, and
-// portals look realistic in a live demo. Run `npm run seed:demo` AFTER
-// `npm run db:seed` (and after `node scripts/generate-card-art.mjs`).
+// Populates a spread of nine deals across the full lifecycle using the real
+// baseball card roster, so the admin dashboard, hub queue, and buyer/seller
+// portals look realistic in a live demo. Owned by the standard demo login
+// accounts (seller.demo@ / buyer.demo@) so a client signing in as either sees
+// their populated portal, and admin.demo@ sees all nine. Idempotent: it wipes
+// and recreates only the DEMO- deals, so it is safe to run on every deploy.
 const db = new PrismaClient();
 
-const CARDS_DIR = path.join(process.cwd(), "public", "cards");
-const UPLOAD_ROOT = path.join(process.cwd(), ".data", "uploads");
+// Card art is committed under public/cards and served statically. Demo media
+// uses a "demo-public:" storage key that mediaViewUrl resolves to /public,
+// so photos render on a read-only serverless filesystem without S3.
+function mediaKey(slug: string, face: "" | "-back"): string | null {
+  const rel = `cards/${slug}${face}.jpg`;
+  if (!fs.existsSync(path.join(process.cwd(), "public", rel))) return null;
+  return `demo-public:${rel}`;
+}
 
-// slug, player, team, year, grade, cert, priceCents, statLine, status
-// Real cards from the client's own collection (photos in public/cards/{slug}.jpg).
+// slug, player, team, year, grade, cert, priceCents, statLine, status.
+// Nine deals across the pipeline; ohtani appears twice (two different cards)
+// so all nine lifecycle states are represented with the eight card images.
 const ROSTER: [string, string, string, number, string, string, number, string, DealStatus][] = [
   ["griffey", "Ken Griffey Jr.", "Seattle Mariners", 1989, "PSA 8", "24810881", 42500,
-    "The Kid — 630 HR, 10x Gold Glove, 1997 AL MVP, HOF 2016 (99.3%).", "COMPLETE"],
+    "The Kid: 630 HR, 10x Gold Glove, 1997 AL MVP, HOF 2016 (99.3%).", "COMPLETE"],
   ["ohtani", "Shohei Ohtani", "Los Angeles Dodgers", 2024, "PSA 10", "77120346", 52000,
-    "Unanimous 3x MVP; first 50-HR / 50-SB season in MLB history.", "COMPLETE"],
+    "Unanimous 3x MVP; first 50-HR / 50-SB season in MLB history.", "DELIVERED_SIGNED"],
   ["bojackson", "Bo Jackson", "Kansas City Royals", 1989, "PSA 9", "30556214", 18500,
-    "Two-sport phenom; 1989 MLB All-Star Game MVP.", "DELIVERED_SIGNED"],
+    "Two-sport phenom; 1989 MLB All-Star Game MVP.", "IN_TRANSIT_TO_BUYER"],
   ["ripken", "Cal Ripken Jr.", "Baltimore Orioles", 1989, "PSA 9", "19204773", 16500,
-    "The Iron Man — 2,632 consecutive games, 3,184 hits, HOF 2007.", "IN_TRANSIT_TO_BUYER"],
-  ["griffin", "Konnor Griffin", "Pittsburgh Pirates", 2025, "GEM MT 10", "60050231", 31000,
-    "2025 Topps Now rookie — top-of-the-draft phenom prospect.", "AWAITING_SELLER_SHIPMENT"],
-  ["misiorowski", "Jacob Misiorowski", "Milwaukee Brewers", 2025, "GEM MT 10", "60050194", 24000,
-    "2025 Topps Now rookie — 100+ mph flamethrower.", "RECEIVED_AT_HUB"],
+    "The Iron Man: 2,632 consecutive games, 3,184 hits, HOF 2007.", "RECEIVED_AT_HUB"],
   ["murakami", "Munetaka Murakami", "Tokyo (NPB)", 2025, "PSA 9", "88041127", 17500,
-    "NPB single-season home-run record holder; among the fastest to 200 HR.", "FLAGGED"],
+    "NPB single-season home-run record holder; among the fastest to 200 HR.", "IN_TRANSIT_TO_HUB"],
+  ["griffin", "Konnor Griffin", "Pittsburgh Pirates", 2025, "GEM MT 10", "60050231", 31000,
+    "2025 Topps Now rookie; top-of-the-draft phenom prospect.", "AWAITING_SELLER_SHIPMENT"],
+  ["misiorowski", "Jacob Misiorowski", "Milwaukee Brewers", 2025, "GEM MT 10", "60050194", 24000,
+    "2025 Topps Now rookie; 100+ mph flamethrower.", "PAID"],
   ["valdez", "Esmerlyn Valdez", "Pittsburgh Pirates", 2025, "PSA 8", "60050288", 16000,
-    "2025 Topps Now — go-ahead grand slam fuels a doubleheader sweep.", "DECLINED"],
+    "2025 Topps Now; go-ahead grand slam fuels a doubleheader sweep.", "FLAGGED"],
+  ["ohtani", "Shohei Ohtani", "Los Angeles Dodgers", 2023, "PSA 9", "77120912", 34000,
+    "2023 flagship; unanimous AL MVP, 44 HR, 1.066 OPS.", "DECLINED"],
 ];
 
 const CODE = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
 const code = (i: number) => `DEMO-${String(i).padStart(2, "0")}${CODE[i % CODE.length]}${CODE[(i * 7) % CODE.length]}`;
-
-// Copies a real card photo into local media storage so the signed-URL flow
-// renders it exactly like a seller upload. face: "" (front) or "-back".
-function copyMedia(slug: string, face: "" | "-back"): string | null {
-  const src = path.join(CARDS_DIR, `${slug}${face}.jpg`);
-  if (!fs.existsSync(src)) return null;
-  const key = `deal-photos/demo/${slug}${face}.jpg`;
-  const dest = path.join(UPLOAD_ROOT, key);
-  fs.mkdirSync(path.dirname(dest), { recursive: true });
-  fs.copyFileSync(src, dest);
-  return key;
-}
 
 const EVENTS = {
   base: [
@@ -57,7 +56,7 @@ const EVENTS = {
   paid: [
     { type: "INVITE_CLAIMED", actor: "buyer", message: "Buyer claimed the invitation." },
     { type: "ACCEPTED", actor: "buyer", message: "Buyer accepted and started checkout." },
-    { type: "PAYMENT_CAPTURED", actor: "system", message: "Payment confirmed — held by the payment processor." },
+    { type: "PAYMENT_CAPTURED", actor: "system", message: "Payment confirmed, held by the payment processor." },
     { type: "AWAITING_SELLER_SHIPMENT", actor: "system", message: "Seller alerted to ship to the hub." },
   ],
   shipped1: [
@@ -98,14 +97,14 @@ async function main() {
 
   const passwordHash = await bcrypt.hash("fliplocker-demo", 10);
   const seller = await db.user.upsert({
-    where: { email: "demo.seller@fliplocker.app" },
+    where: { email: "seller.demo@fliplocker.app" },
     update: {},
-    create: { email: "demo.seller@fliplocker.app", name: "Marcus Vega", role: "SELLER", passwordHash, emailVerified: new Date() },
+    create: { email: "seller.demo@fliplocker.app", name: "Dana Seller", role: "SELLER", passwordHash, emailVerified: new Date() },
   });
   const buyer = await db.user.upsert({
-    where: { email: "demo.buyer@fliplocker.app" },
+    where: { email: "buyer.demo@fliplocker.app" },
     update: {},
-    create: { email: "demo.buyer@fliplocker.app", name: "Priya Anand", role: "BUYER", passwordHash, emailVerified: new Date() },
+    create: { email: "buyer.demo@fliplocker.app", name: "Blake Buyer", role: "BUYER", passwordHash, emailVerified: new Date() },
   });
 
   await db.deal.deleteMany({ where: { shortCode: { startsWith: "DEMO-" } } });
@@ -113,9 +112,9 @@ async function main() {
   for (let i = 0; i < ROSTER.length; i++) {
     const [slug, player, team, year, grade, cert, priceCents, statLine, status] = ROSTER[i];
     const q = computeQuote({ salePriceCents: priceCents, feeConfig: feeFree, checkout, taxRateBps: 0 });
-    const paid = !["DECLINED"].includes(status);
-    const frontKey = copyMedia(slug, "");
-    const rearKey = copyMedia(slug, "-back");
+    const paid = status !== "DECLINED";
+    const frontKey = mediaKey(slug, "");
+    const rearKey = mediaKey(slug, "-back");
 
     const deal = await db.deal.create({
       data: {
@@ -158,17 +157,18 @@ async function main() {
     if (paid) {
       await db.payment.create({
         data: {
-          dealId: deal.id, provider: "PAYPAL_SIM", paypalOrderId: `DEMO-ORD-${slug}`,
-          captureId: `DEMO-CAP-${slug}`, state: status === "FLAGGED" ? "REFUNDED" : "CAPTURED",
+          dealId: deal.id, provider: "PAYPAL_SIM", paypalOrderId: `DEMO-ORD-${i}`,
+          captureId: `DEMO-CAP-${i}`, state: status === "FLAGGED" ? "REFUNDED" : "CAPTURED",
           grossCents: q.buyerTotalCents, platformFeeCents: q.feeTotalCents, sellerNetCents: q.sellerPayoutCents,
           disbursedAt: status === "COMPLETE" ? new Date() : null,
-          refundId: status === "FLAGGED" ? `DEMO-REF-${slug}` : null,
+          refundId: status === "FLAGGED" ? `DEMO-REF-${i}` : null,
         },
       });
     }
 
     if (["IN_TRANSIT_TO_HUB", "RECEIVED_AT_HUB", "VERIFIED", "REPACKED", "IN_TRANSIT_TO_BUYER", "DELIVERED_SIGNED", "FUNDS_RELEASED", "COMPLETE", "FLAGGED", "AWAITING_SELLER_SHIPMENT"].includes(status)) {
-      await db.shipment.create({ data: { dealId: deal.id, leg: "TO_HUB", carrier: "USPS", service: "USPS Ground Advantage", trackingNumber: `9400100000${1000000000 + i}`, status: status === "AWAITING_SELLER_SHIPMENT" ? "LABEL_CREATED" : "DELIVERED", provider: "SIM" } });
+      const legStatus = status === "AWAITING_SELLER_SHIPMENT" ? "LABEL_CREATED" : status === "IN_TRANSIT_TO_HUB" ? "IN_TRANSIT" : "DELIVERED";
+      await db.shipment.create({ data: { dealId: deal.id, leg: "TO_HUB", carrier: "USPS", service: "USPS Ground Advantage", trackingNumber: `9400100000${1000000000 + i}`, status: legStatus, provider: "SIM" } });
     }
     if (["IN_TRANSIT_TO_BUYER", "DELIVERED_SIGNED", "FUNDS_RELEASED", "COMPLETE"].includes(status)) {
       await db.shipment.create({ data: { dealId: deal.id, leg: "TO_BUYER", carrier: "USPS", service: "USPS Priority + Signature", signatureRequired: true, trackingNumber: `9400100000${2000000000 + i}`, status: status === "IN_TRANSIT_TO_BUYER" ? "IN_TRANSIT" : "DELIVERED", signedBy: ["DELIVERED_SIGNED", "FUNDS_RELEASED", "COMPLETE"].includes(status) ? "Demo Recipient" : null, provider: "SIM" } });
@@ -183,7 +183,7 @@ async function main() {
 
   const counts = await db.deal.groupBy({ by: ["status"], _count: { _all: true }, where: { shortCode: { startsWith: "DEMO-" } } });
   console.log("Seeded demo deals:", counts.map((c) => `${c.status}=${c._count._all}`).join(", "));
-  console.log("Demo seller: demo.seller@fliplocker.app / fliplocker-demo");
+  console.log("Demo logins (password fliplocker-demo): seller.demo@fliplocker.app, buyer.demo@fliplocker.app, admin.demo@fliplocker.app");
 }
 
 main().catch((e) => { console.error(e); process.exit(1); }).finally(() => db.$disconnect());

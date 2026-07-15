@@ -9,7 +9,7 @@ export default async function VerifyEmailPage({ params }: { params: Promise<{ to
 
   if (row) {
     await db.user.update({ where: { id: row.userId }, data: { emailVerified: new Date() } });
-    // The link came from the user's inbox — safe to sign them in.
+    // The link came from the user's inbox, safe to sign them in.
     const current = await getCurrentUser();
     if (!current || current.id === row.userId) {
       if (!current) await createSession(row.userId);

@@ -11,7 +11,7 @@ interface SendSmsArgs {
 }
 
 export async function sendSms({ to, body, dealId }: SendSmsArgs): Promise<void> {
-  if (!to) return; // no phone on file — SMS is best-effort, email is the system of record
+  if (!to) return; // no phone on file, SMS is best-effort, email is the system of record
   const sid = process.env.TWILIO_ACCOUNT_SID;
   const token = process.env.TWILIO_AUTH_TOKEN;
   const from = process.env.TWILIO_FROM;

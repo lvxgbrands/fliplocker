@@ -29,7 +29,7 @@ export interface Quote {
   taxCents: number;
   buyerTotalCents: number; // sale + buyer fee share + shipping + insurance + tax
   sellerPayoutCents: number; // sale - seller fee share
-  platformReceivesCents: number; // fee total only — never the purchase funds
+  platformReceivesCents: number; // fee total only, never the purchase funds
   snapshot: Record<string, unknown>; // config used, stored on the deal record
 }
 
@@ -71,7 +71,7 @@ export function computeQuote({ salePriceCents, feeConfig, checkout, taxRateBps }
     : 0;
 
   // Tax policy is the Client's (CPA-directed). When enabled, tax applies to the
-  // platform's service lines only — never to the peer-to-peer card amount.
+  // platform's service lines only, never to the peer-to-peer card amount.
   const taxableCents = feeBuyerCents + shippingCents;
   const taxCents = taxRateBps > 0 ? Math.round((taxableCents * taxRateBps) / 10000) : 0;
 

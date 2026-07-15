@@ -2,7 +2,7 @@ import { randomBytes } from "crypto";
 import type { Deal } from "@prisma/client";
 
 // ---------------------------------------------------------------------------
-// PayPal Complete Payments (multiparty) — Orders v2.
+// PayPal Complete Payments (multiparty), Orders v2.
 //
 // Money rules (contract + compliance):
 //   - Buyer funds are held by PayPal, never by FlipLocker.
@@ -12,8 +12,8 @@ import type { Deal } from "@prisma/client";
 //     delivery + review window (released by a later milestone's job).
 //
 // PAYPAL_MODE:
-//   sandbox / live — real REST calls against PayPal (client id/secret env).
-//   simulator      — no external calls; approval URL points at our local
+//   sandbox / live, real REST calls against PayPal (client id/secret env).
+//   simulator     , no external calls; approval URL points at our local
 //                    /pay/simulator page so the full checkout loop is
 //                    demoable without sandbox credentials. Same interface,
 //                    same data recorded, switch modes purely via env.
@@ -88,7 +88,7 @@ export async function createOrder(deal: Deal): Promise<CreatedOrder> {
       {
         reference_id: deal.id,
         custom_id: deal.shortCode,
-        description: `FlipLocker deal ${deal.shortCode} — documentation & logistics service`,
+        description: `FlipLocker deal ${deal.shortCode}, documentation & logistics service`,
         amount: {
           ...usd(deal.buyerTotalCents),
           breakdown: {

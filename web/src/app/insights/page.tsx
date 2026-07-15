@@ -8,7 +8,7 @@ import { pageMetadata, SITE, absoluteUrl } from "@/lib/seo";
 import { ARTICLES, ARTICLE_CATEGORIES, formatArticleDate, type Article } from "@/lib/insights";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Insights — playbooks for safe peer-to-peer card deals",
+  title: "Insights, playbooks for safe peer-to-peer card deals",
   description:
     "Original, practical guides on selling graded cards on social media, spotting scams, shipping slabs safely, PayPal payment types, and what card documentation really means.",
   path: "/insights",
@@ -84,7 +84,7 @@ export default async function InsightsIndex({
       <PageHero
         kicker="Insights"
         title="Playbooks for safe card deals"
-        lede="Practical, original guides on selling on social, spotting scams, shipping slabs, and what card documentation really means — written by the team that built FlipLocker."
+        lede="Practical, original guides on selling on social, spotting scams, shipping slabs, and what card documentation really means, written by the team that built FlipLocker."
       />
 
       <section className="mx-auto max-w-6xl px-4 py-14">

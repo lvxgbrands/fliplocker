@@ -76,7 +76,7 @@ export function newInviteToken(): string {
 }
 
 export function cardTitle(deal: Pick<Deal, "cardYear" | "playerName" | "sport" | "gradingCompany" | "certNumber">): string {
-  return `${deal.cardYear} ${deal.playerName} (${deal.sport}) — ${deal.gradingCompany} #${deal.certNumber}`;
+  return `${deal.cardYear} ${deal.playerName} (${deal.sport}), ${deal.gradingCompany} #${deal.certNumber}`;
 }
 
 /** Statuses shown to users, in copy that follows the language rules. */
@@ -84,19 +84,19 @@ export const STATUS_LABELS: Record<DealStatus, string> = {
   DRAFT: "Draft",
   CREATED: "Created",
   BUYER_NOTIFIED: "Buyer invited",
-  ACCEPTED: "Accepted — payment in progress",
-  PAID: "Paid — awaiting shipment",
+  ACCEPTED: "Accepted, payment in progress",
+  PAID: "Paid, awaiting shipment",
   AWAITING_SELLER_SHIPMENT: "Awaiting seller shipment",
   IN_TRANSIT_TO_HUB: "In transit to FlipLocker hub",
   RECEIVED_AT_HUB: "Received at hub",
   VERIFIED: "Documented",
   REPACKED: "Repacked for delivery",
   IN_TRANSIT_TO_BUYER: "On the way to buyer",
-  DELIVERED_SIGNED: "Delivered — signature confirmed",
+  DELIVERED_SIGNED: "Delivered, signature confirmed",
   FUNDS_RELEASED: "Seller payout released",
   COMPLETE: "Complete",
   DECLINED: "Declined by buyer",
   CANCELLED: "Cancelled",
   REFUNDED: "Refunded",
-  FLAGGED: "On hold — under review",
+  FLAGGED: "On hold, under review",
 };

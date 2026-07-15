@@ -126,7 +126,7 @@ export default async function InvitePage({
                 <form action={claimSignedInAction} className="space-y-4 text-center">
                   <input type="hidden" name="token" value={token} />
                   <p className="text-sm text-ink-600">
-                    Signed in as <strong>{user.email}</strong> — the invited buyer.
+                    Signed in as <strong>{user.email}</strong>, the invited buyer.
                   </p>
                   <SubmitButton>View &amp; review this deal</SubmitButton>
                 </form>

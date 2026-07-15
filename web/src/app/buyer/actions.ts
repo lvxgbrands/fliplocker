@@ -78,7 +78,7 @@ export async function reportIssueAction(formData: FormData) {
   });
   await db.deal.update({ where: { id: dealId }, data: { flagReason: reason } });
   const mail = genericEmail(
-    `Issue reported — deal ${deal.shortCode}`,
+    `Issue reported, deal ${deal.shortCode}`,
     "An issue was reported on your deal",
     [
       `The buyer reported an issue on deal <strong>${deal.shortCode}</strong> during the review window. FlipLocker will review it.`,

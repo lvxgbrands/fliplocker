@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 
-// Newsletter capture — adapter/simulator pattern (like PayPal, shipping, email).
+// Newsletter capture, adapter/simulator pattern (like PayPal, shipping, email).
 //   Simulator (default): subscribers are captured in the newsletter_subscribers
 //   table. Real mode: also added to a Resend audience when RESEND_API_KEY and
 //   RESEND_AUDIENCE_ID are set. A provider hiccup never fails the signup.
@@ -19,7 +19,7 @@ export async function subscribeEmail(rawEmail: string, source = "footer"): Promi
   const email = rawEmail.trim().toLowerCase();
   if (!isValidEmail(email)) return { ok: false, error: "Please enter a valid email address." };
 
-  // Real mode — add to a Resend audience when configured.
+  // Real mode, add to a Resend audience when configured.
   let provider = "dev-outbox";
   const apiKey = process.env.RESEND_API_KEY;
   const audienceId = process.env.RESEND_AUDIENCE_ID;

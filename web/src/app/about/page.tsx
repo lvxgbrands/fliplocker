@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 import { ABOUT_FAQS } from "@/lib/faqs";
 
 export const metadata: Metadata = pageMetadata({
-  title: "About FlipLocker — why we exist",
+  title: "About FlipLocker, why we exist",
   description:
     "FlipLocker exists to make the graded-card deals people negotiate on social media safe to close. Our mission, our safety promise, and the honest limits we hold ourselves to.",
   path: "/about",
@@ -17,13 +17,13 @@ export const metadata: Metadata = pageMetadata({
 
 const VALUES = [
   { icon: Scale, t: "Honesty over hype", b: "We say documented, never guaranteed genuine. We publish our limits instead of hiding them. An accurate promise is worth more than an impressive one." },
-  { icon: Eye, t: "Transparency by default", b: "Both parties watch the same timestamped timeline. There is no hidden state, no separate stories — one shared source of truth for every deal." },
+  { icon: Eye, t: "Transparency by default", b: "Both parties watch the same timestamped timeline. There is no hidden state, no separate stories, one shared source of truth for every deal." },
   { icon: Lock, t: "Safety through structure", b: "We don't ask people to trust strangers. We build a process that protects both sides even when trust isn't there: held payment, documentation, signature." },
-  { icon: Users, t: "For the community", b: "FlipLocker is built by people who deal cards, for people who deal cards — starting with baseball, the category we know best." },
+  { icon: Users, t: "For the community", b: "FlipLocker is built by people who deal cards, for people who deal cards, starting with baseball, the category we know best." },
 ];
 
 const PROMISES = [
-  { icon: Lock, t: "Payments held by our processor", b: "Buyer funds sit with our payment processor until delivery is signed for — never with FlipLocker." },
+  { icon: Lock, t: "Payments held by our processor", b: "Buyer funds sit with our payment processor until delivery is signed for, never with FlipLocker." },
   { icon: ShieldCheck, t: "Documented, not overclaimed", b: "We document cards; we don't grade them or guarantee they're genuine, and we say so plainly." },
   { icon: PenLine, t: "A signature, never waived", b: "The buyer-leg delivery signature is required on every deal. Convenience never trumps proof." },
   { icon: Trash2, t: "Privacy by default", b: "Inspection media is automatically purged 30 days after delivery. We keep the record, not your business forever." },
@@ -43,7 +43,7 @@ export default function AboutPage() {
             </span>
           </>
         }
-        lede="FlipLocker exists to make the card deals people negotiate in DMs safe to actually close — without anyone shipping into the unknown or paying into it."
+        lede="FlipLocker exists to make the card deals people negotiate in DMs safe to actually close, without anyone shipping into the unknown or paying into it."
       />
 
       {/* Mission / why */}
@@ -51,7 +51,7 @@ export default function AboutPage() {
         <AnswerBlock label="Our mission">
           FlipLocker makes peer-to-peer graded-card deals safe to close. We hold the buyer&apos;s payment
           with our payment processor, document every card at a neutral hub, and deliver it with an insured
-          signature — turning a risky social-media handshake into a documented, protected transaction.
+          signature, turning a risky social-media handshake into a documented, protected transaction.
         </AnswerBlock>
 
         <div className="mt-10 space-y-5 text-[15px] leading-relaxed text-ink-600">
@@ -60,12 +60,12 @@ export default function AboutPage() {
             The trading-card hobby moved to social media, but the tools to close a deal never caught up.
             People find each other on Instagram, X, and Discord, agree a price in the DMs, and then hit the
             scariest part: sending money to a stranger, or shipping a valuable slab on a promise. Every week,
-            someone gets burned — a Friends &amp; Family payment with no recourse, a card that never arrives,
+            someone gets burned, a Friends &amp; Family payment with no recourse, a card that never arrives,
             a &ldquo;that&apos;s not what I sent&rdquo; standoff with no neutral record.
           </p>
           <p>
-            FlipLocker was built to close that gap. Not as a marketplace — there&apos;s nothing here to browse
-            or buy — but as the safe, neutral place to finish a deal two people already agreed to. We handle
+            FlipLocker was built to close that gap. Not as a marketplace, there&apos;s nothing here to browse
+            or buy, but as the safe, neutral place to finish a deal two people already agreed to. We handle
             the three moments where private deals go wrong: the payment, the handoff, and the record.
           </p>
           <p>
@@ -131,7 +131,7 @@ export default function AboutPage() {
       <FaqSection items={ABOUT_FAQS} kicker="About FAQ" title="More about FlipLocker" />
 
       <CtaBand
-        title="Deal like the pros — safely"
+        title="Deal like the pros, safely"
         body="Bring the buyer you found on social. We'll handle the payment, the documentation, and the delivery."
         primary={{ href: "/register", label: "Create a deal" }}
         secondary={{ href: "/how-it-works", label: "How it works" }}

@@ -50,9 +50,9 @@ export default async function SellerDealPage({
       <SuccessNote
         message={
           notices.created
-            ? `Deal created — the buyer's invitation is on its way to ${deal.buyerEmail}.`
+            ? `Deal created, the buyer's invitation is on its way to ${deal.buyerEmail}.`
             : notices.labeled
-              ? "Label generated — print it and ship within the 72-hour window."
+              ? "Label generated, print it and ship within the 72-hour window."
               : undefined
         }
       />
@@ -68,7 +68,7 @@ export default async function SellerDealPage({
               </span>
               <div>
                 <p className="kicker text-[11px] text-brand-300">Payment cleared</p>
-                <p className="text-lg font-extrabold text-white">Payment received — ship now!</p>
+                <p className="text-lg font-extrabold text-white">Payment received, ship now!</p>
               </div>
             </div>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-brand-100/85">

@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 
 // Lightweight in-memory rate limiter. Sufficient for a single instance /
 // staging. In multi-instance production, back this with a shared store
-// (e.g. Upstash/Redis) — the call sites stay the same.
+// (e.g. Upstash/Redis), the call sites stay the same.
 type Bucket = { count: number; resetAt: number };
 const buckets = new Map<string, Bucket>();
 

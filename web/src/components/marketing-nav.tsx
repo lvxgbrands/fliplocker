@@ -18,7 +18,7 @@ const INSIGHTS_LATEST: NavLeaf[] = ARTICLES.slice(0, 4).map((a) => ({
 }));
 
 // Leaf links are always rendered on the white mega panel: brand-blue heading,
-// dark-grey description body — regardless of whether the nav itself is dark.
+// dark-grey description body, regardless of whether the nav itself is dark.
 function LeafLink({ leaf, onClick }: { leaf: NavLeaf; onClick?: () => void }) {
   const Icon = leaf.icon;
   return (
@@ -53,7 +53,7 @@ function MegaPanel({ item, onNavigate }: { item: TopNavItem; onNavigate: () => v
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
-      {/* Left — section overview CTA + link columns. */}
+      {/* Left, section overview CTA + link columns. */}
       <div>
         <Link
           href={item.href}
@@ -75,7 +75,7 @@ function MegaPanel({ item, onNavigate }: { item: TopNavItem; onNavigate: () => v
         </div>
       </div>
 
-      {/* Right — featured callout: light background, blue heading, grey body,
+      {/* Right, featured callout: light background, blue heading, grey body,
           with a bright brand-blue accent that stays even in dark-nav mode. */}
       <Link
         href={item.mega.featured.href}
@@ -236,7 +236,7 @@ export function MarketingNav({ dark = false }: { dark?: boolean }) {
         </div>
       </div>
 
-      {/* Mega panel — full-bleed, opaque white bar spanning the full viewport
+      {/* Mega panel, full-bleed, opaque white bar spanning the full viewport
           width under the nav; inner content is constrained to max-w-6xl. It
           stays white even when the nav itself is in dark mode. */}
       {activeMega ? (
@@ -252,7 +252,7 @@ export function MarketingNav({ dark = false }: { dark?: boolean }) {
       ) : null}
     </header>
 
-    {/* Mobile drawer — rendered OUTSIDE <header> so the header's backdrop-blur
+    {/* Mobile drawer, rendered OUTSIDE <header> so the header's backdrop-blur
         doesn't become the containing block for this position:fixed overlay
         (it must stay viewport-relative to fill the screen). */}
       {drawer ? (

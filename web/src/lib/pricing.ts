@@ -1,6 +1,6 @@
 // Pricing content model. Three FlipLocker packages presented as a marketing
 // layer on top of the per-deal service fee (which is a function of SALE PRICE
-// ONLY — see src/lib/fees.ts — and is never affected by a card's market value).
+// ONLY, see src/lib/fees.ts, and is never affected by a card's market value).
 //
 // Subscriptions are billed monthly or annually; annual billing saves 17%
 // (industry-average). All numbers live here, not in the page.
@@ -33,7 +33,7 @@ export const PACKAGES: Package[] = [
     ctaLabel: "Start a single deal",
     ctaHref: "/register",
     who: "For the occasional seller closing a one-off deal from a social-media DM.",
-    why: "Everything you need to close one deal safely, with no monthly commitment — you only pay the per-deal service fee when a deal actually happens.",
+    why: "Everything you need to close one deal safely, with no monthly commitment, you only pay the per-deal service fee when a deal actually happens.",
     perDeal: "Standard per-deal service fee, based on the sale price",
     features: [
       "One documented deal at a time",
@@ -164,7 +164,7 @@ export function formatUsd(n: number): string {
   return Number.isInteger(n) ? `$${n}` : `$${n.toFixed(2)}`;
 }
 
-/** For Product/Offer JSON-LD — annual effective price per tier. */
+/** For Product/Offer JSON-LD, annual effective price per tier. */
 export function offerData() {
   return PACKAGES.map((p) => ({
     name: `FlipLocker ${p.name}`,

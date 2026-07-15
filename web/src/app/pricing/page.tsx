@@ -14,13 +14,13 @@ import { pageMetadata, productLd } from "@/lib/seo";
 import { offerData } from "@/lib/pricing";
 import { PRICING_FAQS } from "@/lib/faqs";
 
-// Reads live fee/checkout config from the DB — render per request, not at build.
+// Reads live fee/checkout config from the DB, render per request, not at build.
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Pricing — Single, Plus & Pro packages",
+  title: "Pricing, Single, Plus & Pro packages",
   description:
-    "Three FlipLocker packages — Single, Plus, and Pro — with monthly or annual billing (save 17% annually). The per-deal service fee is based on the sale price only, never a card's market value.",
+    "Three FlipLocker packages, Single, Plus, and Pro, with monthly or annual billing (save 17% annually). The per-deal service fee is based on the sale price only, never a card's market value.",
   path: "/pricing",
   keywords: ["FlipLocker pricing", "card deal fees", "trading card deal protection", "service fee"],
 });
@@ -34,7 +34,7 @@ export default async function Pricing() {
     getCheckoutConfig(),
   ]);
 
-  // Worked example — Ken Griffey Jr. ($425) on the standard (Single) fee schedule.
+  // Worked example, Ken Griffey Jr. ($425) on the standard (Single) fee schedule.
   const examplePriceCents = 42500;
   const quote = computeQuote({ salePriceCents: examplePriceCents, feeConfig: free, checkout, taxRateBps: 0 });
 
@@ -45,7 +45,7 @@ export default async function Pricing() {
       <PageHero
         kicker="Pricing"
         title="Simple packages. One honest fee."
-        lede="Pick a package for the volume and tools you need, then pay a per-deal service fee based only on the sale price. No surprises, ever — every line is shown at checkout before anyone pays."
+        lede="Pick a package for the volume and tools you need, then pay a per-deal service fee based only on the sale price. No surprises, ever, every line is shown at checkout before anyone pays."
       />
 
       {/* Packages + billing toggle */}
@@ -132,7 +132,7 @@ export default async function Pricing() {
 
       <CtaBand
         title="No surprises at checkout"
-        body="Every line — card amount, service fee, shipping, coverage — is shown before anyone pays."
+        body="Every line, card amount, service fee, shipping, coverage, is shown before anyone pays."
         primary={{ href: "/register", label: "Create a deal" }}
         secondary={{ href: "/how-it-works", label: "See how it works" }}
       />

@@ -28,7 +28,7 @@ export const PILLARS: Pillar[] = [
     description:
       "How FlipLocker keeps a buyer's money safe: funds are held by our payment processor, never by FlipLocker, and released to the seller only after documented, signature-confirmed delivery.",
     answer:
-      "On FlipLocker, the buyer pays through PayPal checkout and the funds are held by our payment processor — not by FlipLocker and not by the seller — until the card is documented at the hub and delivered with a confirmed signature. FlipLocker never takes possession or control of the purchase funds and is not a money transmitter; its account receives only its service fee.",
+      "On FlipLocker, the buyer pays through PayPal checkout and the funds are held by our payment processor, not by FlipLocker and not by the seller, until the card is documented at the hub and delivered with a confirmed signature. FlipLocker never takes possession or control of the purchase funds and is not a money transmitter; its account receives only its service fee.",
     intro:
       "The single most dangerous moment in a peer-to-peer card deal is the payment. Send money directly to a stranger and you're relying on goodwill. FlipLocker removes that risk by changing where the money sits and when it moves.",
     sections: [
@@ -36,7 +36,7 @@ export const PILLARS: Pillar[] = [
         id: "how-it-works",
         heading: "Where the money actually sits",
         body: p(
-          "When a buyer accepts a deal, they pay through PayPal checkout. Instead of that payment landing with the seller, it is **held by our payment processor**. FlipLocker does not receive, hold, or control the purchase funds at any point — its own account only ever receives its service fee.",
+          "When a buyer accepts a deal, they pay through PayPal checkout. Instead of that payment landing with the seller, it is **held by our payment processor**. FlipLocker does not receive, hold, or control the purchase funds at any point, its own account only ever receives its service fee.",
           "The held payment is released to the seller after three things have happened: the card passed inspection and was documented at the hub, it was delivered to the buyer with a confirmed signature, and the 48-hour buyer review window closed. Until then, the money stays put.",
           { note: "Because the funds are held by the processor rather than by FlipLocker, FlipLocker is not a money transmitter and does not act as a custodian of the purchase funds. This is a deliberate, compliance-driven design." }
         ),
@@ -48,7 +48,7 @@ export const PILLARS: Pillar[] = [
           "Holding the payment defeats the most common ways money goes wrong in a private deal:",
           {
             list: [
-              "The seller can't disappear with your money — nothing is released until you've received the card.",
+              "The seller can't disappear with your money, nothing is released until you've received the card.",
               "There's no irreversible transfer to claw back, so reversal and overpayment scams don't work.",
               "The seller ships knowing the payment is real and waiting, so 'phantom buyer' risk is gone too.",
             ],
@@ -60,7 +60,7 @@ export const PILLARS: Pillar[] = [
         id: "refunds",
         heading: "If something goes wrong",
         body: p(
-          "If the card fails inspection at the hub — it doesn't match the seller's listing — the deal is flagged and the buyer is **automatically refunded** from the held funds. The documentation is shared with both parties and a return label is issued to the seller. The buyer is never left chasing a refund.",
+          "If the card fails inspection at the hub, it doesn't match the seller's listing, the deal is flagged and the buyer is **automatically refunded** from the held funds. The documentation is shared with both parties and a return label is issued to the seller. The buyer is never left chasing a refund.",
           "Every movement of money is itemized and timestamped on the [transparency timeline](/platform/transparency-timeline), so both parties can see exactly what happened and when."
         ),
       },
@@ -91,11 +91,11 @@ export const PILLARS: Pillar[] = [
     eyebrow: "Documentation",
     title: "Hub documentation",
     description:
-      "Every card is filmed, photographed, and tamper-sealed at the FlipLocker documentation hub, and matched against the grading company's registry — a neutral, timestamped record of exactly what moved.",
+      "Every card is filmed, photographed, and tamper-sealed at the FlipLocker documentation hub, and matched against the grading company's registry, a neutral, timestamped record of exactly what moved.",
     answer:
       "At the FlipLocker hub, documenting a card means confirming a physical card that matches the seller's listing, in a slab whose certificate number is active in the grading company's registry, then capturing it on a 15-second video and two photos with a numbered tamper seal logged to the deal. It is documentation, not grading and not a guarantee of genuineness: FlipLocker does not judge whether a card is genuine and does not guarantee it.",
     intro:
-      "The second dangerous moment in a private deal is the handoff — the card leaves the seller's hands with no neutral record of what it was or what condition it was in. FlipLocker's hub creates that record before the card ever reaches the buyer.",
+      "The second dangerous moment in a private deal is the handoff, the card leaves the seller's hands with no neutral record of what it was or what condition it was in. FlipLocker's hub creates that record before the card ever reaches the buyer.",
     sections: [
       {
         id: "what-we-capture",
@@ -118,7 +118,7 @@ export const PILLARS: Pillar[] = [
         heading: "Documentation, not a genuineness guarantee",
         body: p(
           "This is the distinction we never blur. Documentation is a neutral record of a card's identity, condition, and chain of custody. It is **not** grading and **not** a guarantee that the card is genuine.",
-          "FlipLocker does not perform forensic (chemical, paper, ink, or microscopic) examination, does not judge whether a card is genuine, and does not assign or re-judge a grade. A genuine certificate number reprinted onto a counterfeit slab can pass a registry lookup, and a resealed slab may not be detectable by inspection alone. That's why we always describe a card as documented — never as graded or guaranteed genuine.",
+          "FlipLocker does not perform forensic (chemical, paper, ink, or microscopic) examination, does not judge whether a card is genuine, and does not assign or re-judge a grade. A genuine certificate number reprinted onto a counterfeit slab can pass a registry lookup, and a resealed slab may not be detectable by inspection alone. That's why we always describe a card as documented, never as graded or guaranteed genuine.",
           "Read the full, honest version on [Security & limits](/security), or the plain-English explainer [What card documentation actually means](/insights/what-card-documentation-actually-means)."
         ),
       },
@@ -134,11 +134,11 @@ export const PILLARS: Pillar[] = [
     faqs: [
       {
         q: "Does the hub grade my card or confirm it's genuine?",
-        a: "No. The hub documents the card — films, photographs, tamper-seals it, and confirms the certificate number is active in the registry. It does not grade cards, does not judge whether a card is genuine, and does not guarantee a slab is genuine.",
+        a: "No. The hub documents the card, films, photographs, tamper-seals it, and confirms the certificate number is active in the registry. It does not grade cards, does not judge whether a card is genuine, and does not guarantee a slab is genuine.",
       },
       {
         q: "What is captured in the documentation?",
-        a: "A registry match, a physical-to-listing comparison, a 15-second video, two reference photos, and a numbered, logged tamper seal — all bound to the deal record.",
+        a: "A registry match, a physical-to-listing comparison, a 15-second video, two reference photos, and a numbered, logged tamper seal, all bound to the deal record.",
       },
       {
         q: "Can documentation be fooled?",
@@ -148,7 +148,7 @@ export const PILLARS: Pillar[] = [
     related: ["tamper-seal", "payments-held-by-processor", "media-auto-purge"],
     cta: {
       title: "A neutral record of exactly what moved",
-      body: "Every card documented on video and photo, matched to the registry, sealed and logged — before it reaches the buyer.",
+      body: "Every card documented on video and photo, matched to the registry, sealed and logged, before it reaches the buyer.",
     },
   },
 
@@ -157,7 +157,7 @@ export const PILLARS: Pillar[] = [
     eyebrow: "Delivery",
     title: "Insured signature delivery",
     description:
-      "Two insured USPS legs and a delivery signature that is never waived — so a card's journey from seller to buyer is tracked, covered, and confirmed at every step.",
+      "Two insured USPS legs and a delivery signature that is never waived, so a card's journey from seller to buyer is tracked, covered, and confirmed at every step.",
     answer:
       "FlipLocker ships every deal in two insured USPS legs: the seller ships to the hub, and after documentation the hub ships to the buyer with Signature Confirmation that is never waived. Both legs are tracked end-to-end, and the buyer's payment stays held by the processor until that final delivery signature lands.",
     intro:
@@ -170,8 +170,8 @@ export const PILLARS: Pillar[] = [
           "Instead of one blind shipment from seller to buyer, a FlipLocker deal has two documented legs:",
           {
             list: [
-              "**Leg 1 — seller to hub.** A prepaid, insured label is issued after a Terms acknowledgment, with a 72-hour ship window.",
-              "**Leg 2 — hub to buyer.** After documentation, the card is repacked and shipped with insured, signature-required delivery.",
+              "**Leg 1, seller to hub.** A prepaid, insured label is issued after a Terms acknowledgment, with a 72-hour ship window.",
+              "**Leg 2, hub to buyer.** After documentation, the card is repacked and shipped with insured, signature-required delivery.",
             ],
           },
           "Both legs are tracked end-to-end and shown on the [transparency timeline](/platform/transparency-timeline)."
@@ -181,7 +181,7 @@ export const PILLARS: Pillar[] = [
         id: "signature",
         heading: "A signature that's never waived",
         body: p(
-          "The buyer-leg signature is required and **never waived**. That single detail converts the most common delivery dispute — 'I never received it' — into a carrier-confirmed fact.",
+          "The buyer-leg signature is required and **never waived**. That single detail converts the most common delivery dispute, 'I never received it', into a carrier-confirmed fact.",
           { note: "Convenience is never worth waiving the signature on a valuable card. On FlipLocker, it isn't an option to skip." }
         ),
       },
@@ -189,7 +189,7 @@ export const PILLARS: Pillar[] = [
         id: "insurance",
         heading: "Coverage matched to the deal",
         body: p(
-          "Both legs are insured, and declared-value coverage is a transparent, itemized line at checkout — a pass-through of the carrier's coverage, sized to the sale price. Because the hub documents the card's condition on arrival, there's a neutral before-and-after record that makes any coverage claim straightforward rather than a fight.",
+          "Both legs are insured, and declared-value coverage is a transparent, itemized line at checkout, a pass-through of the carrier's coverage, sized to the sale price. Because the hub documents the card's condition on arrival, there's a neutral before-and-after record that makes any coverage claim straightforward rather than a fight.",
           "Learn how to pack a slab for these legs in our guide, [How to ship a graded card safely](/insights/how-to-ship-a-graded-card-safely)."
         ),
       },
@@ -211,7 +211,7 @@ export const PILLARS: Pillar[] = [
     related: ["hub-documentation", "transparency-timeline", "payments-held-by-processor"],
     cta: {
       title: "Tracked, insured, signed for",
-      body: "Two documented legs and a signature that's never waived — from the seller's hands to the buyer's.",
+      body: "Two documented legs and a signature that's never waived, from the seller's hands to the buyer's.",
     },
   },
 
@@ -220,9 +220,9 @@ export const PILLARS: Pillar[] = [
     eyebrow: "Transparency",
     title: "The transparency timeline",
     description:
-      "A timestamped, append-only record of every step in a deal — created, paid, shipped, documented, delivered, released — that both the buyer and seller watch in real time.",
+      "A timestamped, append-only record of every step in a deal, created, paid, shipped, documented, delivered, released, that both the buyer and seller watch in real time.",
     answer:
-      "Every FlipLocker deal has a transparency timeline: an append-only, timestamped log of each event from creation to payout. Both parties see the same live record — payment held, label issued, card received, documented, delivered with signature, review window, funds released — so no one has to take anyone's word for what happened.",
+      "Every FlipLocker deal has a transparency timeline: an append-only, timestamped log of each event from creation to payout. Both parties see the same live record, payment held, label issued, card received, documented, delivered with signature, review window, funds released, so no one has to take anyone's word for what happened.",
     intro:
       "Trust between strangers doesn't come from promises; it comes from a shared, tamper-evident record. The timeline is that record.",
     sections: [
@@ -230,7 +230,7 @@ export const PILLARS: Pillar[] = [
         id: "append-only",
         heading: "Append-only by design",
         body: p(
-          "The timeline is **append-only**: events are added as they happen and never quietly edited or removed. Each entry is timestamped and attributed to an actor — system, seller, buyer, hub, or admin — so the history of a deal is a fact, not a story either side can rewrite.",
+          "The timeline is **append-only**: events are added as they happen and never quietly edited or removed. Each entry is timestamped and attributed to an actor, system, seller, buyer, hub, or admin, so the history of a deal is a fact, not a story either side can rewrite.",
           "Both parties see the same timeline. There is no separate 'seller version' and 'buyer version.'"
         ),
       },
@@ -256,7 +256,7 @@ export const PILLARS: Pillar[] = [
         id: "why-it-matters",
         heading: "Why it matters",
         body: p(
-          "When money and a valuable object are moving between people who've never met, a shared source of truth is everything. The timeline means disputes are resolved by looking at what actually happened — backed by the [hub documentation](/platform/hub-documentation) and delivery signature — rather than by argument.",
+          "When money and a valuable object are moving between people who've never met, a shared source of truth is everything. The timeline means disputes are resolved by looking at what actually happened, backed by the [hub documentation](/platform/hub-documentation) and delivery signature, rather than by argument.",
           "It's also your receipt: a complete, exportable record of the transaction for your files."
         ),
       },
@@ -264,7 +264,7 @@ export const PILLARS: Pillar[] = [
     faqs: [
       {
         q: "Can the timeline be edited after the fact?",
-        a: "No. The timeline is append-only — events are added as they occur and are timestamped and attributed. History isn't quietly rewritten.",
+        a: "No. The timeline is append-only, events are added as they occur and are timestamped and attributed. History isn't quietly rewritten.",
       },
       {
         q: "Do the buyer and seller see the same thing?",
@@ -287,7 +287,7 @@ export const PILLARS: Pillar[] = [
     eyebrow: "Chain of custody",
     title: "The tamper-seal chain",
     description:
-      "A numbered tamper seal is applied and logged at the hub and bound to the deal before the card ships to the buyer — a physical link in the chain of custody.",
+      "A numbered tamper seal is applied and logged at the hub and bound to the deal before the card ships to the buyer, a physical link in the chain of custody.",
     answer:
       "Before a documented card leaves the FlipLocker hub, a numbered tamper seal is applied to its packaging and logged to the deal. The buyer can match the seal against the record on delivery, giving a physical, tamper-evident link between the card the hub documented and the package that arrives.",
     intro:
@@ -319,7 +319,7 @@ export const PILLARS: Pillar[] = [
         id: "limits",
         heading: "Honest limits",
         body: p(
-          "A tamper seal is a strong deterrent and a clear signal, not a magic guarantee. Like the rest of FlipLocker's process, it's **documentation** — a neutral, logged record — not a judgment that the card itself is genuine. Read the full limits on [Security & limits](/security)."
+          "A tamper seal is a strong deterrent and a clear signal, not a magic guarantee. Like the rest of FlipLocker's process, it's **documentation**, a neutral, logged record, not a judgment that the card itself is genuine. Read the full limits on [Security & limits](/security)."
         ),
       },
     ],
@@ -334,7 +334,7 @@ export const PILLARS: Pillar[] = [
       },
       {
         q: "Does the seal guarantee the card is genuine?",
-        a: "No. The seal is part of documentation and chain of custody — it does not judge whether a card or slab is genuine and does not guarantee it.",
+        a: "No. The seal is part of documentation and chain of custody, it does not judge whether a card or slab is genuine and does not guarantee it.",
       },
     ],
     related: ["hub-documentation", "signature-delivery", "transparency-timeline"],
@@ -349,9 +349,9 @@ export const PILLARS: Pillar[] = [
     eyebrow: "Privacy",
     title: "Media auto-purge",
     description:
-      "Inspection video and photos are automatically deleted 30 days after confirmed delivery by default — the transaction record is kept, the sensitive media isn't kept forever.",
+      "Inspection video and photos are automatically deleted 30 days after confirmed delivery by default, the transaction record is kept, the sensitive media isn't kept forever.",
     answer:
-      "By default, the inspection video and photos captured at the hub are automatically purged 30 days after a deal's confirmed delivery. The deal's transaction record is retained as your receipt, but the sensitive media isn't stored indefinitely — a privacy-by-default choice.",
+      "By default, the inspection video and photos captured at the hub are automatically purged 30 days after a deal's confirmed delivery. The deal's transaction record is retained as your receipt, but the sensitive media isn't stored indefinitely, a privacy-by-default choice.",
     intro:
       "Documentation should protect a deal, not become a permanent archive of your business. FlipLocker keeps the record and lets the media expire.",
     sections: [
@@ -362,7 +362,7 @@ export const PILLARS: Pillar[] = [
           "The hub captures a 15-second inspection video and two reference photos for each deal. By default, that media is **automatically purged 30 days after confirmed delivery**. The purge window is a platform setting, and each media item carries its own scheduled purge time once delivery is confirmed.",
           {
             list: [
-              "Kept: the deal's timestamped transaction record and timeline — your receipt.",
+              "Kept: the deal's timestamped transaction record and timeline, your receipt.",
               "Purged by default: the inspection video and reference photos, 30 days after delivery.",
             ],
           }
@@ -380,7 +380,7 @@ export const PILLARS: Pillar[] = [
         id: "how-it-fits",
         heading: "How it fits the rest of the process",
         body: p(
-          "Auto-purge is the privacy bookend to [hub documentation](/platform/hub-documentation). The two together mean you get a strong, neutral record exactly when it matters — through delivery and the review window — without that media living on indefinitely.",
+          "Auto-purge is the privacy bookend to [hub documentation](/platform/hub-documentation). The two together mean you get a strong, neutral record exactly when it matters, through delivery and the review window, without that media living on indefinitely.",
           "Details on data handling are in the [Privacy](/privacy) policy."
         ),
       },
@@ -402,7 +402,7 @@ export const PILLARS: Pillar[] = [
     related: ["hub-documentation", "transparency-timeline", "payments-held-by-processor"],
     cta: {
       title: "Documentation that doesn't overstay",
-      body: "The record you need, kept — the sensitive media, purged by default.",
+      body: "The record you need, kept, the sensitive media, purged by default.",
     },
   },
 ];
