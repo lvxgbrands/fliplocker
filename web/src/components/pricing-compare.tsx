@@ -21,8 +21,11 @@ function Cell({ value }: { value: string | boolean }) {
 }
 
 export function PricingCompare() {
+  // `relative` makes this scroll container the containing block for the table's
+  // absolutely-positioned `sr-only` nodes; without it they escape the clip and
+  // push the page into horizontal overflow on mobile.
   return (
-    <div className="overflow-x-auto">
+    <div className="relative overflow-x-auto">
       <table className="w-full min-w-[640px] border-collapse text-sm">
         <caption className="sr-only">Feature comparison across the Single, Plus, and Pro packages</caption>
         <thead>

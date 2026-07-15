@@ -54,6 +54,8 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-white">
       <a href="#main" className="skip-link">Skip to content</a>
+      {/* News ticker pinned at the very top; the sticky nav slides under it on scroll. */}
+      <NewsTicker />
       <MarketingNav dark />
       <main id="main">
 
@@ -93,9 +95,6 @@ export default async function Home() {
           <HeroShowcase />
         </div>
       </section>
-
-      {/* Live card-market news ticker */}
-      <NewsTicker />
 
       {/* How it works */}
       <section className="mx-auto max-w-6xl px-4 py-24">

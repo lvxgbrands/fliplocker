@@ -42,7 +42,7 @@ export async function NewsTicker() {
   if (!items.length) return null;
 
   return (
-    <section className="news-ticker relative overflow-hidden border-y border-white/10 bg-navy-950 py-3.5" aria-label="Sports-card market news">
+    <section className="news-ticker relative z-50 overflow-hidden border-b border-white/10 bg-navy-950 py-3.5" aria-label="Sports-card market news">
       <div className="pointer-events-none absolute left-0 top-0 z-10 flex h-full items-center pl-4 pr-3">
         <span className="kicker hidden rounded-full border border-white/10 bg-navy-950 px-2.5 py-1 text-[10px] text-brand-300 md:inline">
           Card market

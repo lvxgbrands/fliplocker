@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu, X, ArrowRight, BookOpen } from "lucide-react";
+import { ChevronDown, Menu, X, ArrowRight, BookOpen, Sparkles } from "lucide-react";
 import { Wordmark } from "@/components/brand";
 import { buttonClass } from "@/components/ui";
 import { TOP_NAV, type TopNavItem, type NavLeaf } from "@/lib/nav";
@@ -17,99 +17,85 @@ const INSIGHTS_LATEST: NavLeaf[] = ARTICLES.slice(0, 4).map((a) => ({
   icon: BookOpen,
 }));
 
-function LeafLink({ leaf, dark, onClick }: { leaf: NavLeaf; dark: boolean; onClick?: () => void }) {
+// Leaf links are always rendered on the white mega panel: brand-blue heading,
+// dark-grey description body — regardless of whether the nav itself is dark.
+function LeafLink({ leaf, onClick }: { leaf: NavLeaf; onClick?: () => void }) {
   const Icon = leaf.icon;
   return (
     <Link
       href={leaf.href}
       onClick={onClick}
-      className={`group/leaf flex gap-3 rounded-xl p-3 transition-colors ${
-        dark ? "hover:bg-white/5" : "hover:bg-ink-50"
-      }`}
+      className="group/leaf flex gap-3 rounded-xl p-3 transition-colors hover:bg-ink-50"
     >
-      <span
-        className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors ${
-          dark
-            ? "bg-white/5 text-brand-300 group-hover/leaf:bg-brand-500/20"
-            : "bg-brand-50 text-brand-600 group-hover/leaf:bg-brand-100"
-        }`}
-      >
+      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600 transition-colors group-hover/leaf:bg-brand-100">
         <Icon className="h-[18px] w-[18px]" strokeWidth={2} />
       </span>
       <span className="min-w-0">
-        <span className={`block text-sm font-semibold ${dark ? "text-white" : "text-ink-900"}`}>
-          {leaf.label}
-        </span>
-        <span className={`mt-0.5 block text-xs leading-snug ${dark ? "text-brand-100/60" : "text-ink-500"} line-clamp-2`}>
-          {leaf.desc}
-        </span>
+        <span className="block text-sm font-semibold text-brand-700">{leaf.label}</span>
+        <span className="mt-0.5 line-clamp-2 block text-xs leading-snug text-ink-600">{leaf.desc}</span>
       </span>
     </Link>
   );
 }
 
-function MegaPanel({
-  item,
-  dark,
-  onNavigate,
-}: {
-  item: TopNavItem;
-  dark: boolean;
-  onNavigate: () => void;
-}) {
+// The mega panel is always white/opaque. Its outer full-bleed bar (in
+// MarketingNav) supplies the background, border, and shadow; this renders the
+// constrained inner content: link columns on the left, a bright brand-blue
+// featured callout on the right.
+function MegaPanel({ item, onNavigate }: { item: TopNavItem; onNavigate: () => void }) {
   if (!item.mega) return null;
   const columns =
     item.label === "Insights"
       ? [{ heading: "Latest from the blog", links: INSIGHTS_LATEST }]
       : item.mega.columns;
+  const colClass =
+    columns.length >= 3 ? "sm:grid-cols-3" : columns.length === 2 ? "sm:grid-cols-2" : "";
 
   return (
-    <div
-      className={`grid gap-2 overflow-hidden rounded-2xl border p-3 shadow-lift sm:grid-cols-[1.6fr_1fr] ${
-        dark ? "border-white/10 bg-navy-900/95 backdrop-blur-xl" : "border-ink-200/70 bg-white"
-      }`}
-    >
-        <div className={`grid gap-1 ${columns.length > 1 ? "sm:grid-cols-2" : ""} p-1`}>
-          <Link
-            href={item.href}
-            onClick={onNavigate}
-            className={`col-span-full mx-1 mb-1 flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors ${
-              dark ? "bg-white/5 text-white hover:bg-white/10" : "bg-ink-50 text-ink-900 hover:bg-ink-100"
-            }`}
-          >
-            {item.label} overview
-            <ArrowRight className="h-3.5 w-3.5 text-brand-400" strokeWidth={2.5} />
-          </Link>
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
+      {/* Left — section overview CTA + link columns. */}
+      <div>
+        <Link
+          href={item.href}
+          onClick={onNavigate}
+          className="flex items-center justify-between rounded-xl bg-ink-50 px-4 py-2.5 text-sm font-semibold text-ink-900 transition-colors hover:bg-ink-100"
+        >
+          {item.label} overview
+          <ArrowRight className="h-3.5 w-3.5 text-brand-500" strokeWidth={2.5} />
+        </Link>
+        <div className={`mt-2 grid gap-x-4 ${colClass}`}>
           {columns.map((col) => (
             <div key={col.heading} className="min-w-0">
-              <p className={`kicker px-3 pb-1 pt-2 text-[10px] ${dark ? "text-brand-300/70" : "text-ink-400"}`}>
-                {col.heading}
-              </p>
+              <p className="kicker px-3 pb-1 pt-3 text-[10px] text-brand-600">{col.heading}</p>
               {col.links.map((leaf) => (
-                <LeafLink key={leaf.href} leaf={leaf} dark={dark} onClick={onNavigate} />
+                <LeafLink key={leaf.href} leaf={leaf} onClick={onNavigate} />
               ))}
             </div>
           ))}
         </div>
-        <Link
-          href={item.mega.featured.href}
-          onClick={onNavigate}
-          className={`group/feat relative flex flex-col justify-between overflow-hidden rounded-xl p-5 transition-transform hover:-translate-y-0.5 ${
-            dark ? "bg-gradient-to-br from-brand-600 to-brand-800" : "bg-gradient-to-br from-navy-900 to-navy-950"
-          }`}
-        >
-          <div className="dotgrid-blue absolute inset-0 opacity-40" aria-hidden />
-          <div className="relative">
-            <p className="kicker text-[10px] text-brand-300">{item.mega.featured.eyebrow}</p>
-            <p className="mt-2 text-base font-bold leading-snug text-white">{item.mega.featured.title}</p>
-            <p className="mt-2 text-xs leading-relaxed text-brand-100/80">{item.mega.featured.body}</p>
-          </div>
-          <span className="relative mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-white">
-            Learn more
-            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/feat:translate-x-0.5" strokeWidth={2.5} />
-          </span>
-        </Link>
       </div>
+
+      {/* Right — featured callout: light background, blue heading, grey body,
+          with a bright brand-blue accent that stays even in dark-nav mode. */}
+      <Link
+        href={item.mega.featured.href}
+        onClick={onNavigate}
+        className="group/feat relative flex flex-col justify-between overflow-hidden rounded-2xl border border-brand-100 bg-gradient-to-br from-brand-50 to-white p-5 transition-transform hover:-translate-y-0.5"
+      >
+        <div>
+          <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-brand-600 text-white shadow-soft">
+            <Sparkles className="h-[18px] w-[18px]" strokeWidth={2} />
+          </span>
+          <p className="kicker text-[10px] text-brand-600">{item.mega.featured.eyebrow}</p>
+          <p className="mt-2 text-base font-bold leading-snug text-brand-700">{item.mega.featured.title}</p>
+          <p className="mt-2 text-xs leading-relaxed text-ink-600">{item.mega.featured.body}</p>
+        </div>
+        <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700">
+          Learn more
+          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/feat:translate-x-0.5" strokeWidth={2.5} />
+        </span>
+      </Link>
+    </div>
   );
 }
 
@@ -218,17 +204,6 @@ export function MarketingNav({ dark = false }: { dark?: boolean }) {
           </ul>
         </nav>
 
-        {/* Mega panel — anchored to the nav bar, centered, so it never clips the viewport. */}
-        {activeMega ? (
-          <div
-            className="absolute left-1/2 top-full z-40 hidden w-[calc(100vw-2rem)] max-w-[56rem] -translate-x-1/2 pt-3 lg:block"
-            onMouseEnter={() => openNow(activeMega.label)}
-            onMouseLeave={closeSoon}
-          >
-            <MegaPanel item={activeMega} dark={dark} onNavigate={() => setOpen(null)} />
-          </div>
-        ) : null}
-
         {/* Actions */}
         <div className="flex items-center gap-2">
           <Link
@@ -239,9 +214,14 @@ export function MarketingNav({ dark = false }: { dark?: boolean }) {
           >
             Sign in
           </Link>
-          <Link href="/register" className={`hidden sm:inline-flex ${buttonClass("primary", "md")}`}>
-            Create a deal
-          </Link>
+          {/* Wrapper owns the responsive visibility so buttonClass's own
+              `inline-flex` can't override `hidden` and leak the CTA onto the
+              cramped mobile header (the drawer already carries this action). */}
+          <span className="hidden sm:inline-flex">
+            <Link href="/register" className={buttonClass("primary", "md")}>
+              Create a deal
+            </Link>
+          </span>
           <button
             type="button"
             aria-label="Open menu"
@@ -255,6 +235,21 @@ export function MarketingNav({ dark = false }: { dark?: boolean }) {
           </button>
         </div>
       </div>
+
+      {/* Mega panel — full-bleed, opaque white bar spanning the full viewport
+          width under the nav; inner content is constrained to max-w-6xl. It
+          stays white even when the nav itself is in dark mode. */}
+      {activeMega ? (
+        <div
+          className="absolute inset-x-0 top-full z-40 hidden border-b border-ink-200/70 bg-white shadow-lift lg:block"
+          onMouseEnter={() => openNow(activeMega.label)}
+          onMouseLeave={closeSoon}
+        >
+          <div className="mx-auto max-w-6xl px-4 py-6">
+            <MegaPanel item={activeMega} onNavigate={() => setOpen(null)} />
+          </div>
+        </div>
+      ) : null}
     </header>
 
     {/* Mobile drawer — rendered OUTSIDE <header> so the header's backdrop-blur
