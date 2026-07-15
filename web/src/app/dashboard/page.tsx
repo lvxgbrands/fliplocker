@@ -15,13 +15,13 @@ export default async function DashboardPage({
   const qs = params.size ? `?${params}` : "";
   if (user.role === "SELLER") redirect(`/seller${qs}`);
   if (user.role === "BUYER") redirect(`/buyer${qs}`);
+  if (user.role === "FACILITATOR") redirect("/hub");
+  if (user.role === "ADMIN") redirect("/admin");
 
-  // FACILITATOR and ADMIN portals arrive in Weeks 3–4.
   return (
     <PortalShell user={user} title="Dashboard">
       <div className="rounded-xl border border-slate-200 bg-white p-8 text-center text-slate-500">
-        The {user.role === "ADMIN" ? "admin" : "hub facilitator"} portal ships in a later
-        milestone. This build covers the seller and buyer transaction loop.
+        Welcome to FlipLocker.
       </div>
     </PortalShell>
   );
