@@ -29,17 +29,17 @@ function PhotoInput({
   const [preview, setPreview] = useState<string | null>(null);
   return (
     <label className="block cursor-pointer">
-      <span className="block text-sm font-medium text-slate-700 mb-1">{label}</span>
+      <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">{label}</span>
       <div
         className={`relative flex items-center justify-center rounded-xl border-2 border-dashed aspect-[3/4] max-h-56 w-full overflow-hidden ${
-          file ? "border-teal-400 bg-teal-50/40" : "border-slate-300 bg-slate-50 hover:border-teal-400"
+          file ? "border-brand-400 bg-brand-50/50 shadow-glow" : "border-ink-300 bg-ink-50 hover:border-brand-400 hover:bg-brand-50/30"
         }`}
       >
         {preview ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={preview} alt={label} className="absolute inset-0 h-full w-full object-cover" />
         ) : (
-          <span className="text-xs text-slate-400 px-4 text-center">
+          <span className="px-4 text-center text-xs font-medium text-ink-400">
             Tap to add photo
             <br />
             (JPG / PNG / WebP)
@@ -56,7 +56,7 @@ function PhotoInput({
           setPreview(f ? URL.createObjectURL(f) : null);
         }}
       />
-      {file ? <span className="block text-xs text-teal-700 mt-1 truncate">{file.name}</span> : null}
+      {file ? <span className="mt-1.5 block truncate text-xs font-semibold text-brand-700">{file.name}</span> : null}
     </label>
   );
 }
@@ -145,16 +145,16 @@ export function CreateDealForm({ minSalePriceCents }: { minSalePriceCents: numbe
   }
 
   const input =
-    "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white";
+    "w-full rounded-xl border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 shadow-[inset_0_1px_2px_rgb(18_55_54/0.04)] transition-colors duration-150 hover:border-ink-300 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-500/15";
 
   return (
     <form onSubmit={onSubmit} className="grid gap-8 lg:grid-cols-[1fr_320px]">
       <div className="space-y-6">
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 space-y-4">
-          <h2 className="font-semibold text-slate-900">Card details</h2>
+        <section className="space-y-4 rounded-2xl border border-ink-200/70 bg-white p-6 shadow-soft">
+          <h2 className="text-[15px] font-bold text-ink-900">Card details</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <label className="block">
-              <span className="block text-sm font-medium text-slate-700 mb-1">Sport</span>
+              <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">Sport</span>
               <select name="sport" required className={input} defaultValue="">
                 <option value="" disabled>
                   Select sport…
@@ -167,15 +167,15 @@ export function CreateDealForm({ minSalePriceCents }: { minSalePriceCents: numbe
               </select>
             </label>
             <label className="block">
-              <span className="block text-sm font-medium text-slate-700 mb-1">Card year</span>
+              <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">Card year</span>
               <input name="cardYear" type="number" min={1900} max={2027} required className={input} placeholder="2018" />
             </label>
             <label className="block sm:col-span-2">
-              <span className="block text-sm font-medium text-slate-700 mb-1">Player / character</span>
+              <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">Player / character</span>
               <input name="playerName" required className={input} placeholder="Luka Dončić" />
             </label>
             <label className="block">
-              <span className="block text-sm font-medium text-slate-700 mb-1">Grading company</span>
+              <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">Grading company</span>
               <select name="gradingCompany" required className={input} defaultValue="">
                 <option value="" disabled>
                   Select grader…
@@ -188,12 +188,12 @@ export function CreateDealForm({ minSalePriceCents }: { minSalePriceCents: numbe
               </select>
             </label>
             <label className="block">
-              <span className="block text-sm font-medium text-slate-700 mb-1">Certificate / serial #</span>
+              <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">Certificate / serial #</span>
               <input name="certNumber" required className={input} placeholder="82345678" />
             </label>
             <label className="block sm:col-span-2">
-              <span className="block text-sm font-medium text-slate-700 mb-1">
-                Description <span className="text-slate-400 font-normal">(optional)</span>
+              <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">
+                Description <span className="font-normal text-ink-400">(optional)</span>
               </span>
               <textarea name="description" rows={3} className={input} placeholder="Anything the buyer should know…" />
             </label>
@@ -204,11 +204,11 @@ export function CreateDealForm({ minSalePriceCents }: { minSalePriceCents: numbe
           </div>
         </section>
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 space-y-4">
-          <h2 className="font-semibold text-slate-900">Deal terms</h2>
+        <section className="space-y-4 rounded-2xl border border-ink-200/70 bg-white p-6 shadow-soft">
+          <h2 className="text-[15px] font-bold text-ink-900">Deal terms</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <label className="block">
-              <span className="block text-sm font-medium text-slate-700 mb-1">Agreed sale price (USD)</span>
+              <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">Agreed sale price (USD)</span>
               <input
                 name="salePrice"
                 type="number"
@@ -219,14 +219,14 @@ export function CreateDealForm({ minSalePriceCents }: { minSalePriceCents: numbe
                 placeholder={(minSalePriceCents / 100).toFixed(2)}
                 onChange={(e) => refreshQuote(e.target.value)}
               />
-              <span className="block text-xs text-slate-400 mt-1">
+              <span className="mt-1.5 block text-xs text-ink-400">
                 Minimum {money(minSalePriceCents)}
               </span>
             </label>
             <label className="block">
-              <span className="block text-sm font-medium text-slate-700 mb-1">Buyer&apos;s email</span>
+              <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">Buyer&apos;s email</span>
               <input name="buyerEmail" type="email" required className={input} placeholder="buyer@example.com" />
-              <span className="block text-xs text-slate-400 mt-1">
+              <span className="mt-1.5 block text-xs text-ink-400">
                 They&apos;ll get a private invitation to review &amp; accept
               </span>
             </label>
@@ -237,29 +237,29 @@ export function CreateDealForm({ minSalePriceCents }: { minSalePriceCents: numbe
         <button
           type="submit"
           disabled={busy}
-          className="w-full sm:w-auto rounded-xl bg-teal-600 px-8 py-3 text-sm font-semibold text-white hover:bg-teal-700 disabled:opacity-50"
+          className="w-full rounded-xl bg-gradient-to-b from-brand-500 to-brand-600 px-8 py-3.5 text-sm font-semibold text-white shadow-soft transition-all duration-200 hover:from-brand-600 hover:to-brand-700 hover:shadow-glow active:translate-y-px disabled:opacity-50 sm:w-auto"
         >
           {busy ? "Creating deal…" : "Create deal & invite buyer"}
         </button>
       </div>
 
-      <aside className="lg:sticky lg:top-24 h-fit rounded-2xl border border-teal-200 bg-teal-50/50 p-5">
-        <h3 className="font-semibold text-teal-900 mb-3">Checkout preview</h3>
+      <aside className="h-fit rounded-2xl border border-brand-200/80 bg-gradient-to-b from-brand-50/80 to-white p-5 shadow-soft lg:sticky lg:top-24">
+        <h3 className="mb-3 text-[15px] font-bold text-brand-900">Checkout preview</h3>
         {quote ? (
           <dl className="space-y-1.5 text-sm">
             {quote.feeBuyerCents > 0 && <Row label="Buyer service fee" cents={quote.feeBuyerCents} />}
             <Row label="Outbound shipping & signature" cents={quote.shippingCents} />
             {quote.insuranceCents > 0 && <Row label="Declared-value coverage" cents={quote.insuranceCents} />}
             {quote.taxCents > 0 && <Row label="Tax" cents={quote.taxCents} />}
-            <div className="border-t border-teal-200 my-2" />
+            <div className="my-2 border-t border-brand-200" />
             <Row label="Buyer pays" cents={quote.buyerTotalCents} bold />
             {quote.feeSellerCents > 0 && <Row label="Your service fee share" cents={-quote.feeSellerCents} />}
             <Row label="Your payout on completion" cents={quote.sellerPayoutCents} bold />
           </dl>
         ) : (
-          <p className="text-sm text-teal-800/70">{quoteNote ?? "Enter a sale price to preview the numbers."}</p>
+          <p className="text-sm text-brand-800/70">{quoteNote ?? "Enter a sale price to preview the numbers."}</p>
         )}
-        <p className="mt-4 text-xs text-teal-800/60 leading-relaxed">
+        <p className="mt-4 text-xs leading-relaxed text-brand-800/60">
           The buyer&apos;s payment is held securely by our payment processor and released to you after
           hub verification and signature-confirmed delivery.
         </p>
@@ -270,9 +270,9 @@ export function CreateDealForm({ minSalePriceCents }: { minSalePriceCents: numbe
 
 function Row({ label, cents, bold = false }: { label: string; cents: number; bold?: boolean }) {
   return (
-    <div className={`flex justify-between gap-3 ${bold ? "font-semibold text-teal-950" : "text-teal-900/80"}`}>
+    <div className={`flex justify-between gap-3 ${bold ? "font-bold text-brand-950" : "text-brand-900/75"}`}>
       <dt>{label}</dt>
-      <dd className="tabular-nums">{money(cents)}</dd>
+      <dd className="font-mono tabular-nums">{money(cents)}</dd>
     </div>
   );
 }

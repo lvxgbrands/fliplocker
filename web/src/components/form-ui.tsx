@@ -1,3 +1,6 @@
+import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { inputClass } from "@/components/ui";
+
 export function Field({
   label,
   name,
@@ -23,11 +26,9 @@ export function Field({
 }) {
   return (
     <label className="block">
-      <span className="block text-sm font-medium text-slate-700 mb-1">{label}</span>
+      <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">{label}</span>
       <input
-        className={`w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 ${
-          readOnly ? "bg-slate-50 text-slate-500" : "bg-white"
-        }`}
+        className={`${inputClass} ${readOnly ? "bg-ink-50 text-ink-400" : ""}`}
         name={name}
         type={type}
         required={required}
@@ -37,7 +38,7 @@ export function Field({
         step={step}
         min={min}
       />
-      {hint ? <span className="block text-xs text-slate-400 mt-1">{hint}</span> : null}
+      {hint ? <span className="mt-1.5 block text-xs text-ink-400">{hint}</span> : null}
     </label>
   );
 }
@@ -46,7 +47,7 @@ export function SubmitButton({ children }: { children: React.ReactNode }) {
   return (
     <button
       type="submit"
-      className="w-full rounded-lg bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-teal-700 disabled:opacity-50"
+      className="w-full rounded-xl bg-gradient-to-b from-brand-500 to-brand-600 px-4 py-3 text-sm font-semibold text-white shadow-soft transition-all duration-200 hover:from-brand-600 hover:to-brand-700 hover:shadow-glow active:translate-y-px disabled:opacity-50"
     >
       {children}
     </button>
@@ -56,7 +57,8 @@ export function SubmitButton({ children }: { children: React.ReactNode }) {
 export function ErrorNote({ message }: { message?: string }) {
   if (!message) return null;
   return (
-    <p className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">
+    <p className="flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
+      <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2.2} aria-hidden />
       {message}
     </p>
   );
@@ -65,7 +67,8 @@ export function ErrorNote({ message }: { message?: string }) {
 export function SuccessNote({ message }: { message?: string }) {
   if (!message) return null;
   return (
-    <p className="rounded-lg border border-teal-200 bg-teal-50 px-3 py-2 text-sm text-teal-700">
+    <p className="flex items-start gap-2.5 rounded-xl border border-brand-200 bg-brand-50 px-4 py-3 text-sm text-brand-800">
+      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2.2} aria-hidden />
       {message}
     </p>
   );

@@ -1,11 +1,19 @@
 import Link from "next/link";
+import { PackageOpen, Plus, Wallet, ArrowUpRight, Layers, PackageCheck } from "lucide-react";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/auth";
 import { StatusChip } from "@/components/deal-ui";
 import { VerifyEmailBanner } from "@/components/shell";
+import { buttonClass, EmptyState, Stat } from "@/components/ui";
 import { formatCents } from "@/lib/fees";
 import { cardTitle } from "@/lib/deals";
 import { SuccessNote } from "@/components/form-ui";
+
+const ACTIVE_STATUSES = [
+  "CREATED", "BUYER_NOTIFIED", "ACCEPTED", "PAID", "AWAITING_SELLER_SHIPMENT",
+  "IN_TRANSIT_TO_HUB", "RECEIVED_AT_HUB", "VERIFIED", "REPACKED",
+  "IN_TRANSIT_TO_BUYER", "DELIVERED_SIGNED",
+] as const;
 
 export default async function SellerDashboard({
   searchParams,
@@ -20,6 +28,9 @@ export default async function SellerDashboard({
   });
 
   const shipNow = deals.filter((d) => d.status === "AWAITING_SELLER_SHIPMENT" || d.status === "PAID");
+  const active = deals.filter((d) => (ACTIVE_STATUSES as readonly string[]).includes(d.status));
+  const completed = deals.filter((d) => d.status === "COMPLETE");
+  const earnedCents = completed.reduce((sum, d) => sum + d.sellerPayoutCents, 0);
 
   return (
     <div>
@@ -37,65 +48,82 @@ export default async function SellerDashboard({
       />
 
       {shipNow.length > 0 && (
-        <div className="mt-4 mb-2 rounded-xl border border-teal-300 bg-teal-50 px-4 py-3">
-          <p className="text-sm font-semibold text-teal-900">
-            📦 Payment received on {shipNow.length === 1 ? "a deal" : `${shipNow.length} deals`} — time to ship!
-          </p>
-          <ul className="mt-1 text-sm text-teal-800">
-            {shipNow.map((d) => (
-              <li key={d.id}>
-                <Link className="underline font-medium" href={`/seller/deals/${d.id}`}>
-                  {d.shortCode} — {cardTitle(d)}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <div className="mt-4 overflow-hidden rounded-2xl border border-brand-300/70 bg-gradient-to-r from-brand-50 via-brand-50 to-white shadow-soft">
+          <div className="flex items-start gap-3.5 px-5 py-4">
+            <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-b from-brand-500 to-brand-600 text-white shadow-soft">
+              <PackageCheck className="h-5 w-5" strokeWidth={2} />
+            </span>
+            <div>
+              <p className="font-bold text-brand-900">
+                Payment received on {shipNow.length === 1 ? "a deal" : `${shipNow.length} deals`} — time to ship!
+              </p>
+              <ul className="mt-1 space-y-0.5 text-sm text-brand-800">
+                {shipNow.map((d) => (
+                  <li key={d.id}>
+                    <Link
+                      className="inline-flex items-center gap-1 font-semibold underline decoration-brand-300 underline-offset-2 hover:decoration-brand-500"
+                      href={`/seller/deals/${d.id}`}
+                    >
+                      {d.shortCode} — {cardTitle(d)}
+                      <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       )}
 
-      <div className="flex items-center justify-between mt-6 mb-4">
+      {deals.length > 0 && (
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
+          <Stat label="Active deals" value={String(active.length)} icon={Layers} />
+          <Stat label="Completed" value={String(completed.length)} icon={PackageCheck} />
+          <Stat label="Earned payouts" value={formatCents(earnedCents)} icon={Wallet} accent />
+        </div>
+      )}
+
+      <div className="mb-5 mt-8 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Your deals</h1>
-        <Link
-          href="/seller/deals/new"
-          className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
-        >
-          + Create deal
+        <Link href="/seller/deals/new" className={buttonClass("primary", "md")}>
+          <Plus className="h-4 w-4" strokeWidth={2.5} /> Create deal
         </Link>
       </div>
 
       {deals.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center">
-          <p className="text-slate-500 mb-4">
-            No deals yet. Agreed a price with a buyer? Lock it in.
-          </p>
-          <Link
-            href="/seller/deals/new"
-            className="inline-block rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-700"
-          >
-            Create your first deal
-          </Link>
-        </div>
+        <EmptyState
+          icon={PackageOpen}
+          title="No deals yet"
+          body="Agreed a price with a buyer? Lock it in — we'll handle payment, verification, and delivery."
+          action={{ label: "Create your first deal", href: "/seller/deals/new" }}
+        />
       ) : (
-        <div className="rounded-2xl border border-slate-200 bg-white divide-y divide-slate-100">
-          {deals.map((d) => (
-            <Link
-              key={d.id}
-              href={`/seller/deals/${d.id}`}
-              className="flex items-center justify-between gap-4 px-4 py-4 hover:bg-slate-50 first:rounded-t-2xl last:rounded-b-2xl"
-            >
-              <div className="min-w-0">
-                <p className="font-semibold text-slate-900 truncate">{cardTitle(d)}</p>
-                <p className="text-xs text-slate-400">
-                  {d.shortCode} · buyer {d.buyerEmail} ·{" "}
-                  {new Date(d.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                </p>
-              </div>
-              <div className="flex items-center gap-3 shrink-0">
-                <span className="font-semibold tabular-nums">{formatCents(d.salePriceCents)}</span>
-                <StatusChip status={d.status} />
-              </div>
-            </Link>
-          ))}
+        <div className="overflow-hidden rounded-2xl border border-ink-200/70 bg-white shadow-soft">
+          <div className="divide-y divide-ink-100">
+            {deals.map((d) => (
+              <Link
+                key={d.id}
+                href={`/seller/deals/${d.id}`}
+                className="group flex items-center justify-between gap-4 px-5 py-4 transition-colors hover:bg-brand-50/40"
+              >
+                <div className="min-w-0">
+                  <p className="truncate font-semibold text-ink-900 group-hover:text-brand-800">
+                    {cardTitle(d)}
+                  </p>
+                  <p className="mt-0.5 text-xs text-ink-400">
+                    <span className="font-mono">{d.shortCode}</span> · buyer {d.buyerEmail} ·{" "}
+                    {new Date(d.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                  </p>
+                </div>
+                <div className="flex shrink-0 items-center gap-3">
+                  <span className="font-mono text-sm font-semibold tabular-nums text-ink-900">
+                    {formatCents(d.salePriceCents)}
+                  </span>
+                  <StatusChip status={d.status} />
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       )}
     </div>

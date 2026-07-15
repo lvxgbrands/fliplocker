@@ -1,12 +1,56 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   FlipLocker design tokens.
+   Typography: Sora (display) · Inter (UI/body) · JetBrains Mono (numbers/codes)
+   Color: custom teal brand ramp + warm slate neutrals + semantic status hues.
+--------------------------------------------------------------------------- */
+
 @theme {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-sora), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Brand ramp — slightly deeper + more saturated than stock teal. */
+  --color-brand-50: #effbf9;
+  --color-brand-100: #d5f5ef;
+  --color-brand-200: #aeeae0;
+  --color-brand-300: #76d8cb;
+  --color-brand-400: #40bfb1;
+  --color-brand-500: #1ba397;
+  --color-brand-600: #0f847c;
+  --color-brand-700: #0f6a65;
+  --color-brand-800: #115552;
+  --color-brand-900: #124745;
+  --color-brand-950: #042a2a;
+
+  /* Ink & surfaces (cool neutral with a hint of brand). */
+  --color-ink-50: #f7f9fa;
+  --color-ink-100: #eef1f4;
+  --color-ink-200: #d9dfe5;
+  --color-ink-300: #b8c2cc;
+  --color-ink-400: #8d9aa8;
+  --color-ink-500: #6b7a8a;
+  --color-ink-600: #556372;
+  --color-ink-700: #46505d;
+  --color-ink-800: #3d454f;
+  --color-ink-900: #363c44;
+  --color-ink-950: #23282e;
+
+  --shadow-soft: 0 1px 2px rgb(18 55 54 / 0.05), 0 4px 16px -4px rgb(18 55 54 / 0.08);
+  --shadow-lift: 0 2px 4px rgb(18 55 54 / 0.06), 0 12px 32px -8px rgb(18 55 54 / 0.16);
+  --shadow-glow: 0 0 0 1px rgb(27 163 151 / 0.12), 0 8px 32px -8px rgb(27 163 151 / 0.35);
 }
 
 body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+  @apply bg-ink-50 text-ink-950 antialiased;
+  font-feature-settings: "cv11", "ss01";
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
 /* Visible keyboard focus for all interactive elements. */
@@ -16,7 +60,7 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid #0d9488;
+  outline: 2px solid var(--color-brand-500);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -27,7 +71,7 @@ textarea:focus-visible,
   left: 8px;
   top: -48px;
   z-index: 50;
-  background: #0f766e;
+  background: var(--color-brand-700);
   color: #fff;
   padding: 8px 14px;
   border-radius: 8px;
@@ -36,4 +80,37 @@ textarea:focus-visible,
 }
 .skip-link:focus {
   top: 8px;
+}
+
+/* Subtle entrance for page content — respects reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Hero gradient mesh used on marketing/auth surfaces. */
+.mesh {
+  background:
+    radial-gradient(42rem 26rem at 18% -8%, rgb(27 163 151 / 0.14), transparent 60%),
+    radial-gradient(38rem 24rem at 85% -12%, rgb(64 191 177 / 0.12), transparent 55%),
+    radial-gradient(30rem 22rem at 55% 115%, rgb(15 106 101 / 0.08), transparent 60%),
+    linear-gradient(to bottom, #fbfdfd, #f7f9fa);
+}
+
+/* Fine dotted grid overlay for hero sections. */
+.dotgrid {
+  background-image: radial-gradient(rgb(18 71 69 / 0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
 }
