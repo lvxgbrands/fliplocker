@@ -14,7 +14,7 @@ const STEPS = [
   { icon: Mail, t: "Buyer is invited privately", b: "The buyer receives a one-time invitation link, claims it, and reviews the full itemized checkout before deciding." },
   { icon: CreditCard, t: "Buyer accepts & pays", b: "Payment runs through PayPal checkout. Funds are held securely by our payment processor — never by FlipLocker." },
   { icon: Tag, t: "Seller ships to the hub", b: "A prepaid, insured Leg 1 label is issued after a Terms acknowledgment. A 72-hour ship window keeps the deal moving." },
-  { icon: Building2, t: "Hub verifies & documents", b: "The card is checked in, filmed for 15 seconds, photographed twice, and its tamper seal is logged and bound to the deal." },
+  { icon: Building2, t: "Hub inspects & documents", b: "The card is checked in, filmed for 15 seconds, photographed twice, and its tamper seal is logged and bound to the deal." },
   { icon: Truck, t: "Delivered with a signature", b: "After a passing inspection the card is repacked and shipped to the buyer with Signature Confirmation — never waived." },
   { icon: PartyPopper, t: "Payout released", b: "A 48-hour buyer review window opens on delivery. Approve it, or let it lapse, and the seller's payout plus FlipLocker's fee are released." },
 ];

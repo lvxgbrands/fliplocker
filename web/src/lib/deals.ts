@@ -89,7 +89,7 @@ export const STATUS_LABELS: Record<DealStatus, string> = {
   AWAITING_SELLER_SHIPMENT: "Awaiting seller shipment",
   IN_TRANSIT_TO_HUB: "In transit to FlipLocker hub",
   RECEIVED_AT_HUB: "Received at hub",
-  VERIFIED: "Verified & documented",
+  VERIFIED: "Documented",
   REPACKED: "Repacked for delivery",
   IN_TRANSIT_TO_BUYER: "On the way to buyer",
   DELIVERED_SIGNED: "Delivered — signature confirmed",

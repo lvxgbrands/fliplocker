@@ -65,8 +65,8 @@ const EVENTS = {
     { type: "LEG1_IN_TRANSIT", actor: "system", message: "In transit to the hub." },
   ],
   hub: [{ type: "RECEIVED_AT_HUB", actor: "system", message: "Package received at the hub." }],
-  verified: [
-    { type: "VERIFIED", actor: "facilitator", message: "Card verified and documented at the hub." },
+  documented: [
+    { type: "VERIFIED", actor: "facilitator", message: "Card documented at the hub." },
     { type: "REPACKED", actor: "facilitator", message: "Card repacked for delivery." },
     { type: "LEG2_IN_TRANSIT", actor: "system", message: "Shipped to the buyer with Signature Confirmation." },
   ],
@@ -84,7 +84,7 @@ function eventsFor(status: DealStatus) {
   if (has(["ACCEPTED", "PAID", "AWAITING_SELLER_SHIPMENT", "IN_TRANSIT_TO_HUB", "RECEIVED_AT_HUB", "VERIFIED", "REPACKED", "IN_TRANSIT_TO_BUYER", "DELIVERED_SIGNED", "FUNDS_RELEASED", "COMPLETE", "FLAGGED"])) e.push(...EVENTS.paid);
   if (has(["IN_TRANSIT_TO_HUB", "RECEIVED_AT_HUB", "VERIFIED", "REPACKED", "IN_TRANSIT_TO_BUYER", "DELIVERED_SIGNED", "FUNDS_RELEASED", "COMPLETE", "FLAGGED"])) e.push(...EVENTS.shipped1);
   if (has(["RECEIVED_AT_HUB", "VERIFIED", "REPACKED", "IN_TRANSIT_TO_BUYER", "DELIVERED_SIGNED", "FUNDS_RELEASED", "COMPLETE", "FLAGGED"])) e.push(...EVENTS.hub);
-  if (has(["IN_TRANSIT_TO_BUYER", "DELIVERED_SIGNED", "FUNDS_RELEASED", "COMPLETE"])) e.push(...EVENTS.verified);
+  if (has(["IN_TRANSIT_TO_BUYER", "DELIVERED_SIGNED", "FUNDS_RELEASED", "COMPLETE"])) e.push(...EVENTS.documented);
   if (has(["DELIVERED_SIGNED", "FUNDS_RELEASED", "COMPLETE"])) e.push(...EVENTS.delivered);
   if (has(["COMPLETE"])) e.push(...EVENTS.released);
   if (status === "FLAGGED") e.push({ type: "FLAGGED", actor: "facilitator", message: "Condition mismatch flagged at the hub." });

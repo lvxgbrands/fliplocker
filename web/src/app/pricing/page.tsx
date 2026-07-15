@@ -30,7 +30,7 @@ export default async function Pricing() {
   ];
 
   const commonFeatures = [
-    "Hub verification & documentation",
+    "Hub inspection & documentation",
     "15-second inspection video + 2 photos",
     "Tamper-seal logging",
     "Insured two-leg shipping, signature delivery",
@@ -120,7 +120,7 @@ export default async function Pricing() {
               totalCents={quote.buyerTotalCents}
               lines={[
                 { label: "Card (peer-to-peer amount)", cents: quote.salePriceCents, hint: "Paid to the seller, held until delivery", emphasize: true },
-                ...(quote.feeBuyerCents > 0 ? [{ label: "FlipLocker service fee", cents: quote.feeBuyerCents, hint: "Verification, documentation & logistics" }] : []),
+                ...(quote.feeBuyerCents > 0 ? [{ label: "FlipLocker service fee", cents: quote.feeBuyerCents, hint: "Documentation & logistics" }] : []),
                 { label: "Outbound shipping & signature", cents: quote.shippingCents },
                 ...(quote.insuranceCents > 0 ? [{ label: "Declared-value coverage", cents: quote.insuranceCents }] : []),
               ]}

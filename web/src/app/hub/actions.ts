@@ -55,10 +55,10 @@ export async function submitInspectionAction(input: InspectionInput): Promise<{ 
   const photoPrefix = `hub-photos/${user.id}/`;
   const videoPrefix = `hub-videos/${user.id}/`;
   if (!data.photo1Key.startsWith(photoPrefix) || !data.photo2Key.startsWith(photoPrefix)) {
-    return { error: "Reference photos could not be verified — please re-upload." };
+    return { error: "Reference photos could not be documented — please re-upload." };
   }
   if (data.videoKey && !data.videoKey.startsWith(videoPrefix)) {
-    return { error: "Inspection video could not be verified — please re-upload." };
+    return { error: "Inspection video could not be documented — please re-upload." };
   }
 
   // Bind media.
@@ -101,13 +101,13 @@ export async function submitInspectionAction(input: InspectionInput): Promise<{ 
     await transitionDeal(deal.id, "VERIFIED", {
       actor: "facilitator",
       type: "VERIFIED",
-      message: `Card verified and documented at the hub. Tamper-seal serial ${data.tamperSealSerial} logged.`,
+      message: `Card documented at the hub. Tamper-seal serial ${data.tamperSealSerial} logged.`,
     });
     await db.deal.update({ where: { id: deal.id }, data: { verifiedAt: new Date() } });
     for (const to of [deal.seller.email, deal.buyerEmail]) {
       const mail = genericEmail(
-        `Verified & documented — deal ${deal.shortCode}`,
-        "Card verified &amp; documented ✔",
+        `Documented — deal ${deal.shortCode}`,
+        "Card inspected &amp; documented ✔",
         [
           `The card for deal <strong>${deal.shortCode}</strong> was inspected at the FlipLocker hub, documented on video and photos, and its tamper seal logged.`,
           `It will now be repacked and shipped to the buyer with signature confirmation.`,
@@ -124,10 +124,10 @@ export async function submitInspectionAction(input: InspectionInput): Promise<{ 
       payload: { tamperSealSerial: data.tamperSealSerial },
     });
     await db.deal.update({ where: { id: deal.id }, data: { flagReason: data.notes || "Condition mismatch at hub" } });
-    // Failed verification → automatic buyer refund (A-5).
+    // Failed documentation → automatic buyer refund (A-5).
     await refundDeal(deal.id, {
       actor: "facilitator",
-      reason: "The card did not pass hub verification (condition mismatch).",
+      reason: "The card did not pass hub documentation (condition mismatch).",
       toStatus: "REFUNDED",
     });
   }

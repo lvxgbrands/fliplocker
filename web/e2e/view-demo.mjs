@@ -60,21 +60,21 @@ await page.fill('input[name="password"]', SELLER.pass);
 await shot(page, "seller-register");
 await page.click('button:has-text("Create account")');
 await page.waitForURL("**/seller**");
-if (!(await page.textContent("body")).includes("verify")) fail("no verification banner after registration");
+if (!(await page.textContent("body")).includes("document")) fail("no documentation banner after registration");
 await shot(page, "seller-dashboard-unverified");
 console.log("✔ AC1a: seller registered, logged in");
 
-// ---- 3. Verify email via staging mailbox ----
+// ---- 3. Confirm email via staging mailbox ----
 await page.goto(`${BASE}/dev/mailbox`);
-await page.click("text=Verify your FlipLocker email");
+await page.click("text=Confirm your FlipLocker email");
 const verifyLink = await page.locator('a[href*="/verify-email/"]').first().getAttribute("href");
-if (!verifyLink) fail("verification link not found in mailbox");
-await shot(page, "mailbox-verification-email");
+if (!verifyLink) fail("confirmation link not found in mailbox");
+await shot(page, "mailbox-documentation-email");
 await page.goto(verifyLink);
 await page.waitForURL("**/seller**");
-if (!(await page.textContent("body")).includes("Email verified")) fail("email verification did not confirm");
-await shot(page, "seller-verified");
-console.log("✔ AC1b: email verified via emailed link");
+if (!(await page.textContent("body")).includes("Email confirmed")) fail("email confirmation did not confirm");
+await shot(page, "seller-documented");
+console.log("✔ AC1b: email confirmed via emailed link");
 
 // ---- 4. Seller creates the deal ----
 await page.click("text=Create your first deal");
@@ -106,7 +106,7 @@ console.log("✔ AC1c: deal created (card details, photos, price, buyer email)")
 
 // ---- 5. Invitation email sent ----
 await page.goto(`${BASE}/dev/mailbox`);
-const inviteRow = page.locator("a", { hasText: "You're invited to a verified card deal" }).first();
+const inviteRow = page.locator("a", { hasText: "You're invited to a documented card deal" }).first();
 if (!(await inviteRow.count())) fail("buyer invitation email not in outbox");
 await inviteRow.click();
 const inviteLink = await page.locator('a[href*="/invite/"]').first().getAttribute("href");

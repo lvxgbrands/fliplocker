@@ -19,7 +19,7 @@ export default function PrivacyPage() {
 
       <h2>2. How we use it</h2>
       <p>
-        To operate the verification and logistics service: create and track deals, send lifecycle
+        To operate the documentation and logistics service: create and track deals, send lifecycle
         notifications by email and text, process payments through our payment processor, and produce
         transaction records for the parties.
       </p>

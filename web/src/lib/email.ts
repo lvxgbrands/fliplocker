@@ -64,8 +64,8 @@ function layout(title: string, bodyHtml: string, cta?: { label: string; url: str
         </td></tr>
         <tr><td style="padding:18px 32px;background:${BRAND.bg};border-top:1px solid ${BRAND.border}">
           <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#6b7280">
-            FlipLocker — verified &amp; documented card deals, invitation-only.
-            Buyer payments are held securely by our payment processor until verification and delivery are complete.
+            FlipLocker — inspected &amp; documented card deals, invitation-only.
+            Buyer payments are held securely by our payment processor until documentation and delivery are complete.
           </p>
         </td></tr>
       </table>
@@ -91,12 +91,12 @@ export function genericEmail(
 
 export function verifyEmailTemplate(url: string) {
   return {
-    subject: "Verify your FlipLocker email",
+    subject: "Confirm your FlipLocker email",
     html: layout(
       "Confirm your email address",
-      `<p style="font-size:14px;line-height:1.6">Welcome to FlipLocker. Click below to verify your email and activate your account.</p>
+      `<p style="font-size:14px;line-height:1.6">Welcome to FlipLocker. Click below to confirm your email and activate your account.</p>
        <p style="font-size:13px;color:#6b7280">This link expires in 24 hours.</p>`,
-      { label: "Verify email", url }
+      { label: "Confirm email", url }
     ),
   };
 }
@@ -121,7 +121,7 @@ export function buyerInviteTemplate(args: {
   shortCode: string;
 }) {
   return {
-    subject: `You're invited to a verified card deal — ${args.cardTitle}`,
+    subject: `You're invited to a documented card deal — ${args.cardTitle}`,
     html: layout(
       `${args.sellerName} sent you a deal`,
       `<p style="font-size:14px;line-height:1.6">
@@ -132,7 +132,7 @@ export function buyerInviteTemplate(args: {
          <p style="margin:6px 0 0;font-size:14px">Agreed price: <strong>${money(args.salePriceCents)}</strong></p>
        </div>
        <p style="font-size:14px;line-height:1.6">Review the card photos and full cost breakdown, then accept or decline.
-       Your payment is held securely by our payment processor while the card is verified and documented at the FlipLocker hub — it isn't released to the seller until delivery is complete.</p>`,
+       Your payment is held securely by our payment processor while the card is documented at the FlipLocker hub — it isn't released to the seller until delivery is complete.</p>`,
       { label: "Review this deal", url: args.url }
     ),
   };
@@ -149,7 +149,7 @@ export function paymentReceivedSellerTemplate(args: {
     html: layout(
       "Payment received — time to ship 📦",
       `<p style="font-size:14px;line-height:1.6">The buyer's payment for <strong>${args.cardTitle}</strong> (deal <strong>${args.shortCode}</strong>) has cleared and is held securely by our payment processor.</p>
-       <p style="font-size:14px;line-height:1.6">Your payout of <strong>${money(args.sellerPayoutCents)}</strong> is released after the card is verified at the hub and delivery is signed for.</p>
+       <p style="font-size:14px;line-height:1.6">Your payout of <strong>${money(args.sellerPayoutCents)}</strong> is released after the card is documented at the hub and delivery is signed for.</p>
        <p style="font-size:14px;line-height:1.6"><strong>Next step:</strong> your prepaid Leg&nbsp;1 shipping label to the FlipLocker hub is being prepared. A 72-hour ship window applies once the label is issued.</p>`,
       { label: "Open your deal", url: args.url }
     ),
@@ -167,7 +167,7 @@ export function buyerReceiptTemplate(args: {
     html: layout(
       "Payment confirmed ✔",
       `<p style="font-size:14px;line-height:1.6">Your payment of <strong>${money(args.buyerTotalCents)}</strong> for <strong>${args.cardTitle}</strong> is confirmed and held securely by our payment processor.</p>
-       <p style="font-size:14px;line-height:1.6">The seller has been alerted to ship the card to the FlipLocker hub, where it will be verified and documented on video before it heads your way with signature delivery. Follow every step on your deal timeline.</p>`,
+       <p style="font-size:14px;line-height:1.6">The seller has been alerted to ship the card to the FlipLocker hub, where it will be documented on video before it heads your way with signature delivery. Follow every step on your deal timeline.</p>`,
       { label: "Track your deal", url: args.url }
     ),
   };

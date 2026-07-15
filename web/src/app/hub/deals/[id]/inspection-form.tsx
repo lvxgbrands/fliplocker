@@ -102,7 +102,7 @@ export function InspectionForm({ dealId }: { dealId: string }) {
           disabled={busy !== null}
           className="rounded-lg bg-brand-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-brand-700 disabled:opacity-50"
         >
-          {busy === "PASS" ? "Submitting…" : "Pass — verified"}
+          {busy === "PASS" ? "Submitting…" : "Pass — documented"}
         </button>
         <button
           type="button"

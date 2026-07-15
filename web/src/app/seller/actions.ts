@@ -35,7 +35,7 @@ export type CreateDealInput = z.infer<typeof createDealSchema>;
 export async function createDealAction(input: CreateDealInput): Promise<{ error?: string }> {
   const user = await requireUser();
   if (!user.emailVerified) {
-    return { error: "Verify your email before creating a deal — check your inbox for the link." };
+    return { error: "Confirm your email before creating a deal — check your inbox for the link." };
   }
 
   const parsed = createDealSchema.safeParse(input);
@@ -50,7 +50,7 @@ export async function createDealAction(input: CreateDealInput): Promise<{ error?
   // Uploaded media must belong to this seller's presigned namespace.
   const prefix = `deal-photos/${user.id}/`;
   if (!data.frontPhotoKey.startsWith(prefix) || !data.rearPhotoKey.startsWith(prefix)) {
-    return { error: "Photo upload could not be verified — please re-upload." };
+    return { error: "Photo upload could not be documented — please re-upload." };
   }
 
   const salePriceCents = Math.round(data.salePriceDollars * 100);

@@ -29,9 +29,9 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FlipLocker — verified & documented card deals",
+  title: "FlipLocker — documented card deals",
   description:
-    "Private, invitation-only verification and logistics for peer-to-peer graded card deals. Payments held securely by our payment processor until verification and delivery are complete.",
+    "Private, invitation-only documentation and logistics for peer-to-peer graded card deals. Payments held securely by our payment processor until documentation and delivery are complete.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

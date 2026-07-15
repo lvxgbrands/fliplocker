@@ -262,7 +262,7 @@ export function CreateDealForm({ minSalePriceCents }: { minSalePriceCents: numbe
         )}
         <p className="mt-4 text-xs leading-relaxed text-brand-800/60">
           The buyer&apos;s payment is held securely by our payment processor and released to you after
-          hub verification and signature-confirmed delivery.
+          hub documentation and signature-confirmed delivery.
         </p>
       </aside>
     </form>

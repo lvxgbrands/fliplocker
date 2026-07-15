@@ -38,7 +38,7 @@ describe("deal state machine", () => {
     expect(ALLOWED_TRANSITIONS.BUYER_NOTIFIED).not.toContain("REFUNDED");
   });
 
-  it("routes failed verification to FLAGGED then REFUNDED", () => {
+  it("routes failed documentation to FLAGGED then REFUNDED", () => {
     expect(ALLOWED_TRANSITIONS.RECEIVED_AT_HUB).toContain("FLAGGED");
     expect(ALLOWED_TRANSITIONS.FLAGGED).toContain("REFUNDED");
   });

@@ -23,11 +23,11 @@ export default async function HubQueue({
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold">Hub — verification queue</h1>
+        <h1 className="text-2xl font-bold">Hub — documentation queue</h1>
         <p className="text-sm text-ink-500 mt-1">Check in inbound packages and document each card.</p>
       </div>
 
-      <SuccessNote message={shipped ? `Deal ${shipped} verified, repacked, and shipped to the buyer.` : undefined} />
+      <SuccessNote message={shipped ? `Deal ${shipped} documented, repacked, and shipped to the buyer.` : undefined} />
       <ErrorNote message={error} />
 
       <section className="rounded-2xl border border-ink-200 bg-white p-5">

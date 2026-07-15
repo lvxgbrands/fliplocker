@@ -38,12 +38,12 @@ export const SHOWCASE: ShowcaseCard[] = [
 ];
 
 export const TICKER = [
-  "Hub-verified on video",
+  "Hub-documented on video",
   "Funds held by our payment processor",
   "Signature delivery — never waived",
   "Tamper-sealed & insured in transit",
   "Private & invitation-only",
-  "Card verified & documented",
+  "Card documented",
 ];
 
 export const FAQ: { q: string; a: string }[] = [
@@ -52,8 +52,8 @@ export const FAQ: { q: string; a: string }[] = [
     a: "The buyer pays through PayPal checkout and the funds are held securely by our payment processor — never by FlipLocker. They're released to the seller only after the card passes hub inspection and is delivered with a confirmed signature, plus a 48-hour buyer review window. FlipLocker's account receives only its service fee.",
   },
   {
-    q: "What does verification cover — and what does it not?",
-    a: "The hub confirms a physical card matching the seller's listing, in a slab whose certificate number is valid and active in the grading company's registry, and documents it on a 15-second video and two photos with a logged tamper seal. This is an administrative data-match and documentation service. It is not a forensic examination: FlipLocker does not chemically or microscopically examine a card and cannot, for example, detect a genuine certificate number reprinted onto a counterfeit slab, or a slab that was opened and resealed. Cards are verified and documented — not graded or guaranteed genuine.",
+    q: "What does documentation cover — and what does it not?",
+    a: "The hub confirms a physical card matching the seller's listing, in a slab whose certificate number is valid and active in the grading company's registry, and documents it on a 15-second video and two photos with a logged tamper seal. This is an administrative data-match and documentation service. It is not a forensic examination: FlipLocker does not chemically or microscopically examine a card and cannot, for example, detect a genuine certificate number reprinted onto a counterfeit slab, or a slab that was opened and resealed. Cards are documented — not graded or guaranteed genuine.",
   },
   {
     q: "What are the fees?",
@@ -61,7 +61,7 @@ export const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "How does shipping work?",
-    a: "Two insured USPS legs: the seller ships to the FlipLocker hub, and after verification the hub ships to the buyer with Signature Confirmation, which is never waived. Both legs are tracked end-to-end on the deal timeline.",
+    a: "Two insured USPS legs: the seller ships to the FlipLocker hub, and after documentation the hub ships to the buyer with Signature Confirmation, which is never waived. Both legs are tracked end-to-end on the deal timeline.",
   },
   {
     q: "What are the timelines?",

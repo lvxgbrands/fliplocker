@@ -3,7 +3,7 @@ import { ShieldCheck, ScanLine, Image as ImageIcon, Stamp, Video, Lock, Trash2, 
 import { buttonClass } from "@/components/ui";
 import { MarketingNav, MarketingFooter, SectionKicker } from "@/components/marketing";
 
-export const metadata = { title: "Security & verification — FlipLocker" };
+export const metadata = { title: "Security & documentation — FlipLocker" };
 
 const PROVES = [
   { icon: ScanLine, t: "Registry status check", b: "The certificate number on the slab is confirmed valid and active in the grading company's registry." },
@@ -14,9 +14,9 @@ const PROVES = [
 
 const LIMITS = [
   "FlipLocker is not a grading service and does not perform forensic (chemical, paper, ink, or microscopic) examination.",
-  "A genuine certificate number reprinted onto a counterfeit slab can pass a registry lookup — verification is an administrative data-match, not a guarantee of genuineness.",
+  "A genuine certificate number reprinted onto a counterfeit slab can pass a registry lookup — documentation is an administrative data-match, not a guarantee of genuineness.",
   "A slab that has been opened and resealed may not be detectable by inspection alone.",
-  "Cards are described as verified and documented — never as guaranteed genuine, fraud-proof, or forensically examined.",
+  "Cards are described as documented — never as guaranteed genuine, fraud-proof, or forensically examined.",
 ];
 
 export default function Security() {
@@ -27,9 +27,9 @@ export default function Security() {
         <div className="dotgrid-blue absolute inset-0" aria-hidden />
         <div className="relative mx-auto max-w-3xl px-4 py-20 text-center">
           <ShieldCheck className="mx-auto mb-5 h-12 w-12 text-brand-400" strokeWidth={1.8} />
-          <SectionKicker>Security &amp; verification</SectionKicker>
+          <SectionKicker>Security &amp; documentation</SectionKicker>
           <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-            What our verification proves — and what it doesn&apos;t
+            What our documentation proves — and what it doesn&apos;t
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-lg text-brand-100/80">
             Honesty is the whole point. Here&apos;s exactly what happens to a card at the FlipLocker
@@ -75,7 +75,7 @@ export default function Security() {
 
       <section className="border-t border-ink-200/60 bg-ink-50">
         <div className="mx-auto max-w-4xl px-4 py-16 text-center">
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Verified &amp; documented — clearly</h2>
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Inspected &amp; documented — clearly</h2>
           <p className="mx-auto mt-3 max-w-xl text-ink-500">
             No overclaiming. You get a documented, insured, signature-delivered transaction and a full
             record of everything that happened to the card.

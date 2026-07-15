@@ -77,7 +77,7 @@ export default async function HubDealPage({
             </section>
           ) : deal.status === "VERIFIED" ? (
             <section className="rounded-xl border border-brand-200 bg-brand-50/50 p-4 space-y-3">
-              <p className="text-sm text-brand-900 font-semibold">Verified ✔ — ready to repack</p>
+              <p className="text-sm text-brand-900 font-semibold">Documented ✔ — ready to repack</p>
               <p className="text-xs text-brand-800">
                 Repack the card and generate the Leg 2 label. Delivery requires a signature.
               </p>

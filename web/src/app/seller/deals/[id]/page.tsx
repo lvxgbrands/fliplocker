@@ -85,7 +85,7 @@ export default async function SellerDealPage({
                   <Link href="/terms" target="_blank" className="font-semibold text-white underline">
                     Terms of Service
                   </Link>{" "}
-                  and understand FlipLocker verifies and documents the card (it does not grade it).
+                  and understand FlipLocker documents the card (it does not grade it).
                 </span>
               </label>
               <button
@@ -148,7 +148,7 @@ export default async function SellerDealPage({
               shipping &amp; coverage lines).
             </p>
             <p>
-              Funds are held by our payment processor and released after hub verification and
+              Funds are held by our payment processor and released after hub documentation and
               signature-confirmed delivery. FlipLocker receives only its service fee.
             </p>
           </div>

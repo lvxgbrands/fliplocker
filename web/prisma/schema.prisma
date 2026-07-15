@@ -187,7 +187,7 @@ model DealMedia {
   @@map("deal_media")
 }
 
-// ---------- Hub verification (facilitator) ----------
+// ---------- Hub documentation (facilitator) ----------
 
 enum InspectionResult {
   PENDING
@@ -334,7 +334,7 @@ model CheckoutConfig {
   // Leg 1 label charge billed to the seller (configurable, A-3).
   sellerLabelChargeCents Int      @default(0)
   // Hub ship-to address (client-provided at kickoff).
-  hubName                String   @default("FlipLocker Verification Hub")
+  hubName                String   @default("FlipLocker Documentation Hub")
   hubStreet              String   @default("000 Placeholder St")
   hubCity                String   @default("Austin")
   hubState               String   @default("TX")

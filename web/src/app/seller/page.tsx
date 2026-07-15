@@ -18,7 +18,7 @@ const ACTIVE_STATUSES = [
 export default async function SellerDashboard({
   searchParams,
 }: {
-  searchParams: Promise<{ verification_sent?: string; verified?: string; welcome?: string }>;
+  searchParams: Promise<{ verification_sent?: string; documented?: string; welcome?: string }>;
 }) {
   const user = await requireUser();
   const params = await searchParams;
@@ -37,12 +37,12 @@ export default async function SellerDashboard({
       <VerifyEmailBanner user={user} />
       <SuccessNote
         message={
-          params.verified
-            ? "Email verified — you're all set."
+          params.documented
+            ? "Email confirmed — you're all set."
             : params.verification_sent
-              ? "Verification email sent — check your inbox."
+              ? "Confirmation email sent — check your inbox."
               : params.welcome
-                ? "Welcome to FlipLocker! We sent a verification link to your email."
+                ? "Welcome to FlipLocker! We sent a confirmation link to your email."
                 : undefined
         }
       />
@@ -94,7 +94,7 @@ export default async function SellerDashboard({
         <EmptyState
           icon={PackageOpen}
           title="No deals yet"
-          body="Agreed a price with a buyer? Lock it in — we'll handle payment, verification, and delivery."
+          body="Agreed a price with a buyer? Lock it in — we'll handle payment, documentation, and delivery."
           action={{ label: "Create your first deal", href: "/seller/deals/new" }}
         />
       ) : (

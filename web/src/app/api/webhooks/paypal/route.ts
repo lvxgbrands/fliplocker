@@ -3,15 +3,15 @@ import { verifyWebhookSignature } from "@/lib/paypal";
 import { captureAndMarkPaid } from "@/lib/checkout";
 import { db } from "@/lib/db";
 
-// PayPal webhook receiver. In sandbox/live the signature is verified with
+// PayPal webhook receiver. In sandbox/live the signature is documented with
 // PayPal before anything is processed. captureAndMarkPaid is idempotent, so
 // the browser return-URL path and this webhook can race safely.
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();
 
-  const verified = await verifyWebhookSignature(req.headers, rawBody);
-  if (!verified) {
-    return NextResponse.json({ error: "signature verification failed" }, { status: 400 });
+  const documented = await verifyWebhookSignature(req.headers, rawBody);
+  if (!documented) {
+    return NextResponse.json({ error: "signature documentation failed" }, { status: 400 });
   }
 
   const event = JSON.parse(rawBody);

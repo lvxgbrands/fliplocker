@@ -2,7 +2,7 @@ export const metadata = { title: "Terms of Service — FlipLocker" };
 
 // PLACEHOLDER CONTENT — pending the Client's attorney review and approval.
 // Written to the approved framing in docs/COMPLIANCE-NOTES.md: FlipLocker is a
-// verification, documentation, and logistics service (not a grader, not a fund
+// documentation and logistics service (not a grader, not a fund
 // custodian). Wording intentionally avoids terms restricted by the copy rules.
 export default function TermsPage() {
   return (
@@ -15,7 +15,7 @@ export default function TermsPage() {
 
       <h2>1. What FlipLocker is</h2>
       <p>
-        FlipLocker provides an administrative verification, documentation, and logistics service for
+        FlipLocker provides an administrative documentation and logistics service for
         privately negotiated, invitation-only trading-card deals. Buyers and sellers agree on a card
         and price off-platform and bring the deal to FlipLocker to close it safely. FlipLocker hosts
         no inventory and lists nothing for sale.
@@ -30,7 +30,7 @@ export default function TermsPage() {
         is determined solely by the card&apos;s sale price and is described at checkout.
       </p>
 
-      <h2>3. What verification does and does not cover</h2>
+      <h2>3. What documentation does and does not cover</h2>
       <p>
         FlipLocker&apos;s hub confirms that a physical card matching the seller&apos;s listing, in a
         slab bearing a certificate number that is valid and active in the grading company&apos;s
@@ -41,7 +41,7 @@ export default function TermsPage() {
         <strong>FlipLocker is not a grading service and does not perform forensic (chemical, paper,
         ink, or microscopic) examination.</strong> FlipLocker makes no warranty that a card is
         genuine or that a slab has not been altered, and does not represent any card as
-        &ldquo;guaranteed genuine.&rdquo; Cards are <strong>verified and documented</strong>, not
+        &ldquo;guaranteed genuine.&rdquo; Cards are <strong>documented</strong>, not
         graded. Known limitations include a copied certificate number applied to a substitute item
         and a slab that has been opened and resealed.
       </p>
@@ -49,7 +49,7 @@ export default function TermsPage() {
       <h2>4. Limitation of liability</h2>
       <p>
         To the maximum extent permitted by law, FlipLocker&apos;s total liability arising from a deal
-        is limited to the verification service fee paid for that deal. FlipLocker is not liable for
+        is limited to the documentation service fee paid for that deal. FlipLocker is not liable for
         the underlying value, grade, or genuineness of any card.
       </p>
 
@@ -69,7 +69,7 @@ export default function TermsPage() {
       <h2>7. Acknowledgment</h2>
       <p>
         By proceeding with a deal you acknowledge these terms, including the scope and limits of the
-        verification service described above.
+        documentation service described above.
       </p>
     </>
   );

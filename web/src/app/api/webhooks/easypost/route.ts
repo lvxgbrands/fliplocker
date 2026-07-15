@@ -5,7 +5,7 @@ import { scanLeg1Accepted, receiveAtHub, deliverToBuyer } from "@/lib/logistics"
 
 // EasyPost tracker webhook receiver (used once SHIPPING_MODE=easypost). Maps
 // carrier tracking events to deal transitions — the real-provider equivalent of
-// the staging carrier simulator. Signature is verified with EASYPOST_WEBHOOK_SECRET
+// the staging carrier simulator. Signature is documented with EASYPOST_WEBHOOK_SECRET
 // when set (HMAC-SHA256 over the raw body, hex, in X-Hmac-Signature).
 export async function POST(req: NextRequest) {
   const raw = await req.text();

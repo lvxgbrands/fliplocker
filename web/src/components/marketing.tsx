@@ -17,7 +17,7 @@ export function MarketingNav({ dark = false }: { dark?: boolean }) {
         dark ? "border-white/10 bg-navy-950/70" : "border-ink-200/50 bg-white/80"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4">
         <Wordmark dark={dark} />
         <nav className="hidden items-center gap-1 md:flex">
           {NAV_LINKS.map((l) => (
@@ -64,8 +64,8 @@ export function MarketingFooter() {
         </nav>
       </div>
       <div className="mx-auto max-w-6xl px-4 pb-10 text-xs leading-relaxed text-ink-400">
-        FlipLocker is a verification, documentation, and logistics service for private, peer-to-peer
-        deals — not a marketplace. Cards are verified and documented; FlipLocker does not grade
+        FlipLocker is a documentation and logistics service for private, peer-to-peer
+        deals — not a marketplace. Cards are documented; FlipLocker does not grade
         cards. Buyer payments are held by our payment processor and released to the seller after
         signature-confirmed delivery.
       </div>
@@ -86,7 +86,7 @@ export function ShowcaseSlab({ card }: { card: ShowcaseCard }) {
           <ShieldCheck className="h-4 w-4 text-brand-400" strokeWidth={2.4} />
           {card.grade}
         </span>
-        <span className="kicker text-[10px] text-brand-200">Verified &amp; documented</span>
+        <span className="kicker text-[10px] text-brand-200">Inspected &amp; documented</span>
       </div>
       <div className="bg-ink-100 p-3">
         <div className="overflow-hidden rounded-lg shadow-inner">
@@ -111,7 +111,7 @@ export function ShowcaseSlab({ card }: { card: ShowcaseCard }) {
         <p className="kicker mt-0.5 text-[10px] text-ink-400">{card.meta}</p>
         <p className="mt-2 text-xs leading-relaxed text-ink-500">{card.stat}</p>
         <div className="mt-3 flex items-center gap-1.5 border-t border-ink-100 pt-3">
-          {["Verified", "Held", "Delivered"].map((s, i) => (
+          {["Documented", "Held", "Delivered"].map((s, i) => (
             <span key={s} className="flex items-center gap-1.5">
               <span className={`h-1.5 w-1.5 rounded-full ${i < 2 ? "bg-brand-500" : "bg-ink-300"}`} />
               <span className="kicker text-[9px] text-ink-400">{s}</span>

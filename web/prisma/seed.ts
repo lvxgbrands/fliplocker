@@ -17,7 +17,7 @@ async function main() {
     defaultTaxBps: 0,
     sellerLabelChargeCents: 500, // $5.00 Leg 1 label charge billed to seller (placeholder)
     // Hub ship-to address (placeholder until Client provides at kickoff).
-    hubName: "FlipLocker Verification Hub",
+    hubName: "FlipLocker Documentation Hub",
     hubStreet: "2200 Card Vault Way, Suite 10",
     hubCity: "Austin",
     hubState: "TX",

@@ -2,7 +2,7 @@ import type { DealMedia, HubInspection } from "@prisma/client";
 import { mediaViewUrl } from "@/lib/storage";
 
 // Shows the hub's inspection evidence (video + two photos + tamper seal) to the
-// buyer and seller once verification passes. Media auto-purges after 30 days.
+// buyer and seller once documentation passes. Media auto-purges after 30 days.
 export async function HubEvidence({
   media,
   inspection,
@@ -19,7 +19,7 @@ export async function HubEvidence({
   return (
     <section className="rounded-xl border border-brand-200 bg-brand-50/40 p-4">
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-sm font-semibold text-brand-900">✔ Verified &amp; documented at the hub</h2>
+        <h2 className="text-sm font-semibold text-brand-900">✔ Inspected &amp; documented at the hub</h2>
         {inspection.tamperSealSerial ? (
           <span className="text-xs text-brand-800 font-mono">seal #{inspection.tamperSealSerial}</span>
         ) : null}

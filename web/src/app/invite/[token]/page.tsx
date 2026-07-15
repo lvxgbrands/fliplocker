@@ -12,7 +12,7 @@ import { claimSignedInAction, claimWithNewAccountAction } from "../actions";
 import { logoutAction } from "@/app/(auth)/actions";
 
 const TRUST = [
-  { icon: ShieldCheck, label: "Hub-verified" },
+  { icon: ShieldCheck, label: "Hub-documented" },
   { icon: Video, label: "Documented on video" },
   { icon: PenLine, label: "Signature delivery" },
   { icon: Lock, label: "Funds held by processor" },
@@ -39,7 +39,7 @@ export default async function InvitePage({
   if (!deal) {
     return (
       <div className="min-h-screen bg-ink-50">
-        <header className="mx-auto flex h-16 max-w-3xl items-center px-4">
+        <header className="mx-auto flex h-20 max-w-3xl items-center px-4">
           <Wordmark />
         </header>
         <main className="mx-auto max-w-3xl px-4">
@@ -62,13 +62,13 @@ export default async function InvitePage({
       <header className="hero-dark relative overflow-hidden">
         <div className="dotgrid-blue absolute inset-0" aria-hidden />
         <div className="relative mx-auto max-w-3xl px-4">
-          <div className="flex h-16 items-center">
+          <div className="flex h-20 items-center">
             <Wordmark dark />
           </div>
           <div className="pb-12 pt-6 text-center">
             <p className="kicker mb-3 text-[12px] text-brand-300">Private deal invitation</p>
             <h1 className="mx-auto max-w-xl text-3xl font-extrabold leading-tight text-white sm:text-4xl">
-              {sellerName} sent you a verified card deal
+              {sellerName} sent you a documented card deal
             </h1>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
               {TRUST.map((t) => (

@@ -44,7 +44,7 @@ function simTrackingNumber(): string {
   return n;
 }
 
-// Signed token so a label URL can't be forged; label route verifies it.
+// Signed token so a label URL can't be forged; label route documents it.
 export function labelToken(shipmentId: string): string {
   return createHmac("sha256", process.env.SESSION_SECRET || "dev")
     .update(`label:${shipmentId}`)

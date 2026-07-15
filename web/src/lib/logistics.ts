@@ -130,7 +130,7 @@ export async function receiveAtHub(dealId: string) {
     "Your card reached the hub 🏢",
     [
       `<strong>${cardTitle(deal)}</strong> has arrived at the FlipLocker hub and is queued for inspection and documentation.`,
-      `You'll be notified as soon as it's verified and on its way to the buyer.`,
+      `You'll be notified as soon as it's documented and on its way to the buyer.`,
     ],
     { label: "View deal", url: `${appUrl()}/seller/deals/${dealId}` }
   );

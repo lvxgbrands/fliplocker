@@ -55,7 +55,7 @@ export default async function BuyerDealPage({
       <SuccessNote
         message={
           notices.paid
-            ? "Payment confirmed! It's held securely by our payment processor until your card is verified and delivered."
+            ? "Payment confirmed! It's held securely by our payment processor until your card is documented and delivered."
             : notices.declined
               ? "You declined this deal. The seller has been notified — no payment was collected."
               : notices.cancelled
@@ -117,7 +117,7 @@ export default async function BuyerDealPage({
                 emphasize: true,
               },
               ...(deal.feeBuyerCents > 0
-                ? [{ label: "FlipLocker service fee", cents: deal.feeBuyerCents, hint: "Verification, documentation & logistics" }]
+                ? [{ label: "FlipLocker service fee", cents: deal.feeBuyerCents, hint: "Documentation & logistics" }]
                 : []),
               { label: "Outbound shipping & signature", cents: deal.shippingCents },
               ...(deal.insuranceCents > 0

@@ -41,7 +41,7 @@ export function PortalShell({
         Skip to content
       </a>
       <header className="sticky top-0 z-10 border-b border-ink-200/60 bg-white/85 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-4">
+        <div className="mx-auto flex h-20 max-w-5xl items-center justify-between gap-4 px-4">
           <Wordmark href={home} />
           <nav className="flex items-center gap-3 text-sm">
             <span className="hidden items-center gap-2.5 sm:flex">
@@ -76,7 +76,7 @@ export function PortalShell({
       <footer className="mx-auto max-w-5xl px-4 py-10">
         <div className="border-t border-ink-200/60 pt-6 text-xs leading-relaxed text-ink-400">
           FlipLocker — private, invitation-only deals. Buyer payments are held securely by our
-          payment processor until verification and delivery are complete.
+          payment processor until documentation and delivery are complete.
         </div>
       </footer>
     </div>
@@ -87,7 +87,7 @@ export function VerifyEmailBanner({ user }: { user: User }) {
   if (user.emailVerified) return null;
   return (
     <div className="mb-6 flex items-center justify-between gap-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-      <span>Please verify your email address — check your inbox for the verification link.</span>
+      <span>Please confirm your email address — check your inbox for the confirmation link.</span>
       <Link href="/resend-verification" className="whitespace-nowrap font-semibold underline">
         Resend link
       </Link>

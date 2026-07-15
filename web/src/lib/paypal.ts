@@ -88,7 +88,7 @@ export async function createOrder(deal: Deal): Promise<CreatedOrder> {
       {
         reference_id: deal.id,
         custom_id: deal.shortCode,
-        description: `FlipLocker deal ${deal.shortCode} — verification & logistics service`,
+        description: `FlipLocker deal ${deal.shortCode} — documentation & logistics service`,
         amount: {
           ...usd(deal.buyerTotalCents),
           breakdown: {
@@ -198,7 +198,7 @@ export async function releaseDisbursement(captureId: string): Promise<{ ok: true
   return { ok: true, raw: { captureId, note: "released per DELAYED disbursement instruction" } };
 }
 
-/** Verify a webhook signature with PayPal (sandbox/live only). */
+/** Document a webhook signature with PayPal (sandbox/live only). */
 export async function verifyWebhookSignature(
   headers: Headers,
   rawBody: string
@@ -208,7 +208,7 @@ export async function verifyWebhookSignature(
   const webhookId = process.env.PAYPAL_WEBHOOK_ID;
   if (!webhookId) return false;
   const token = await accessToken(mode);
-  const res = await fetch(`${API_BASE[mode]}/v1/notifications/verify-webhook-signature`, {
+  const res = await fetch(`${API_BASE[mode]}/v1/notifications/document-webhook-signature`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
     body: JSON.stringify({

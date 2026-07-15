@@ -5,9 +5,9 @@ import { ErrorNote, Field, SubmitButton, SuccessNote } from "@/components/form-u
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; next?: string; reset?: string; verified?: string }>;
+  searchParams: Promise<{ error?: string; next?: string; reset?: string; documented?: string }>;
 }) {
-  const { error, next, reset, verified } = await searchParams;
+  const { error, next, reset, documented } = await searchParams;
   return (
     <div className="space-y-5">
       <h1 className="text-xl font-bold">Sign in to FlipLocker</h1>
@@ -16,8 +16,8 @@ export default async function LoginPage({
         message={
           reset
             ? "Password updated — sign in with your new password."
-            : verified
-              ? "Email verified — sign in to continue."
+            : documented
+              ? "Email confirmed — sign in to continue."
               : undefined
         }
       />

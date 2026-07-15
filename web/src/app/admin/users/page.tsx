@@ -24,7 +24,7 @@ export default async function AdminUsers({
           <thead className="bg-ink-50 text-ink-500 text-left text-xs uppercase tracking-wide">
             <tr>
               <th className="px-4 py-2 font-medium">User</th>
-              <th className="px-4 py-2 font-medium">Verified</th>
+              <th className="px-4 py-2 font-medium">Documented</th>
               <th className="px-4 py-2 font-medium">Role &amp; plan</th>
               <th className="px-4 py-2"></th>
             </tr>
@@ -38,7 +38,7 @@ export default async function AdminUsers({
                 </td>
                 <td className="px-4 py-2.5">
                   {u.emailVerified ? (
-                    <span className="text-brand-600 text-xs">✔ verified</span>
+                    <span className="text-brand-600 text-xs">✔ documented</span>
                   ) : (
                     <span className="text-ink-400 text-xs">pending</span>
                   )}

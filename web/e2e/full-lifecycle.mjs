@@ -1,5 +1,5 @@
 // Full-lifecycle walkthrough:
-// seller register/verify/create -> buyer claim/pay -> seller ToS+label ->
+// seller register/document/create -> buyer claim/pay -> seller ToS+label ->
 // carrier -> hub check-in + inspection (video+photos+seal) -> repack/Leg2 ->
 // delivered/signed -> buyer approve -> funds released/complete -> admin config.
 import { chromium } from "playwright";
@@ -58,7 +58,7 @@ const webm = fs.readdirSync(SHOTS).find((f) => f.endsWith(".webm"));
 const videoPath = `${SHOTS}${webm}`;
 console.log(`✔ demo media ready (video: ${webm})`);
 
-// 1. Seller register + verify
+// 1. Seller register + document
 await sp.goto(`${BASE}/register`);
 await sp.fill('input[name="name"]', SELLER.name);
 await sp.fill('input[name="email"]', SELLER.email);
@@ -66,12 +66,12 @@ await sp.fill('input[name="password"]', SELLER.pass);
 await sp.click('button:has-text("Create account")');
 await sp.waitForURL("**/seller**");
 await sp.goto(`${BASE}/dev/mailbox`);
-await sp.click("text=Verify your FlipLocker email");
-const verify = await sp.locator('a[href*="/verify-email/"]').first().getAttribute("href");
-await sp.goto(verify);
+await sp.click("text=Confirm your FlipLocker email");
+const document = await sp.locator('a[href*="/verify-email/"]').first().getAttribute("href");
+await sp.goto(document);
 await sp.waitForURL("**/seller**");
-await has(sp, "Email verified");
-console.log("✔ seller registered + verified");
+await has(sp, "Email confirmed");
+console.log("✔ seller registered + documented");
 
 // 2. Create deal
 await sp.click("text=Create your first deal");
@@ -144,10 +144,10 @@ await hf.nth(2).setInputFiles(`${SHOTS}hub2.png`);
 await hp.fill('input[name="tamperSealSerial"]', "TS-778812");
 await hp.fill('textarea[name="notes"]', "Matches listing; cert active in registry.");
 await shot(hp, "hub-inspection-form");
-await hp.click('button:has-text("Pass — verified")');
+await hp.click('button:has-text("Pass — documented")');
 await hp.waitForSelector('button:has-text("Repack & ship to buyer")', { timeout: 30000 });
-await has(hp, "Verified");
-await shot(hp, "hub-verified");
+await has(hp, "Documented");
+await shot(hp, "hub-documented");
 await hp.click('button:has-text("Repack & ship to buyer")');
 await hp.waitForURL((u) => u.pathname === "/hub" && u.search.includes("shipped="), { timeout: 30000 });
 console.log("✔ hub inspection PASS -> repack -> Leg 2 shipped (signature)");
@@ -164,8 +164,8 @@ await has(bp, "Complete", "deal is complete");
 await shot(bp, "buyer-complete");
 console.log("✔ delivered/signed -> buyer approved -> funds released -> COMPLETE");
 
-// 8. Verify hub evidence video present on the completed deal
-await has(bp, "Verified & documented at the hub");
+// 8. Document hub evidence video present on the completed deal
+await has(bp, "documented at the hub");
 if (!(await bp.locator("video").count())) fail("hub inspection video not shown to buyer");
 console.log("✔ hub evidence (video + photos + seal) visible to buyer");
 
