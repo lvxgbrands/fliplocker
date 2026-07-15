@@ -92,10 +92,10 @@ export function Stat({
           aria-hidden
         />
       ) : null}
-      <p className="text-xs font-medium uppercase tracking-wider text-ink-400">{label}</p>
+      <p className="kicker text-[11px] text-ink-400">{label}</p>
       <p
-        className={`relative mt-1.5 text-[1.7rem] font-bold leading-none tabular-nums tracking-tight ${
-          accent ? "text-brand-800" : "text-ink-950"
+        className={`relative mt-1.5 text-[1.7rem] font-extrabold leading-none tabular-nums tracking-tight ${
+          accent ? "text-brand-700" : "text-ink-950"
         }`}
         style={{ fontFamily: "var(--font-display)" }}
       >

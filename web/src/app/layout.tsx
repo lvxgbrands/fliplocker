@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Sora, JetBrains_Mono } from "next/font/google";
+import { Inter, Archivo, Barlow_Condensed, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,9 +8,17 @@ const inter = Inter({
   display: "swap",
 });
 
-const sora = Sora({
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-sora",
+  weight: ["600", "700", "800", "900"],
+  variable: "--font-archivo",
+  display: "swap",
+});
+
+const barlow = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-barlow",
   display: "swap",
 });
 
@@ -28,7 +36,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${sora.variable} ${jetbrains.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${archivo.variable} ${barlow.variable} ${jetbrains.variable}`}
+    >
       <body className="min-h-screen font-sans">{children}</body>
     </html>
   );

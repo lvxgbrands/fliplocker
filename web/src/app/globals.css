@@ -1,45 +1,59 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   FlipLocker design tokens.
-   Typography: Sora (display) · Inter (UI/body) · JetBrains Mono (numbers/codes)
-   Color: custom teal brand ramp + warm slate neutrals + semantic status hues.
+   FlipLocker "Bold Blue" design system.
+   Typography: Archivo (display) · Inter (UI/body) · Barlow Condensed
+   (kicker/ticker, uppercase) · JetBrains Mono (money/certs/tracking).
+   Color: bold sports-tech blue + deep navy depth + cool ink neutrals.
 --------------------------------------------------------------------------- */
 
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-display: var(--font-sora), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-cond: var(--font-barlow), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Brand ramp — slightly deeper + more saturated than stock teal. */
-  --color-brand-50: #effbf9;
-  --color-brand-100: #d5f5ef;
-  --color-brand-200: #aeeae0;
-  --color-brand-300: #76d8cb;
-  --color-brand-400: #40bfb1;
-  --color-brand-500: #1ba397;
-  --color-brand-600: #0f847c;
-  --color-brand-700: #0f6a65;
-  --color-brand-800: #115552;
-  --color-brand-900: #124745;
-  --color-brand-950: #042a2a;
+  /* Brand — bold blue ramp (anchor #0B6CFF). */
+  --color-brand-50: #eef5ff;
+  --color-brand-100: #d9e8ff;
+  --color-brand-200: #b3d1ff;
+  --color-brand-300: #7fb1ff;
+  --color-brand-400: #4a90ff;
+  --color-brand-500: #1b75ff;
+  --color-brand-600: #0b6cff;
+  --color-brand-700: #0757d6;
+  --color-brand-800: #0a47a8;
+  --color-brand-900: #0c3b85;
+  --color-brand-950: #071f47;
 
-  /* Ink & surfaces (cool neutral with a hint of brand). */
-  --color-ink-50: #f7f9fa;
-  --color-ink-100: #eef1f4;
-  --color-ink-200: #d9dfe5;
-  --color-ink-300: #b8c2cc;
-  --color-ink-400: #8d9aa8;
-  --color-ink-500: #6b7a8a;
-  --color-ink-600: #556372;
-  --color-ink-700: #46505d;
-  --color-ink-800: #3d454f;
-  --color-ink-900: #363c44;
-  --color-ink-950: #23282e;
+  /* Navy — depth / dark surfaces. */
+  --color-navy-700: #0d2b52;
+  --color-navy-800: #0b2545;
+  --color-navy-900: #09203f;
+  --color-navy-950: #050e1d;
 
-  --shadow-soft: 0 1px 2px rgb(18 55 54 / 0.05), 0 4px 16px -4px rgb(18 55 54 / 0.08);
-  --shadow-lift: 0 2px 4px rgb(18 55 54 / 0.06), 0 12px 32px -8px rgb(18 55 54 / 0.16);
-  --shadow-glow: 0 0 0 1px rgb(27 163 151 / 0.12), 0 8px 32px -8px rgb(27 163 151 / 0.35);
+  /* Ink — cool slate neutrals. Page bg off-white, cards white, borders light grey. */
+  --color-ink-50: #f7f8fa;
+  --color-ink-100: #eef1f5;
+  --color-ink-200: #e3e7ee;
+  --color-ink-300: #cbd2dd;
+  --color-ink-400: #97a1b1;
+  --color-ink-500: #6b7688;
+  --color-ink-600: #515b6d;
+  --color-ink-700: #3d4657;
+  --color-ink-800: #29303d;
+  --color-ink-900: #171d28;
+  --color-ink-950: #0b1220;
+
+  /* "Win" green — reserved for money-released / payout states only. */
+  --color-win-50: #ecfdf3;
+  --color-win-500: #16a34a;
+  --color-win-600: #12833c;
+  --color-win-700: #106a32;
+
+  --shadow-soft: 0 1px 2px rgb(9 32 63 / 0.05), 0 6px 20px -6px rgb(9 32 63 / 0.10);
+  --shadow-lift: 0 2px 6px rgb(9 32 63 / 0.08), 0 16px 40px -10px rgb(9 32 63 / 0.20);
+  --shadow-glow: 0 0 0 1px rgb(11 108 255 / 0.14), 0 10px 34px -8px rgb(11 108 255 / 0.35);
 }
 
 body {
@@ -50,7 +64,15 @@ body {
 
 h1, h2, h3 {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+}
+
+/* Kicker / ticker label utility — the signature sportsbook detail. */
+.kicker {
+  font-family: var(--font-cond);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
 }
 
 /* Visible keyboard focus for all interactive elements. */
@@ -60,7 +82,7 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid var(--color-brand-500);
+  outline: 2px solid var(--color-brand-600);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -97,20 +119,40 @@ textarea:focus-visible,
       transform: translateY(0);
     }
   }
+  .ticker-track {
+    animation: ticker 26s linear infinite;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
 }
 
-/* Hero gradient mesh used on marketing/auth surfaces. */
+/* Light hero mesh for auth / secondary marketing surfaces. */
 .mesh {
   background:
-    radial-gradient(42rem 26rem at 18% -8%, rgb(27 163 151 / 0.14), transparent 60%),
-    radial-gradient(38rem 24rem at 85% -12%, rgb(64 191 177 / 0.12), transparent 55%),
-    radial-gradient(30rem 22rem at 55% 115%, rgb(15 106 101 / 0.08), transparent 60%),
-    linear-gradient(to bottom, #fbfdfd, #f7f9fa);
+    radial-gradient(42rem 26rem at 18% -8%, rgb(11 108 255 / 0.12), transparent 60%),
+    radial-gradient(38rem 24rem at 85% -12%, rgb(74 144 255 / 0.10), transparent 55%),
+    radial-gradient(30rem 22rem at 55% 115%, rgb(7 87 214 / 0.07), transparent 60%),
+    linear-gradient(to bottom, #fbfcfe, #f7f8fa);
 }
 
-/* Fine dotted grid overlay for hero sections. */
+/* Dark navy hero — the marketing/home + invite header surface. */
+.hero-dark {
+  background:
+    radial-gradient(48rem 30rem at 20% -10%, rgb(11 108 255 / 0.30), transparent 60%),
+    radial-gradient(40rem 26rem at 88% 8%, rgb(27 117 255 / 0.22), transparent 58%),
+    linear-gradient(160deg, #09203f 0%, #050e1d 100%);
+}
+
+/* Fine dotted grid overlay (blue) for hero sections. */
 .dotgrid {
   background-image: radial-gradient(rgb(18 71 69 / 0.09) 1px, transparent 1px);
   background-size: 22px 22px;
   mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
+}
+.dotgrid-blue {
+  background-image: radial-gradient(rgb(127 177 255 / 0.14) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(60% 60% at 50% 30%, black, transparent 85%);
 }
