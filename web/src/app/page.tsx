@@ -10,20 +10,21 @@ import {
   Camera,
   Stamp,
   PenLine,
-  Check,
 } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
 import { getFeeConfig, getCheckoutConfig } from "@/lib/config";
 import { formatCents } from "@/lib/fees";
 import { buttonClass } from "@/components/ui";
 import { MarketingNav, MarketingFooter, SectionKicker, ShowcaseSlab } from "@/components/marketing";
+import { HeroShowcase } from "@/components/hero-showcase";
+import { Reveal } from "@/components/reveal";
 import { SHOWCASE, TICKER, FAQ } from "@/lib/marketing";
 
 const STEPS = [
   { icon: MessageSquareText, title: "Agree your deal anywhere", body: "You and your buyer settle on the card and price off-platform. FlipLocker is invitation-only — no listings, no browsing." },
   { icon: FilePlus2, title: "Create the deal, invite the buyer", body: "The seller enters the card, photos, and agreed price. The buyer gets a private email invitation to review and accept." },
   { icon: Lock, title: "Payment held by our processor", body: "The buyer pays through PayPal checkout. Funds are held securely by our payment processor — never by FlipLocker." },
-  { icon: Video, title: "Verified, documented, delivered", body: "The card is inspected and documented on video at the hub, then delivered with signature confirmation before the seller is paid." },
+  { icon: Video, title: "Documented, packed, delivered", body: "The card is inspected and documented on video at the hub, then delivered with signature confirmation before the seller is paid." },
 ];
 
 const SECURITY = [
@@ -66,9 +67,9 @@ export default async function Home() {
               </span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-brand-100/80">
-              FlipLocker handles the payment, hub verification, and insured signature delivery for
+              FlipLocker handles the payment, hub documentation, and insured signature delivery for
               peer-to-peer graded card deals. The buyer&apos;s money is held securely by our payment
-              processor until the card is verified and delivered.
+              processor until the card is documented and delivered.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Link href="/register" className={buttonClass("primary", "lg")}>
@@ -83,18 +84,8 @@ export default async function Home() {
             </div>
           </div>
 
-          {/* Floating slab cluster */}
-          <div className="relative hidden h-[420px] lg:block" aria-hidden>
-            <div className="absolute left-4 top-8 w-52 rotate-[-6deg] transition-transform duration-500 hover:rotate-0">
-              <SlabFloat slug="ripken" grade="PSA 9" />
-            </div>
-            <div className="absolute right-2 top-0 z-10 w-56 rotate-[5deg] transition-transform duration-500 hover:rotate-0">
-              <SlabFloat slug="griffey" grade="PSA 8" />
-            </div>
-            <div className="absolute bottom-0 left-24 z-20 w-52 rotate-[2deg] transition-transform duration-500 hover:rotate-0">
-              <SlabFloat slug="bojackson" grade="PSA 9" />
-            </div>
-          </div>
+          {/* Premium hero: cards spin centrifugally on cursor proximity */}
+          <HeroShowcase />
         </div>
 
         {/* Ticker strip */}
@@ -120,21 +111,20 @@ export default async function Home() {
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((s, i) => (
-            <div
-              key={s.title}
-              className="group relative rounded-2xl border border-ink-200/70 bg-white p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
-            >
-              <div className="mb-5 flex items-center justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-b from-brand-500 to-brand-600 text-white shadow-soft transition-transform duration-300 group-hover:scale-110">
-                  <s.icon className="h-5 w-5" strokeWidth={2} />
-                </span>
-                <span className="text-4xl font-extrabold text-ink-100" style={{ fontFamily: "var(--font-display)" }}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+            <Reveal key={s.title} delay={i * 90}>
+              <div className="group relative h-full rounded-2xl border border-ink-200/70 bg-white p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
+                <div className="mb-5 flex items-center justify-between">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-b from-brand-500 to-brand-600 text-white shadow-soft transition-transform duration-300 group-hover:scale-110">
+                    <s.icon className="h-5 w-5" strokeWidth={2} />
+                  </span>
+                  <span className="text-4xl font-extrabold text-ink-100" style={{ fontFamily: "var(--font-display)" }}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <h3 className="mb-2 font-bold text-ink-900">{s.title}</h3>
+                <p className="text-sm leading-relaxed text-ink-500">{s.body}</p>
               </div>
-              <h3 className="mb-2 font-bold text-ink-900">{s.title}</h3>
-              <p className="text-sm leading-relaxed text-ink-500">{s.body}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -143,7 +133,7 @@ export default async function Home() {
       <section className="border-y border-ink-200/60 bg-ink-50">
         <div className="mx-auto max-w-6xl px-4 py-24">
           <div className="mb-4 text-center">
-            <SectionKicker>Recent verified deals</SectionKicker>
+            <SectionKicker>Recent documented deals</SectionKicker>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Real cards, protected end-to-end</h2>
             <p className="mx-auto mt-3 max-w-xl text-ink-500">
               Every deal is private and invitation-only — these are examples of the caliber of cards
@@ -151,8 +141,10 @@ export default async function Home() {
             </p>
           </div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {SHOWCASE.map((c) => (
-              <ShowcaseSlab key={c.slug} card={c} />
+            {SHOWCASE.map((c, i) => (
+              <Reveal key={c.slug} delay={i * 110} className="h-full">
+                <ShowcaseSlab card={c} />
+              </Reveal>
             ))}
           </div>
         </div>
@@ -185,20 +177,22 @@ export default async function Home() {
       <section className="border-t border-ink-200/60 bg-gradient-to-b from-ink-50 to-white">
         <div className="mx-auto max-w-6xl px-4 py-24">
           <div className="mb-14 text-center">
-            <SectionKicker>The verification promise</SectionKicker>
+            <SectionKicker>The documentation promise</SectionKicker>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Documented at the hub, delivered with a signature
             </h2>
           </div>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {SECURITY.map((s) => (
-              <div key={s.title} className="rounded-2xl border border-ink-200/70 bg-white p-6 shadow-soft">
-                <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
-                  <s.icon className="h-5 w-5" strokeWidth={2} />
-                </span>
-                <h3 className="mb-1.5 font-bold text-ink-900">{s.title}</h3>
-                <p className="text-sm leading-relaxed text-ink-500">{s.body}</p>
-              </div>
+            {SECURITY.map((s, i) => (
+              <Reveal key={s.title} delay={i * 90}>
+                <div className="h-full rounded-2xl border border-ink-200/70 bg-white p-6 shadow-soft">
+                  <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+                    <s.icon className="h-5 w-5" strokeWidth={2} />
+                  </span>
+                  <h3 className="mb-1.5 font-bold text-ink-900">{s.title}</h3>
+                  <p className="text-sm leading-relaxed text-ink-500">{s.body}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -211,19 +205,20 @@ export default async function Home() {
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Good to know before you deal</h2>
         </div>
         <div className="space-y-3">
-          {FAQ.map((f) => (
-            <details
-              key={f.q}
-              className="group rounded-2xl border border-ink-200/70 bg-white px-5 py-4 shadow-soft [&_summary::-webkit-details-marker]:hidden"
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink-900">
-                {f.q}
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-ink-200 text-ink-400 transition-transform duration-200 group-open:rotate-45">
-                  <span className="text-lg leading-none">+</span>
-                </span>
-              </summary>
-              <p className="mt-3 text-sm leading-relaxed text-ink-600">{f.a}</p>
-            </details>
+          {FAQ.map((f, i) => (
+            <Reveal key={f.q} delay={i * 60}>
+              <details
+                className="group rounded-2xl border border-ink-200/70 bg-white px-5 py-4 shadow-soft [&_summary::-webkit-details-marker]:hidden"
+              >
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink-900">
+                  {f.q}
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-ink-200 text-ink-400 transition-transform duration-200 group-open:rotate-45">
+                    <span className="text-lg leading-none">+</span>
+                  </span>
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed text-ink-600">{f.a}</p>
+              </details>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -236,7 +231,7 @@ export default async function Home() {
             The handshake happened on social. The protection happens here.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-brand-100/80">
-            Every card is verified, documented, and delivered with a signature before a single dollar
+            Every card is documented, and delivered with a signature before a single dollar
             reaches the seller.
           </p>
           <Link href="/register" className={buttonClass("primary", "lg", "mt-8")}>
@@ -246,21 +241,6 @@ export default async function Home() {
       </section>
 
       <MarketingFooter />
-    </div>
-  );
-}
-
-function SlabFloat({ slug, grade }: { slug: string; grade: string }) {
-  return (
-    <div className="overflow-hidden rounded-xl border border-white/10 bg-white shadow-lift">
-      <div className="flex items-center justify-between bg-gradient-to-r from-navy-900 to-navy-800 px-3 py-1.5">
-        <span className="flex items-center gap-1 text-[10px] font-bold text-white">
-          <ShieldCheck className="h-3 w-3 text-brand-400" strokeWidth={2.4} /> {grade}
-        </span>
-        <Check className="h-3 w-3 text-brand-400" strokeWidth={3} />
-      </div>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={`/cards/${slug}.jpg`} alt="" className="aspect-[3/4] w-full object-cover" />
     </div>
   );
 }
