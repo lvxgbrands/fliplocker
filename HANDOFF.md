@@ -74,8 +74,13 @@ DB storage is fine for the demo and light use, but hub inspection **videos** wil
 - **Cloudflare R2 / S3** (zero code change): set `S3_BUCKET`, `S3_ENDPOINT`, `S3_REGION`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`. R2 has a free tier with no egress fees.
 - **Vercel Blob** (needs a small code adapter): create a Blob store in the Vercel dashboard (auto-adds `BLOB_READ_WRITE_TOKEN`).
 
-### 3. Security hardening (demo data + accounts)
-- Demo accounts use a shared, publicly-known password (`fliplocker-demo`) and re-seed on **every** deploy. Gate the demo accounts + 9 demo deals out of production (behind a flag / `VERCEL_ENV` check) before real customers use it, and seed a real admin from env-var secrets.
+### 3. Security hardening (demo data + accounts) — DONE, needs the env set at launch
+Implemented in `web/src/lib/demo.ts` (gate) plus `web/prisma/seed.ts` and `web/prisma/seed-demo.ts`. The four shared-password demo accounts + 9 demo deals are now gated, and a real admin is seeded from secrets. To lock down a real launch, set in Vercel env:
+
+- `ADMIN_EMAIL` + `ADMIN_PASSWORD` (and optional `ADMIN_NAME`): seeds a real admin on each deploy (password refreshed from the env, so rotating it takes effect). This alone flips demo data OFF by default.
+- Optionally `SEED_DEMO=off` to force it, or `SEED_DEMO=on` to keep the demo data on the hosted sales demo even with a real admin present.
+
+Behavior of the gate (`SEED_DEMO`): `on`/`off` force it; when unset it is ON by default but auto-OFF once `ADMIN_EMAIL`+`ADMIN_PASSWORD` are set. When OFF, the next deploy also tears down any demo accounts/deals that already exist (deals first, then accounts, FK-safe). Base config (checkout + FREE/PRO fees) is always seeded regardless. The current hosted demo has none of these env vars set, so it keeps its demo data unchanged.
 
 ### 4. Custom domain (optional)
 - Add your domain in Vercel, then update `APP_URL` so email/invite links point at it.

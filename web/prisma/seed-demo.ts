@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import fs from "fs";
 import path from "path";
 import { computeQuote } from "../src/lib/fees";
+import { DEMO_EMAILS, DEMO_PASSWORD, demoDataEnabled } from "../src/lib/demo";
 
 // Populates a spread of nine deals across the full lifecycle using the real
 // baseball card roster, so the admin dashboard, hub queue, and buyer/seller
@@ -90,12 +91,35 @@ function eventsFor(status: DealStatus) {
   return e;
 }
 
+// Removes the demo deals and the shared-password demo accounts. Run when demo
+// mode is off so toggling SEED_DEMO=off (or configuring a real admin) on an
+// existing database actually clears the demo data rather than leaving it behind.
+async function teardown() {
+  const { count } = await db.deal.deleteMany({ where: { shortCode: { startsWith: "DEMO-" } } });
+  let removedAccounts = 0;
+  for (const email of DEMO_EMAILS) {
+    try {
+      await db.user.delete({ where: { email } });
+      removedAccounts++;
+    } catch {
+      // The account either does not exist or still owns non-demo records; leave
+      // it in place rather than failing the build.
+    }
+  }
+  console.log(`Demo mode off: removed ${count} demo deals and ${removedAccounts} demo accounts.`);
+}
+
 async function main() {
+  if (!demoDataEnabled()) {
+    await teardown();
+    return;
+  }
+
   const checkout = await db.checkoutConfig.findUnique({ where: { id: "default" } });
   const feeFree = await db.feeConfig.findUnique({ where: { plan: "FREE" } });
   if (!checkout || !feeFree) throw new Error("Run `npm run db:seed` first.");
 
-  const passwordHash = await bcrypt.hash("fliplocker-demo", 10);
+  const passwordHash = await bcrypt.hash(DEMO_PASSWORD, 10);
   const seller = await db.user.upsert({
     where: { email: "seller.demo@fliplocker.app" },
     update: {},
