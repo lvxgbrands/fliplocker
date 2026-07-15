@@ -40,7 +40,7 @@ function grain(n) {
   return d;
 }
 
-function front(i, [slug, name, team, sky, jersey, cap, skin, , hasCap, mustache, facing]) {
+function front(i, [, name, team, sky, jersey, cap, skin, , hasCap, mustache, facing]) {
   const sk = fix(skin), jr = fix(jersey), cp = fix(cap);
   const dx = facing * 10; // subtle turn
   return `<svg width="600" height="840" viewBox="0 0 600 840" xmlns="http://www.w3.org/2000/svg">
@@ -109,7 +109,7 @@ function front(i, [slug, name, team, sky, jersey, cap, skin, , hasCap, mustache,
 </svg>`;
 }
 
-function back(i, [slug, name, team, , , , , accent]) {
+function back(i, [, name, team, , , , , accent]) {
   const ac = fix(accent);
   return `<svg width="600" height="840" viewBox="0 0 600 840" xmlns="http://www.w3.org/2000/svg">
   <defs><radialGradient id="bg${i}" cx="50%" cy="42%" r="75%"><stop offset="0%" stop-color="${ac}"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="0.35"/></radialGradient></defs>

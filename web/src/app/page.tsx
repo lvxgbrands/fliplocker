@@ -1,122 +1,122 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import {
   MessageSquareText,
   FilePlus2,
-  ShieldCheck,
-  Video,
-  PenLine,
   Lock,
+  Video,
   ArrowRight,
-  BadgeCheck,
-  Landmark,
-  PackageCheck,
+  ShieldCheck,
+  Camera,
+  Stamp,
+  PenLine,
+  Check,
 } from "lucide-react";
-import { Wordmark, LockMark } from "@/components/brand";
-import { buttonClass } from "@/components/ui";
 import { getCurrentUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { getFeeConfig, getCheckoutConfig } from "@/lib/config";
+import { formatCents } from "@/lib/fees";
+import { buttonClass } from "@/components/ui";
+import { MarketingNav, MarketingFooter, SectionKicker, ShowcaseSlab } from "@/components/marketing";
+import { SHOWCASE, TICKER, FAQ } from "@/lib/marketing";
 
 const STEPS = [
-  {
-    icon: MessageSquareText,
-    title: "Agree your deal anywhere",
-    body: "You and your buyer settle on the card and price off-platform — social media, a show, a group chat. FlipLocker is invitation-only: no listings, no browsing.",
-  },
-  {
-    icon: FilePlus2,
-    title: "Create the deal, invite the buyer",
-    body: "The seller enters the card details, photos, and agreed price. The buyer gets a private email invitation to review and accept.",
-  },
-  {
-    icon: Lock,
-    title: "Payment held by our processor",
-    body: "The buyer pays through PayPal checkout. Funds are held securely by our payment processor — never by FlipLocker — until the deal completes.",
-  },
-  {
-    icon: Video,
-    title: "Verified, documented, delivered",
-    body: "The card ships to the FlipLocker hub, is inspected and documented on video, then delivered to the buyer with signature confirmation before the seller is paid.",
-  },
+  { icon: MessageSquareText, title: "Agree your deal anywhere", body: "You and your buyer settle on the card and price off-platform. FlipLocker is invitation-only — no listings, no browsing." },
+  { icon: FilePlus2, title: "Create the deal, invite the buyer", body: "The seller enters the card, photos, and agreed price. The buyer gets a private email invitation to review and accept." },
+  { icon: Lock, title: "Payment held by our processor", body: "The buyer pays through PayPal checkout. Funds are held securely by our payment processor — never by FlipLocker." },
+  { icon: Video, title: "Verified, documented, delivered", body: "The card is inspected and documented on video at the hub, then delivered with signature confirmation before the seller is paid." },
 ];
 
-const ASSURANCES = [
-  { icon: BadgeCheck, label: "Hub-verified & documented on video" },
-  { icon: Landmark, label: "Funds held by our payment processor" },
-  { icon: PenLine, label: "Signature delivery — never waived" },
-  { icon: PackageCheck, label: "Tamper-sealed & insured in transit" },
+const SECURITY = [
+  { icon: Video, title: "15-second inspection video", body: "Every card is filmed at the hub and the clip is attached to the deal for both parties to watch." },
+  { icon: Camera, title: "Two reference photos", body: "High-resolution front and rear captures documented alongside the seller's original listing images." },
+  { icon: Stamp, title: "Tamper-seal serial", body: "A numbered tamper seal is logged and permanently bound to the deal record before the card ships onward." },
+  { icon: PenLine, title: "Signature delivery", body: "Leg 2 to the buyer always requires a signature — it is never waived — and both legs are insured." },
 ];
 
-export default async function Landing() {
+function feeSummary(floorCents: number, percentBps: number, crossoverCents: number) {
+  return `${formatCents(floorCents)} flat under ${formatCents(crossoverCents)}, then ${(percentBps / 100).toFixed(percentBps % 100 ? 2 : 0)}%`;
+}
+
+export default async function Home() {
   const user = await getCurrentUser();
   if (user) redirect("/dashboard");
 
+  const [free, pro, checkout] = await Promise.all([
+    getFeeConfig("FREE"),
+    getFeeConfig("PRO"),
+    getCheckoutConfig(),
+  ]);
+
   return (
     <div className="min-h-screen bg-white">
-      <header className="sticky top-0 z-10 border-b border-ink-200/40 bg-white/80 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <Wordmark />
-          <nav className="flex items-center gap-2 text-sm">
-            <Link
-              href="/login"
-              className="rounded-lg px-4 py-2 font-semibold text-ink-600 transition-colors hover:bg-ink-100 hover:text-ink-900"
-            >
-              Sign in
-            </Link>
-            <Link href="/register" className={buttonClass("primary", "md")}>
-              Get started
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <MarketingNav dark />
 
-      <section className="relative mesh overflow-hidden">
-        <div className="dotgrid absolute inset-0" aria-hidden />
-        <div className="relative mx-auto max-w-6xl px-4 pb-24 pt-20 text-center sm:pt-28">
-          <p className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-brand-200/80 bg-white/80 px-4 py-1.5 text-xs font-semibold tracking-wide text-brand-700 shadow-soft backdrop-blur">
-            <LockMark className="h-4 w-4" /> PRIVATE &amp; INVITATION-ONLY
-          </p>
-          <h1 className="mx-auto max-w-4xl text-[2.6rem] font-extrabold leading-[1.06] tracking-tight text-ink-950 sm:text-6xl">
-            Close card deals you made anywhere —{" "}
-            <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-brand-400 bg-clip-text text-transparent">
-              verified, documented, protected.
-            </span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-500">
-            FlipLocker handles the payment, hub inspection, and insured signature delivery for
-            peer-to-peer graded card deals. The buyer&apos;s money is held securely by our payment
-            processor until the card is verified and delivered.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/register" className={buttonClass("primary", "lg")}>
-              Create a deal <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-            </Link>
-            <Link href="/login" className={buttonClass("secondary", "lg")}>
-              I was invited
-            </Link>
+      {/* Hero */}
+      <section className="hero-dark relative overflow-hidden">
+        <div className="dotgrid-blue absolute inset-0" aria-hidden />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 pb-24 pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:pt-24">
+          <div>
+            <p className="kicker mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[11px] text-brand-200">
+              <ShieldCheck className="h-3.5 w-3.5" /> Private &amp; invitation-only
+            </p>
+            <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]">
+              The safe way to close the card deal you{" "}
+              <span className="bg-gradient-to-r from-brand-300 to-brand-500 bg-clip-text text-transparent">
+                made on social.
+              </span>
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-brand-100/80">
+              FlipLocker handles the payment, hub verification, and insured signature delivery for
+              peer-to-peer graded card deals. The buyer&apos;s money is held securely by our payment
+              processor until the card is verified and delivered.
+            </p>
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <Link href="/register" className={buttonClass("primary", "lg")}>
+                Create a deal <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+              </Link>
+              <Link
+                href="/login"
+                className="inline-flex items-center rounded-2xl border border-white/20 px-7 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-white/10"
+              >
+                I was invited
+              </Link>
+            </div>
           </div>
 
-          <div className="mx-auto mt-16 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-4">
-            {ASSURANCES.map((a) => (
-              <div
-                key={a.label}
-                className="flex items-center gap-2.5 rounded-xl border border-ink-200/60 bg-white/80 px-3.5 py-3 text-left shadow-soft backdrop-blur"
-              >
-                <a.icon className="h-5 w-5 shrink-0 text-brand-600" strokeWidth={2} />
-                <span className="text-xs font-semibold leading-snug text-ink-700">{a.label}</span>
-              </div>
-            ))}
+          {/* Floating slab cluster */}
+          <div className="relative hidden h-[420px] lg:block" aria-hidden>
+            <div className="absolute left-4 top-8 w-52 rotate-[-6deg] transition-transform duration-500 hover:rotate-0">
+              <SlabFloat slug="baker" grade="PSA 3" />
+            </div>
+            <div className="absolute right-2 top-0 z-10 w-56 rotate-[5deg] transition-transform duration-500 hover:rotate-0">
+              <SlabFloat slug="johnson" grade="PSA 1" />
+            </div>
+            <div className="absolute bottom-0 left-24 z-20 w-52 rotate-[2deg] transition-transform duration-500 hover:rotate-0">
+              <SlabFloat slug="seymour" grade="PSA 3" />
+            </div>
+          </div>
+        </div>
+
+        {/* Ticker strip */}
+        <div className="relative border-t border-white/10 bg-navy-950/60 py-3.5">
+          <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+            <div className="ticker-track flex shrink-0 items-center gap-8 whitespace-nowrap pr-8">
+              {[...TICKER, ...TICKER].map((t, i) => (
+                <span key={i} className="kicker flex items-center gap-8 text-[12px] text-brand-200/70">
+                  {t}
+                  <span className="h-1 w-1 rounded-full bg-brand-500/60" />
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
+      {/* How it works */}
       <section className="mx-auto max-w-6xl px-4 py-24">
         <div className="mb-14 text-center">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-brand-600">
-            How it works
-          </p>
-          <h2 className="text-3xl font-bold tracking-tight text-ink-950 sm:text-4xl">
-            One deal, four safe steps
-          </h2>
+          <SectionKicker>How it works</SectionKicker>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">One deal, four safe steps</h2>
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((s, i) => (
@@ -128,10 +128,7 @@ export default async function Landing() {
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-b from-brand-500 to-brand-600 text-white shadow-soft transition-transform duration-300 group-hover:scale-110">
                   <s.icon className="h-5 w-5" strokeWidth={2} />
                 </span>
-                <span
-                  className="text-4xl font-extrabold text-ink-100"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
+                <span className="text-4xl font-extrabold text-ink-100" style={{ fontFamily: "var(--font-display)" }}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
               </div>
@@ -142,15 +139,105 @@ export default async function Landing() {
         </div>
       </section>
 
+      {/* Product showcase */}
+      <section className="border-y border-ink-200/60 bg-ink-50">
+        <div className="mx-auto max-w-6xl px-4 py-24">
+          <div className="mb-4 text-center">
+            <SectionKicker>Recent verified deals</SectionKicker>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Real cards, protected end-to-end</h2>
+            <p className="mx-auto mt-3 max-w-xl text-ink-500">
+              Every deal is private and invitation-only — these are examples of the caliber of cards
+              that move safely through FlipLocker. There is nothing to browse or buy here.
+            </p>
+          </div>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {SHOWCASE.map((c) => (
+              <ShowcaseSlab key={c.slug} card={c} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Fee transparency teaser */}
+      <section className="mx-auto max-w-6xl px-4 py-24">
+        <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <SectionKicker>Transparent pricing</SectionKicker>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              A service fee based only on the sale price
+            </h2>
+            <p className="mt-4 text-ink-500">
+              The card&apos;s market value is never used — the fee is a function of the agreed sale
+              price alone, shown in full at checkout. Minimum deal price {formatCents(checkout.minSalePriceCents)}.
+            </p>
+            <Link href="/pricing" className={buttonClass("secondary", "md", "mt-6")}>
+              See full pricing <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+            </Link>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <PlanCard name="Free" tone="light" summary={feeSummary(free.floorCents, free.percentBps, free.crossoverPriceCents)} whoPays={free.whoPays} />
+            <PlanCard name="Pro" tone="dark" summary={feeSummary(pro.floorCents, pro.percentBps, pro.crossoverPriceCents)} whoPays={pro.whoPays} />
+          </div>
+        </div>
+      </section>
+
+      {/* Security / process */}
       <section className="border-t border-ink-200/60 bg-gradient-to-b from-ink-50 to-white">
-        <div className="mx-auto max-w-6xl px-4 py-20 text-center">
-          <ShieldCheck className="mx-auto mb-5 h-10 w-10 text-brand-500" strokeWidth={1.8} />
-          <h2 className="mx-auto max-w-2xl text-2xl font-bold tracking-tight text-ink-950 sm:text-3xl">
+        <div className="mx-auto max-w-6xl px-4 py-24">
+          <div className="mb-14 text-center">
+            <SectionKicker>The verification promise</SectionKicker>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Documented at the hub, delivered with a signature
+            </h2>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {SECURITY.map((s) => (
+              <div key={s.title} className="rounded-2xl border border-ink-200/70 bg-white p-6 shadow-soft">
+                <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+                  <s.icon className="h-5 w-5" strokeWidth={2} />
+                </span>
+                <h3 className="mb-1.5 font-bold text-ink-900">{s.title}</h3>
+                <p className="text-sm leading-relaxed text-ink-500">{s.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="mx-auto max-w-3xl px-4 py-24">
+        <div className="mb-12 text-center">
+          <SectionKicker>Questions</SectionKicker>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Good to know before you deal</h2>
+        </div>
+        <div className="space-y-3">
+          {FAQ.map((f) => (
+            <details
+              key={f.q}
+              className="group rounded-2xl border border-ink-200/70 bg-white px-5 py-4 shadow-soft [&_summary::-webkit-details-marker]:hidden"
+            >
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink-900">
+                {f.q}
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-ink-200 text-ink-400 transition-transform duration-200 group-open:rotate-45">
+                  <span className="text-lg leading-none">+</span>
+                </span>
+              </summary>
+              <p className="mt-3 text-sm leading-relaxed text-ink-600">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="hero-dark relative overflow-hidden">
+        <div className="dotgrid-blue absolute inset-0" aria-hidden />
+        <div className="relative mx-auto max-w-4xl px-4 py-20 text-center">
+          <h2 className="mx-auto max-w-2xl text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
             The handshake happened on social. The protection happens here.
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-ink-500">
-            Every card passes through the FlipLocker hub — inspected, documented on video, tamper
-            sealed, and delivered with a signature before a single dollar reaches the seller.
+          <p className="mx-auto mt-4 max-w-xl text-brand-100/80">
+            Every card is verified, documented, and delivered with a signature before a single dollar
+            reaches the seller.
           </p>
           <Link href="/register" className={buttonClass("primary", "lg", "mt-8")}>
             Start your first deal <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
@@ -158,21 +245,49 @@ export default async function Landing() {
         </div>
       </section>
 
-      <footer className="border-t border-ink-200/60">
-        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-center sm:justify-between">
-          <Wordmark />
-          <div className="flex gap-6 text-sm font-medium text-ink-500">
-            <Link href="/terms" className="hover:text-ink-900">Terms</Link>
-            <Link href="/privacy" className="hover:text-ink-900">Privacy</Link>
-          </div>
-        </div>
-        <div className="mx-auto max-w-6xl px-4 pb-10 text-xs leading-relaxed text-ink-400">
-          FlipLocker is a verification, documentation, and logistics service for private
-          peer-to-peer deals. Cards are verified and documented — FlipLocker does not grade cards.
-          Buyer payments are held by our payment processor and released to the seller after
-          signature-confirmed delivery.
-        </div>
-      </footer>
+      <MarketingFooter />
+    </div>
+  );
+}
+
+function SlabFloat({ slug, grade }: { slug: string; grade: string }) {
+  return (
+    <div className="overflow-hidden rounded-xl border border-white/10 bg-white shadow-lift">
+      <div className="flex items-center justify-between bg-gradient-to-r from-navy-900 to-navy-800 px-3 py-1.5">
+        <span className="flex items-center gap-1 text-[10px] font-bold text-white">
+          <ShieldCheck className="h-3 w-3 text-brand-400" strokeWidth={2.4} /> {grade}
+        </span>
+        <Check className="h-3 w-3 text-brand-400" strokeWidth={3} />
+      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={`/cards/${slug}-front.png`} alt="" className="aspect-[3/4] w-full object-cover" />
+    </div>
+  );
+}
+
+function PlanCard({
+  name,
+  tone,
+  summary,
+  whoPays,
+}: {
+  name: string;
+  tone: "light" | "dark";
+  summary: string;
+  whoPays: string;
+}) {
+  const dark = tone === "dark";
+  return (
+    <div
+      className={`rounded-2xl border p-6 shadow-soft ${
+        dark ? "hero-dark border-navy-800 text-white" : "border-ink-200/70 bg-white"
+      }`}
+    >
+      <p className={`kicker text-[11px] ${dark ? "text-brand-300" : "text-brand-600"}`}>{name} plan</p>
+      <p className={`mt-2 text-lg font-bold ${dark ? "text-white" : "text-ink-900"}`}>{summary}</p>
+      <p className={`mt-3 text-xs ${dark ? "text-brand-100/70" : "text-ink-500"}`}>
+        Fee paid: {whoPays.toLowerCase() === "split" ? "split 50/50" : whoPays.toLowerCase()}
+      </p>
     </div>
   );
 }
