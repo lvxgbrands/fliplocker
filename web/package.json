@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
-    "vercel-build": "prisma generate && (export DATABASE_URL=\"${DATABASE_URL_UNPOOLED:-$DATABASE_URL}\"; prisma migrate deploy && tsx prisma/seed.ts || echo '[vercel-build] DB migrate/seed skipped — set DATABASE_URL to auto-provision the schema + base config') && next build",
+    "build": "prisma generate && (export DATABASE_URL=\"${DATABASE_URL_UNPOOLED:-$DATABASE_URL}\"; prisma migrate deploy && tsx prisma/seed.ts || echo '[build] DB migrate/seed skipped — set a reachable DATABASE_URL to auto-provision the schema + base config') && next build",
+    "vercel-build": "npm run build",
     "start": "next start",
     "lint": "eslint",
     "db:migrate": "prisma migrate dev",
