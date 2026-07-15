@@ -17,8 +17,11 @@ import { formatCents } from "@/lib/fees";
 import { buttonClass } from "@/components/ui";
 import { MarketingNav, MarketingFooter, SectionKicker, ShowcaseSlab } from "@/components/marketing";
 import { HeroShowcase } from "@/components/hero-showcase";
+import { NewsTicker } from "@/components/news-ticker";
+import { FaqSection } from "@/components/faq-section";
 import { Reveal } from "@/components/reveal";
-import { SHOWCASE, TICKER, FAQ } from "@/lib/marketing";
+import { SHOWCASE } from "@/lib/marketing";
+import { HOME_FAQS } from "@/lib/faqs";
 
 const STEPS = [
   { icon: MessageSquareText, title: "Agree your deal anywhere", body: "You and your buyer settle on the card and price off-platform. FlipLocker is invitation-only — no listings, no browsing." },
@@ -50,7 +53,9 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      <a href="#main" className="skip-link">Skip to content</a>
       <MarketingNav dark />
+      <main id="main">
 
       {/* Hero */}
       <section className="hero-dark relative overflow-hidden">
@@ -87,21 +92,10 @@ export default async function Home() {
           {/* Premium hero: cards spin centrifugally on cursor proximity */}
           <HeroShowcase />
         </div>
-
-        {/* Ticker strip */}
-        <div className="relative border-t border-white/10 bg-navy-950/60 py-3.5">
-          <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-            <div className="ticker-track flex shrink-0 items-center gap-8 whitespace-nowrap pr-8">
-              {[...TICKER, ...TICKER].map((t, i) => (
-                <span key={i} className="kicker flex items-center gap-8 text-[12px] text-brand-200/70">
-                  {t}
-                  <span className="h-1 w-1 rounded-full bg-brand-500/60" />
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
       </section>
+
+      {/* Live card-market news ticker */}
+      <NewsTicker />
 
       {/* How it works */}
       <section className="mx-auto max-w-6xl px-4 py-24">
@@ -199,29 +193,11 @@ export default async function Home() {
       </section>
 
       {/* FAQ */}
-      <section className="mx-auto max-w-3xl px-4 py-24">
-        <div className="mb-12 text-center">
-          <SectionKicker>Questions</SectionKicker>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Good to know before you deal</h2>
-        </div>
-        <div className="space-y-3">
-          {FAQ.map((f, i) => (
-            <Reveal key={f.q} delay={i * 60}>
-              <details
-                className="group rounded-2xl border border-ink-200/70 bg-white px-5 py-4 shadow-soft [&_summary::-webkit-details-marker]:hidden"
-              >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink-900">
-                  {f.q}
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-ink-200 text-ink-400 transition-transform duration-200 group-open:rotate-45">
-                    <span className="text-lg leading-none">+</span>
-                  </span>
-                </summary>
-                <p className="mt-3 text-sm leading-relaxed text-ink-600">{f.a}</p>
-              </details>
-            </Reveal>
-          ))}
-        </div>
-      </section>
+      <FaqSection
+        items={HOME_FAQS}
+        title="Good to know before you deal"
+        intro="The essentials on how FlipLocker protects a peer-to-peer card deal from handshake to payout."
+      />
 
       {/* Final CTA */}
       <section className="hero-dark relative overflow-hidden">
@@ -240,6 +216,7 @@ export default async function Home() {
         </div>
       </section>
 
+      </main>
       <MarketingFooter />
     </div>
   );

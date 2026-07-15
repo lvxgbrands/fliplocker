@@ -389,3 +389,20 @@ model SmsOutbox {
   @@index([sentAt])
   @@map("sms_outbox")
 }
+
+// ---------- Newsletter (marketing email capture; adapter/simulator pattern) ----------
+// Simulator mode (default) captures subscribers here. Real mode also adds them to
+// a Resend audience when RESEND_API_KEY + RESEND_AUDIENCE_ID are set.
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  source    String   @default("footer") // footer | contact | insights
+  status    String   @default("subscribed") // subscribed | unsubscribed
+  provider  String   @default("dev-outbox") // resend | dev-outbox
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([createdAt])
+  @@map("newsletter_subscribers")
+}

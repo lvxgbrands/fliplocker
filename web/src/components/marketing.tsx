@@ -1,77 +1,11 @@
-import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
-import { Wordmark } from "@/components/brand";
-import { buttonClass } from "@/components/ui";
 import type { ShowcaseCard } from "@/lib/marketing";
 
-const NAV_LINKS = [
-  { href: "/how-it-works", label: "How it works" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/security", label: "Security" },
-];
-
-export function MarketingNav({ dark = false }: { dark?: boolean }) {
-  return (
-    <header
-      className={`sticky top-0 z-20 border-b backdrop-blur-md ${
-        dark ? "border-white/10 bg-navy-950/70" : "border-ink-200/50 bg-white/80"
-      }`}
-    >
-      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4">
-        <Wordmark dark={dark} />
-        <nav className="hidden items-center gap-1 md:flex">
-          {NAV_LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={`rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors ${
-                dark ? "text-brand-100/80 hover:bg-white/10 hover:text-white" : "text-ink-600 hover:bg-ink-100 hover:text-ink-900"
-              }`}
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
-        <div className="flex items-center gap-2">
-          <Link
-            href="/login"
-            className={`hidden rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors sm:block ${
-              dark ? "text-white hover:bg-white/10" : "text-ink-700 hover:bg-ink-100"
-            }`}
-          >
-            Sign in
-          </Link>
-          <Link href="/register" className={buttonClass("primary", "md")}>
-            Get started
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
-}
-
-export function MarketingFooter() {
-  return (
-    <footer className="border-t border-ink-200/60 bg-white">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-center sm:justify-between">
-        <Wordmark />
-        <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-ink-500">
-          <Link href="/how-it-works" className="hover:text-ink-900">How it works</Link>
-          <Link href="/pricing" className="hover:text-ink-900">Pricing</Link>
-          <Link href="/security" className="hover:text-ink-900">Security</Link>
-          <Link href="/terms" className="hover:text-ink-900">Terms</Link>
-          <Link href="/privacy" className="hover:text-ink-900">Privacy</Link>
-        </nav>
-      </div>
-      <div className="mx-auto max-w-6xl px-4 pb-10 text-xs leading-relaxed text-ink-400">
-        FlipLocker is a documentation and logistics service for private, peer-to-peer
-        deals — not a marketplace. Cards are documented; FlipLocker does not grade
-        cards. Buyer payments are held by our payment processor and released to the seller after
-        signature-confirmed delivery.
-      </div>
-    </footer>
-  );
-}
+// Barrel for shared marketing components. Nav and footer moved to dedicated
+// files (the nav is a client mega-menu); re-exported here so existing imports
+// keep working.
+export { MarketingNav } from "@/components/marketing-nav";
+export { MarketingFooter } from "@/components/marketing-footer";
 
 export function SectionKicker({ children }: { children: React.ReactNode }) {
   return <p className="kicker mb-3 text-[12px] text-brand-600">{children}</p>;

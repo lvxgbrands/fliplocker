@@ -24,6 +24,14 @@ Required:
 - `APP_URL` — the deployed URL (e.g. `https://staging.fliplocker.app`)
 - `SESSION_SECRET` — a long random string
 
+Marketing/SEO (optional — sensible defaults):
+- `SITE_URL` — canonical origin for metadata/sitemap/JSON-LD (defaults to `https://fliplocker.app`).
+- Newsletter: `RESEND_AUDIENCE_ID` (with `RESEND_API_KEY`) syncs opt-ins to a Resend audience; otherwise subscribers are captured in the `newsletter_subscribers` table.
+- News ticker: defaults to a curated set of real headlines (simulator). To pull live headlines set `NEWS_MODE=live` plus either `NEWS_RSS_URL` (+ `NEWS_SOURCE_NAME`) or `NEWS_API_KEY` (+ `NEWS_QUERY`). Any failure falls back to the seeded headlines.
+
+All of the above are optional — the marketing site, newsletter capture, contact
+form, and news ticker all run in simulator mode with no third-party keys.
+
 Staging (demo without third-party accounts) — leave provider keys blank and set:
 - `PAYPAL_MODE=simulator`, `SHIPPING_MODE=simulator`
 - `DEV_MAILBOX=on` (captured email/SMS at `/dev/mailbox`)
