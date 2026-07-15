@@ -22,7 +22,7 @@ export function Wordmark({ href = "/", dark = false }: { href?: string; dark?: b
       className="group flex items-center gap-2.5"
       aria-label="FlipLocker home"
     >
-      <LockMark className="h-8 w-8 transition-transform duration-300 group-hover:-translate-y-0.5" />
+      <LockMark className="h-16 w-16 transition-transform duration-300 group-hover:-translate-y-0.5" />
       <span
         className="text-[1.4rem] font-extrabold leading-none tracking-tight"
         style={{ fontFamily: "var(--font-display)" }}
