@@ -8,6 +8,9 @@ const TYPES: Record<string, string> = {
   ".webp": "image/webp",
   ".heic": "image/heic",
   ".svg": "image/svg+xml",
+  ".mp4": "video/mp4",
+  ".mov": "video/quicktime",
+  ".webm": "video/webm",
 };
 
 // Serves local-mode media. Access is signed-URL only (mediaViewUrl).

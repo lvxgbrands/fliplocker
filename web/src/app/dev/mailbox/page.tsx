@@ -21,7 +21,10 @@ export default async function DevMailboxPage({
   if (process.env.DEV_MAILBOX === "off") notFound();
   const { open } = await searchParams;
 
-  const emails = await db.emailOutbox.findMany({ orderBy: { sentAt: "desc" }, take: 50 });
+  const [emails, texts] = await Promise.all([
+    db.emailOutbox.findMany({ orderBy: { sentAt: "desc" }, take: 50 }),
+    db.smsOutbox.findMany({ orderBy: { sentAt: "desc" }, take: 30 }),
+  ]);
   const openEmail = open ? emails.find((e) => e.id === open) : null;
 
   return (
@@ -53,6 +56,19 @@ export default async function DevMailboxPage({
                 </p>
               </Link>
             ))
+          )}
+          {texts.length > 0 && (
+            <div className="border-t-4 border-slate-100">
+              <p className="px-4 py-2 text-xs font-bold uppercase tracking-wide text-slate-400">
+                SMS ({texts.length})
+              </p>
+              {texts.map((t) => (
+                <div key={t.id} className="px-4 py-2.5 border-t border-slate-100">
+                  <p className="text-xs text-slate-400">to {t.toPhone} · via {t.provider}</p>
+                  <p className="text-sm text-slate-700">{t.body}</p>
+                </div>
+              ))}
+            </div>
           )}
         </div>
         <div className="space-y-3">

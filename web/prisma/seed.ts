@@ -8,18 +8,28 @@ const db = new PrismaClient();
 // (Free 4% / $10 floor, Pro 2% / $5 floor) and can be changed without code.
 
 async function main() {
+  const checkoutSettings = {
+    minSalePriceCents: 16000, // $160 minimum sale price
+    outboundShippingCents: 950, // $9.50 flat outbound shipping & signature
+    insuranceEnabled: true,
+    insuranceCentsPer100: 50, // $0.50 per $100 of sale price (carrier pass-through)
+    taxEnabled: false, // per Client tax policy; per-state rows in tax_rates
+    defaultTaxBps: 0,
+    sellerLabelChargeCents: 500, // $5.00 Leg 1 label charge billed to seller (placeholder)
+    // Hub ship-to address (placeholder until Client provides at kickoff).
+    hubName: "FlipLocker Verification Hub",
+    hubStreet: "2200 Card Vault Way, Suite 10",
+    hubCity: "Austin",
+    hubState: "TX",
+    hubZip: "78701",
+    shipTimerHours: 72,
+    reviewWindowHours: 48,
+    mediaPurgeDays: 30,
+  };
   await db.checkoutConfig.upsert({
     where: { id: "default" },
-    update: {},
-    create: {
-      id: "default",
-      minSalePriceCents: 16000, // $160 minimum sale price
-      outboundShippingCents: 950, // $9.50 flat outbound shipping & signature
-      insuranceEnabled: true,
-      insuranceCentsPer100: 50, // $0.50 per $100 of sale price (carrier pass-through)
-      taxEnabled: false, // per Client tax policy; per-state rows in tax_rates
-      defaultTaxBps: 0,
-    },
+    update: checkoutSettings,
+    create: { id: "default", ...checkoutSettings },
   });
 
   await db.feeConfig.upsert({

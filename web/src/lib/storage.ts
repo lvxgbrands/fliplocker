@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { createHmac, randomBytes } from "crypto";
 import path from "path";
@@ -85,4 +85,13 @@ export async function localWrite(key: string, data: Buffer): Promise<void> {
 
 export async function localRead(key: string): Promise<Buffer> {
   return fs.readFile(safeLocalPath(key));
+}
+
+/** Permanently delete a stored object (used by the 30-day media purge). */
+export async function mediaViewKeyDelete(key: string): Promise<void> {
+  if (s3Configured()) {
+    await s3().send(new DeleteObjectCommand({ Bucket: process.env.S3_BUCKET, Key: key }));
+    return;
+  }
+  await fs.rm(safeLocalPath(key), { force: true });
 }

@@ -26,16 +26,18 @@ model User {
   email         String    @unique
   passwordHash  String
   name          String?
+  phone         String? // optional, for SMS alerts (A-9)
   role          Role      @default(SELLER)
   plan          PlanTier  @default(FREE)
   emailVerified DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  sessions     Session[]
-  tokens       AuthToken[]
-  sellerDeals  Deal[]      @relation("SellerDeals")
-  buyerDeals   Deal[]      @relation("BuyerDeals")
+  sessions          Session[]
+  tokens            AuthToken[]
+  sellerDeals       Deal[]          @relation("SellerDeals")
+  buyerDeals        Deal[]          @relation("BuyerDeals")
+  hubInspections    HubInspection[] @relation("FacilitatorInspections")
 
   @@map("users")
 }
@@ -125,21 +127,37 @@ model Deal {
   sellerPayoutCents  Int // what the seller receives on release
   feeConfigSnapshot  Json // the config rows used, for the transaction record
 
-  acceptedAt DateTime?
-  declinedAt DateTime?
-  paidAt     DateTime?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  // Terms of Service acknowledgment — required before a shipping label is generated.
+  tosAcceptedAt DateTime?
 
-  seller    User        @relation("SellerDeals", fields: [sellerId], references: [id])
-  buyer     User?       @relation("BuyerDeals", fields: [buyerId], references: [id])
-  media     DealMedia[]
-  payments  Payment[]
-  shipments Shipment[]
-  events    DealEvent[]
+  // Lifecycle timestamps + timer deadlines (all set as the deal advances).
+  acceptedAt      DateTime?
+  declinedAt      DateTime?
+  paidAt          DateTime?
+  shipDeadlineAt  DateTime? // 72h ship window from Leg 1 label
+  receivedAt      DateTime? // arrived at hub
+  verifiedAt      DateTime?
+  deliveredAt     DateTime? // signature-confirmed delivery to buyer
+  reviewDeadlineAt DateTime? // 48h buyer review window from delivery
+  fundsReleasedAt DateTime?
+  completedAt     DateTime?
+  cancelledAt     DateTime?
+  refundedAt      DateTime?
+  flagReason      String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  seller     User            @relation("SellerDeals", fields: [sellerId], references: [id])
+  buyer      User?           @relation("BuyerDeals", fields: [buyerId], references: [id])
+  media      DealMedia[]
+  payments   Payment[]
+  shipments  Shipment[]
+  events     DealEvent[]
+  inspection HubInspection?
 
   @@index([sellerId])
   @@index([buyerId])
+  @@index([status])
   @@map("deals")
 }
 
@@ -157,12 +175,41 @@ model DealMedia {
   kind        MediaKind
   storageKey  String
   contentType String
+  // Set for hub video/photos: auto-purge 30 days after confirmed delivery (A-9).
+  purgeAfter  DateTime?
+  purgedAt    DateTime?
   createdAt   DateTime  @default(now())
 
   deal Deal @relation(fields: [dealId], references: [id], onDelete: Cascade)
 
   @@unique([dealId, kind])
   @@map("deal_media")
+}
+
+// ---------- Hub verification (facilitator) ----------
+
+enum InspectionResult {
+  PENDING
+  PASS
+  FAIL
+}
+
+model HubInspection {
+  id              String           @id @default(cuid())
+  dealId          String           @unique
+  facilitatorId   String?
+  tamperSealSerial String?
+  result          InspectionResult @default(PENDING)
+  notes           String?
+  checkedInAt     DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  deal        Deal  @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  facilitator User? @relation("FacilitatorInspections", fields: [facilitatorId], references: [id])
+
+  @@map("hub_inspections")
 }
 
 // ---------- Payments ----------
@@ -183,6 +230,9 @@ model Payment {
   paypalOrderId   String       @unique
   authorizationId String?
   captureId       String?
+  refundId        String?
+  disbursedAt     DateTime? // delayed disbursement released to seller (multiparty)
+  refundedAt      DateTime?
   state           PaymentState @default(CREATED)
   // Amount breakdown (cents) as sent to the processor
   grossCents      Int // buyer total charged
@@ -212,10 +262,16 @@ model Shipment {
   dealId            String
   leg               ShipmentLeg
   carrier           String      @default("USPS")
+  service           String? // e.g. "USPS Ground Advantage", "Priority + Signature"
   trackingNumber    String?
   labelUrl          String?
+  labelChargeCents  Int         @default(0)
   signatureRequired Boolean     @default(false)
-  status            String      @default("PENDING")
+  status            String      @default("PENDING") // PENDING|LABEL_CREATED|IN_TRANSIT|DELIVERED
+  lastScanAt        DateTime?
+  deliveredAt       DateTime?
+  signedBy          String?
+  provider          String      @default("SIM") // SIM | EASYPOST
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
 
@@ -274,6 +330,18 @@ model CheckoutConfig {
   insuranceCentsPer100   Int // pass-through declared-value coverage, per $100 of sale price
   taxEnabled             Boolean  @default(false)
   defaultTaxBps          Int      @default(0) // used when no per-state row matches
+  // Leg 1 label charge billed to the seller (configurable, A-3).
+  sellerLabelChargeCents Int      @default(0)
+  // Hub ship-to address (client-provided at kickoff).
+  hubName                String   @default("FlipLocker Verification Hub")
+  hubStreet              String   @default("000 Placeholder St")
+  hubCity                String   @default("Austin")
+  hubState               String   @default("TX")
+  hubZip                 String   @default("78701")
+  // Timer windows (hours).
+  shipTimerHours         Int      @default(72)
+  reviewWindowHours      Int      @default(48)
+  mediaPurgeDays         Int      @default(30)
   updatedAt              DateTime @updatedAt
 
   taxRates TaxRate[]
@@ -294,7 +362,7 @@ model TaxRate {
   @@map("tax_rates")
 }
 
-// ---------- Dev email outbox (captures transactional mail when no Resend key) ----------
+// ---------- Dev outboxes (capture transactional mail/SMS when no provider key) ----------
 
 model EmailOutbox {
   id        String   @id @default(cuid())
@@ -302,7 +370,21 @@ model EmailOutbox {
   subject   String
   html      String
   provider  String // resend | dev-outbox
+  dealId    String?
   sentAt    DateTime @default(now())
 
+  @@index([sentAt])
   @@map("email_outbox")
+}
+
+model SmsOutbox {
+  id        String   @id @default(cuid())
+  toPhone   String
+  body      String
+  provider  String // twilio | dev-outbox
+  dealId    String?
+  sentAt    DateTime @default(now())
+
+  @@index([sentAt])
+  @@map("sms_outbox")
 }

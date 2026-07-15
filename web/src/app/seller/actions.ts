@@ -8,6 +8,8 @@ import { getCheckoutConfig, getFeeConfig } from "@/lib/config";
 import { computeQuote } from "@/lib/fees";
 import { newShortCode, newInviteToken, logDealEvent, transitionDeal, cardTitle } from "@/lib/deals";
 import { sendEmail, buyerInviteTemplate } from "@/lib/email";
+import { generateLeg1Label } from "@/lib/logistics";
+import { revalidatePath } from "next/cache";
 import type { Prisma } from "@prisma/client";
 
 const appUrl = () => process.env.APP_URL || "http://localhost:3000";
@@ -114,4 +116,37 @@ export async function createDealAction(input: CreateDealInput): Promise<{ error?
   });
 
   redirect(`/seller/deals/${deal.id}?created=1`);
+}
+
+/**
+ * Seller accepts the ToS and generates the prepaid Leg 1 label to the hub.
+ * A-9: the ToS acknowledgment checkbox is required before a label is generated.
+ */
+export async function generateLabelAction(formData: FormData) {
+  const user = await requireUser("SELLER");
+  const dealId = String(formData.get("dealId") || "");
+  const tos = formData.get("tos") === "on";
+
+  const deal = await db.deal.findUnique({ where: { id: dealId } });
+  if (!deal || deal.sellerId !== user.id) redirect("/seller");
+  if (!tos) {
+    redirect(`/seller/deals/${dealId}?error=${encodeURIComponent("You must accept the Terms of Service before generating a label.")}`);
+  }
+
+  if (!deal.tosAcceptedAt) {
+    await db.deal.update({ where: { id: dealId }, data: { tosAcceptedAt: new Date() } });
+    await logDealEvent(dealId, {
+      actor: "seller",
+      type: "TOS_ACCEPTED",
+      message: "Seller accepted the Terms of Service.",
+    });
+  }
+
+  try {
+    await generateLeg1Label(dealId);
+  } catch (e) {
+    redirect(`/seller/deals/${dealId}?error=${encodeURIComponent((e as Error).message)}`);
+  }
+  revalidatePath(`/seller/deals/${dealId}`);
+  redirect(`/seller/deals/${dealId}?labeled=1`);
 }

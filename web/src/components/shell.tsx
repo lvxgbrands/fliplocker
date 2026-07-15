@@ -13,7 +13,15 @@ export function PortalShell({
   children: React.ReactNode;
 }) {
   const home =
-    user.role === "BUYER" ? "/buyer" : user.role === "SELLER" ? "/seller" : "/dashboard";
+    user.role === "BUYER"
+      ? "/buyer"
+      : user.role === "SELLER"
+        ? "/seller"
+        : user.role === "FACILITATOR"
+          ? "/hub"
+          : user.role === "ADMIN"
+            ? "/admin"
+            : "/dashboard";
   return (
     <div className="min-h-screen">
       <header className="bg-white border-b border-slate-200 sticky top-0 z-10">

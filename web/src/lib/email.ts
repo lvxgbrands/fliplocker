@@ -9,9 +9,10 @@ interface SendArgs {
   to: string;
   subject: string;
   html: string;
+  dealId?: string;
 }
 
-export async function sendEmail({ to, subject, html }: SendArgs): Promise<void> {
+export async function sendEmail({ to, subject, html, dealId }: SendArgs): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.EMAIL_FROM || "FlipLocker <deals@fliplocker.app>";
   let provider = "dev-outbox";
@@ -24,7 +25,7 @@ export async function sendEmail({ to, subject, html }: SendArgs): Promise<void> 
   }
 
   // Always keep a copy for the transaction record / dev mailbox.
-  await db.emailOutbox.create({ data: { toEmail: to, subject, html, provider } });
+  await db.emailOutbox.create({ data: { toEmail: to, subject, html, provider, dealId } });
 }
 
 // ---------------------------------------------------------------------------
@@ -72,6 +73,19 @@ function layout(title: string, bodyHtml: string, cta?: { label: string; url: str
 
 const money = (cents: number) =>
   (cents / 100).toLocaleString("en-US", { style: "currency", currency: "USD" });
+
+/** Generic branded email used for lifecycle notifications (shipping/hub/release). */
+export function genericEmail(
+  subject: string,
+  title: string,
+  paragraphs: string[],
+  cta?: { label: string; url: string }
+) {
+  const body = paragraphs
+    .map((p) => `<p style="font-size:14px;line-height:1.6">${p}</p>`)
+    .join("");
+  return { subject, html: layout(title, body, cta) };
+}
 
 export function verifyEmailTemplate(url: string) {
   return {

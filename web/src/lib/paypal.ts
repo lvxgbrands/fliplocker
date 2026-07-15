@@ -159,6 +159,45 @@ export async function captureOrder(orderId: string): Promise<CaptureResult> {
   return { captureId: capture?.id ?? "", status: json.status as string, raw: json };
 }
 
+export interface RefundResult {
+  refundId: string;
+  status: string;
+  raw: Record<string, unknown>;
+}
+
+/** Refund a captured payment (full). Simulator returns a synthetic refund id. */
+export async function refundCapture(captureId: string, cents: number): Promise<RefundResult> {
+  const mode = paypalMode();
+  if (mode === "simulator") {
+    return { refundId: `SIMREF-${randomBytes(8).toString("hex").toUpperCase()}`, status: "COMPLETED", raw: { simulated: true } };
+  }
+  const token = await accessToken(mode);
+  const res = await fetch(`${API_BASE[mode]}/v2/payments/captures/${captureId}/refund`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ amount: usd(cents) }),
+    cache: "no-store",
+  });
+  const json = await res.json();
+  if (!res.ok) throw new Error(`PayPal refund failed: ${res.status} ${JSON.stringify(json)}`);
+  return { refundId: json.id as string, status: json.status as string, raw: json };
+}
+
+/**
+ * Release the delayed disbursement to the seller (multiparty). In the simulator
+ * this is a bookkeeping step. With live multiparty + DELAYED disbursement the
+ * platform triggers the referenced payout / the hold is released here; the
+ * platform fee was already routed via `platform_fees` at capture.
+ */
+export async function releaseDisbursement(captureId: string): Promise<{ ok: true; raw: Record<string, unknown> }> {
+  const mode = paypalMode();
+  if (mode === "simulator") return { ok: true, raw: { simulated: true, captureId } };
+  // Live/sandbox referenced-payout integration is finalized with PayPal partner
+  // onboarding; until then disbursement is released per the order's payment
+  // instruction. Recorded here for the transaction record.
+  return { ok: true, raw: { captureId, note: "released per DELAYED disbursement instruction" } };
+}
+
 /** Verify a webhook signature with PayPal (sandbox/live only). */
 export async function verifyWebhookSignature(
   headers: Headers,

@@ -4,8 +4,11 @@ import { db } from "@/lib/db";
 import { requireUser } from "@/lib/auth";
 import { StatusChip, Timeline, CostBreakdown } from "@/components/deal-ui";
 import { DealPhotos } from "@/components/deal-photos";
+import { HubEvidence } from "@/components/hub-evidence";
+import { ShipmentPanel } from "@/components/shipment-panel";
+import { DevControls } from "@/components/dev-controls";
 import { cardTitle } from "@/lib/deals";
-import { acceptAndPayAction, declineAction } from "../../actions";
+import { acceptAndPayAction, declineAction, approveDealAction, reportIssueAction } from "../../actions";
 import { ErrorNote, SuccessNote } from "@/components/form-ui";
 
 export default async function BuyerDealPage({
@@ -13,7 +16,14 @@ export default async function BuyerDealPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ error?: string; paid?: string; declined?: string; cancelled?: string }>;
+  searchParams: Promise<{
+    error?: string;
+    paid?: string;
+    declined?: string;
+    cancelled?: string;
+    approved?: string;
+    reported?: string;
+  }>;
 }) {
   const user = await requireUser();
   const { id } = await params;
@@ -25,12 +35,15 @@ export default async function BuyerDealPage({
       media: true,
       seller: true,
       events: { orderBy: { createdAt: "asc" } },
+      inspection: true,
+      shipments: { orderBy: { createdAt: "asc" } },
     },
   });
   if (!deal || deal.buyerId !== user.id) notFound();
 
   const canDecide = deal.status === "BUYER_NOTIFIED" || deal.status === "ACCEPTED";
-  const isPaid = ["PAID", "AWAITING_SELLER_SHIPMENT"].includes(deal.status);
+  const inReview = deal.status === "DELIVERED_SIGNED";
+  const showEvidence = deal.inspection && deal.inspection.result !== "PENDING";
 
   return (
     <div>
@@ -47,7 +60,11 @@ export default async function BuyerDealPage({
               ? "You declined this deal. The seller has been notified — no payment was collected."
               : notices.cancelled
                 ? "Checkout was cancelled — no payment was collected. You can accept and pay whenever you're ready."
-                : undefined
+                : notices.approved
+                  ? "Thanks! You approved the card — the seller's payout has been released and the deal is complete."
+                  : notices.reported
+                    ? "Issue reported. FlipLocker will review it and follow up — funds remain held by the payment processor."
+                    : undefined
         }
       />
 
@@ -64,6 +81,7 @@ export default async function BuyerDealPage({
       <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
         <div className="space-y-6">
           <DealPhotos media={deal.media} />
+          {showEvidence ? <HubEvidence media={deal.media} inspection={deal.inspection!} /> : null}
 
           <section className="rounded-xl border border-slate-200 bg-white p-4">
             <h2 className="text-sm font-semibold text-slate-900 mb-3">Card details</h2>
@@ -135,12 +153,49 @@ export default async function BuyerDealPage({
                 and is delivered to you with signature confirmation.
               </p>
             </div>
-          ) : isPaid ? (
-            <div className="rounded-xl border border-teal-200 bg-teal-50 px-4 py-3 text-sm text-teal-800">
-              ✔ Paid. The seller has been alerted to ship your card to the FlipLocker hub — follow
-              every step on the timeline.
+          ) : inReview ? (
+            <section className="rounded-xl border border-teal-300 bg-teal-50 p-4 space-y-3">
+              <p className="font-semibold text-teal-900">Delivered — review your card</p>
+              <p className="text-xs text-teal-800">
+                You have 48 hours to approve or report an issue. If the window passes with no
+                report, the deal completes automatically and the seller is paid.
+              </p>
+              <form action={approveDealAction}>
+                <input type="hidden" name="dealId" value={deal.id} />
+                <button className="w-full rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-700">
+                  Approve &amp; release payment
+                </button>
+              </form>
+              <details className="text-sm">
+                <summary className="cursor-pointer text-rose-700 font-medium">Report an issue</summary>
+                <form action={reportIssueAction} className="mt-2 space-y-2">
+                  <input type="hidden" name="dealId" value={deal.id} />
+                  <textarea
+                    name="reason"
+                    required
+                    rows={3}
+                    placeholder="Describe the issue…"
+                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                  />
+                  <button className="w-full rounded-lg border border-rose-300 bg-white px-5 py-2 text-sm font-semibold text-rose-700 hover:bg-rose-50">
+                    Submit issue report
+                  </button>
+                </form>
+              </details>
+            </section>
+          ) : deal.status === "COMPLETE" ? (
+            <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+              ✔ Complete. Thanks for using FlipLocker.
             </div>
-          ) : null}
+          ) : (
+            <div className="rounded-xl border border-teal-200 bg-teal-50 px-4 py-3 text-sm text-teal-800">
+              Your payment is held securely by our payment processor. Follow every step on the
+              timeline.
+            </div>
+          )}
+
+          <ShipmentPanel shipments={deal.shipments} />
+          <DevControls dealId={deal.id} status={deal.status} />
         </aside>
       </div>
     </div>

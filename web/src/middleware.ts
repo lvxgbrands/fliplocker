@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // First-line guard: signed-in cookie required for portal routes.
 // Role checks and session validity run server-side in each page/layout.
-const PROTECTED = ["/seller", "/buyer", "/dashboard"];
+const PROTECTED = ["/seller", "/buyer", "/dashboard", "/hub", "/admin"];
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
