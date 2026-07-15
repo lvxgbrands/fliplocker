@@ -68,7 +68,7 @@ export function InspectionForm({ dealId }: { dealId: string }) {
   }
 
   const input =
-    "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white";
+    "w-full rounded-lg border border-ink-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white";
 
   return (
     <form
@@ -84,12 +84,12 @@ export function InspectionForm({ dealId }: { dealId: string }) {
         <FileTile label="Reference photo 2" accept="image/*" file={photo2} onFile={setPhoto2} />
       </div>
       <label className="block">
-        <span className="block text-sm font-medium text-slate-700 mb-1">Tamper-seal serial number</span>
+        <span className="block text-sm font-medium text-ink-700 mb-1">Tamper-seal serial number</span>
         <input name="tamperSealSerial" className={input} placeholder="TS-000000" required />
       </label>
       <label className="block">
-        <span className="block text-sm font-medium text-slate-700 mb-1">
-          Notes <span className="text-slate-400 font-normal">(required if flagging a mismatch)</span>
+        <span className="block text-sm font-medium text-ink-700 mb-1">
+          Notes <span className="text-ink-400 font-normal">(required if flagging a mismatch)</span>
         </span>
         <textarea name="notes" rows={2} className={input} placeholder="Condition observations…" />
       </label>
@@ -100,7 +100,7 @@ export function InspectionForm({ dealId }: { dealId: string }) {
         <button
           type="submit"
           disabled={busy !== null}
-          className="rounded-lg bg-teal-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-teal-700 disabled:opacity-50"
+          className="rounded-lg bg-brand-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-brand-700 disabled:opacity-50"
         >
           {busy === "PASS" ? "Submitting…" : "Pass — verified"}
         </button>
@@ -130,10 +130,10 @@ function FileTile({
 }) {
   return (
     <label className="block cursor-pointer">
-      <span className="block text-xs font-medium text-slate-600 mb-1">{label}</span>
+      <span className="block text-xs font-medium text-ink-600 mb-1">{label}</span>
       <div
         className={`flex items-center justify-center rounded-lg border-2 border-dashed aspect-square text-xs text-center px-2 ${
-          file ? "border-teal-400 bg-teal-50/50 text-teal-700" : "border-slate-300 bg-slate-50 text-slate-400"
+          file ? "border-brand-400 bg-brand-50/50 text-brand-700" : "border-ink-300 bg-ink-50 text-ink-400"
         }`}
       >
         {file ? file.name : "Tap to add"}

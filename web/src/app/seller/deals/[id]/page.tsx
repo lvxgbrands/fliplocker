@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { PackageCheck } from "lucide-react";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/auth";
 import { StatusChip, Timeline, CostBreakdown } from "@/components/deal-ui";
@@ -42,7 +43,7 @@ export default async function SellerDealPage({
 
   return (
     <div>
-      <Link href="/seller" className="text-sm text-slate-400 hover:text-slate-600">
+      <Link href="/seller" className="text-sm text-ink-400 hover:text-ink-600">
         ← Back to deals
       </Link>
 
@@ -58,39 +59,50 @@ export default async function SellerDealPage({
       <ErrorNote message={notices.error} />
 
       {needsLabel && (
-        <div className="mt-4 rounded-xl border border-teal-300 bg-teal-50 px-4 py-4">
-          <p className="font-semibold text-teal-900">📦 Payment received — ship now!</p>
-          <p className="text-sm text-teal-800 mt-1 mb-3">
-            The buyer&apos;s payment is confirmed and held securely by our payment processor.
-            Accept the Terms of Service to generate your prepaid Leg&nbsp;1 label to the FlipLocker
-            hub. A {config.shipTimerHours}-hour ship window applies once it&apos;s issued.
-          </p>
-          <form action={generateLabelAction} className="space-y-3">
-            <input type="hidden" name="dealId" value={deal.id} />
-            <label className="flex items-start gap-2 text-sm text-teal-900">
-              <input type="checkbox" name="tos" className="mt-0.5" required />
-              <span>
-                I agree to the{" "}
-                <Link href="/terms" target="_blank" className="underline font-semibold">
-                  Terms of Service
-                </Link>{" "}
-                and understand FlipLocker verifies and documents the card (it does not grade it).
+        <div className="hero-dark relative mt-4 overflow-hidden rounded-2xl p-5 shadow-lift">
+          <div className="dotgrid-blue absolute inset-0" aria-hidden />
+          <div className="relative">
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-b from-brand-400 to-brand-600 text-white shadow-glow">
+                <PackageCheck className="h-5 w-5" strokeWidth={2.2} />
               </span>
-            </label>
-            <button
-              type="submit"
-              className="rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-teal-700"
-            >
-              Accept &amp; generate shipping label
-            </button>
-          </form>
+              <div>
+                <p className="kicker text-[11px] text-brand-300">Payment cleared</p>
+                <p className="text-lg font-extrabold text-white">Payment received — ship now!</p>
+              </div>
+            </div>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-brand-100/85">
+              The buyer&apos;s payment is confirmed and held securely by our payment processor.
+              Accept the Terms of Service to generate your prepaid Leg&nbsp;1 label to the FlipLocker
+              hub. A {config.shipTimerHours}-hour ship window applies once it&apos;s issued.
+            </p>
+            <form action={generateLabelAction} className="mt-4 space-y-3">
+              <input type="hidden" name="dealId" value={deal.id} />
+              <label className="flex items-start gap-2 text-sm text-brand-100/90">
+                <input type="checkbox" name="tos" className="mt-0.5 accent-brand-500" required />
+                <span>
+                  I agree to the{" "}
+                  <Link href="/terms" target="_blank" className="font-semibold text-white underline">
+                    Terms of Service
+                  </Link>{" "}
+                  and understand FlipLocker verifies and documents the card (it does not grade it).
+                </span>
+              </label>
+              <button
+                type="submit"
+                className="rounded-xl bg-gradient-to-b from-brand-400 to-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-soft transition-all duration-200 hover:from-brand-500 hover:to-brand-700 hover:shadow-glow active:translate-y-px"
+              >
+                Accept &amp; generate shipping label
+              </button>
+            </form>
+          </div>
         </div>
       )}
 
       <div className="flex items-start justify-between gap-4 mt-4 mb-6">
         <div>
           <h1 className="text-2xl font-bold">{cardTitle(deal)}</h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm text-ink-400 mt-1">
             {deal.shortCode} · buyer {deal.buyerEmail}
             {deal.buyer ? " (joined)" : " (invited)"}
           </p>
@@ -100,16 +112,16 @@ export default async function SellerDealPage({
 
       <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
         <div className="space-y-6">
-          <DealPhotos media={deal.media} />
+          <DealPhotos media={deal.media} deal={deal} />
           {deal.inspection?.result === "PASS" ? <HubEvidence media={deal.media} inspection={deal.inspection} /> : null}
           {deal.description ? (
-            <section className="rounded-xl border border-slate-200 bg-white p-4">
-              <h2 className="text-sm font-semibold text-slate-900 mb-1">Description</h2>
-              <p className="text-sm text-slate-600 whitespace-pre-wrap">{deal.description}</p>
+            <section className="rounded-xl border border-ink-200 bg-white p-4">
+              <h2 className="text-sm font-semibold text-ink-900 mb-1">Description</h2>
+              <p className="text-sm text-ink-600 whitespace-pre-wrap">{deal.description}</p>
             </section>
           ) : null}
           <section>
-            <h2 className="text-sm font-semibold text-slate-900 mb-3">Deal timeline</h2>
+            <h2 className="text-sm font-semibold text-ink-900 mb-3">Deal timeline</h2>
             <Timeline events={deal.events} />
           </section>
         </div>
@@ -130,7 +142,7 @@ export default async function SellerDealPage({
           ) : null}
           <ShipmentPanel shipments={deal.shipments} />
           <DevControls dealId={deal.id} status={deal.status} />
-          <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs text-slate-500 space-y-1">
+          <div className="rounded-xl border border-ink-200 bg-white px-4 py-3 text-xs text-ink-500 space-y-1">
             <p>
               Buyer pays <strong>{formatCents(deal.buyerTotalCents)}</strong> (incl. their fee share,
               shipping &amp; coverage lines).

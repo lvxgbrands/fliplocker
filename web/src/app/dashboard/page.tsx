@@ -20,7 +20,7 @@ export default async function DashboardPage({
 
   return (
     <PortalShell user={user} title="Dashboard">
-      <div className="rounded-xl border border-slate-200 bg-white p-8 text-center text-slate-500">
+      <div className="rounded-xl border border-ink-200 bg-white p-8 text-center text-ink-500">
         Welcome to FlipLocker.
       </div>
     </PortalShell>

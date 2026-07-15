@@ -12,7 +12,7 @@ export default async function RegisterPage({
     <div className="space-y-5">
       <div>
         <h1 className="text-xl font-bold">Create your seller account</h1>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm text-ink-500 mt-1">
           Invited to a deal as a buyer? Use the link in your invitation email instead.
         </p>
       </div>
@@ -23,9 +23,9 @@ export default async function RegisterPage({
         <Field label="Password" name="password" type="password" hint="At least 8 characters" />
         <SubmitButton>Create account</SubmitButton>
       </form>
-      <p className="text-sm text-slate-500 text-center">
+      <p className="text-sm text-ink-500 text-center">
         Already have an account?{" "}
-        <Link className="font-semibold text-teal-700 hover:underline" href="/login">
+        <Link className="font-semibold text-brand-700 hover:underline" href="/login">
           Sign in
         </Link>
       </p>

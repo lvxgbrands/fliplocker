@@ -8,7 +8,7 @@ export default function TermsPage() {
   return (
     <>
       <h1>Terms of Service</h1>
-      <p className="text-slate-500">
+      <p className="text-ink-500">
         <em>Placeholder terms for development. Final Terms are Client-provided and subject to the
         Client&apos;s attorney review before launch.</em>
       </p>

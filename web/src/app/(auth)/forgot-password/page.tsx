@@ -21,7 +21,7 @@ export default async function ForgotPasswordPage({
         </form>
       )}
       <p className="text-sm text-center">
-        <Link className="text-slate-500 hover:underline" href="/login">
+        <Link className="text-ink-500 hover:underline" href="/login">
           Back to sign in
         </Link>
       </p>

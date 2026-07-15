@@ -29,23 +29,23 @@ export default async function AdminDeals({
       <h1 className="text-2xl font-bold">Deals</h1>
 
       <div className="flex flex-wrap gap-1.5 text-sm">
-        <Link href="/admin/deals" className={`rounded-full px-3 py-1 ${!status ? "bg-teal-600 text-white" : "bg-white border border-slate-200 text-slate-600"}`}>
+        <Link href="/admin/deals" className={`rounded-full px-3 py-1 ${!status ? "bg-brand-600 text-white" : "bg-white border border-ink-200 text-ink-600"}`}>
           All
         </Link>
         {ALL_STATUSES.map((s) => (
           <Link
             key={s}
             href={`/admin/deals?status=${s}`}
-            className={`rounded-full px-3 py-1 ${status === s ? "bg-teal-600 text-white" : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"}`}
+            className={`rounded-full px-3 py-1 ${status === s ? "bg-brand-600 text-white" : "bg-white border border-ink-200 text-ink-600 hover:bg-ink-50"}`}
           >
             {STATUS_LABELS[s]}
           </Link>
         ))}
       </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
+      <div className="rounded-2xl border border-ink-200 bg-white overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-slate-500 text-left text-xs uppercase tracking-wide">
+          <thead className="bg-ink-50 text-ink-500 text-left text-xs uppercase tracking-wide">
             <tr>
               <th className="px-4 py-2 font-medium">Deal</th>
               <th className="px-4 py-2 font-medium hidden sm:table-cell">Seller</th>
@@ -54,23 +54,23 @@ export default async function AdminDeals({
               <th className="px-4 py-2 font-medium">Status</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-ink-100">
             {deals.map((d) => (
-              <tr key={d.id} className="hover:bg-slate-50">
+              <tr key={d.id} className="hover:bg-ink-50">
                 <td className="px-4 py-2.5">
-                  <Link href={`/admin/deals/${d.id}`} className="font-medium text-teal-700 hover:underline">
+                  <Link href={`/admin/deals/${d.id}`} className="font-medium text-brand-700 hover:underline">
                     {d.shortCode}
                   </Link>
-                  <p className="text-xs text-slate-400 truncate max-w-[220px]">{cardTitle(d)}</p>
+                  <p className="text-xs text-ink-400 truncate max-w-[220px]">{cardTitle(d)}</p>
                 </td>
-                <td className="px-4 py-2.5 hidden sm:table-cell text-slate-500">{d.seller.email}</td>
+                <td className="px-4 py-2.5 hidden sm:table-cell text-ink-500">{d.seller.email}</td>
                 <td className="px-4 py-2.5 text-right tabular-nums">{formatCents(d.salePriceCents)}</td>
                 <td className="px-4 py-2.5 text-right tabular-nums">{formatCents(d.feeTotalCents)}</td>
                 <td className="px-4 py-2.5"><StatusChip status={d.status} /></td>
               </tr>
             ))}
             {deals.length === 0 && (
-              <tr><td colSpan={5} className="px-4 py-8 text-center text-slate-400">No deals match.</td></tr>
+              <tr><td colSpan={5} className="px-4 py-8 text-center text-ink-400">No deals match.</td></tr>
             )}
           </tbody>
         </table>

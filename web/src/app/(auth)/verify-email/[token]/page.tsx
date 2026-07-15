@@ -21,10 +21,10 @@ export default async function VerifyEmailPage({ params }: { params: Promise<{ to
   return (
     <div className="space-y-4 text-center">
       <h1 className="text-xl font-bold">Link expired</h1>
-      <p className="text-sm text-slate-500">
+      <p className="text-sm text-ink-500">
         That verification link is invalid or has already been used.
       </p>
-      <Link className="font-semibold text-teal-700 hover:underline text-sm" href="/resend-verification">
+      <Link className="font-semibold text-brand-700 hover:underline text-sm" href="/resend-verification">
         Send a new verification link
       </Link>
     </div>

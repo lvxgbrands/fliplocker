@@ -7,23 +7,23 @@ function Row({ shipment }: { shipment: Shipment }) {
   return (
     <div className="px-4 py-3 space-y-1">
       <div className="flex items-center justify-between">
-        <span className="text-sm font-semibold text-slate-800">{leg}</span>
-        <span className="text-xs rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-slate-600">
+        <span className="text-sm font-semibold text-ink-800">{leg}</span>
+        <span className="text-xs rounded-full border border-ink-200 bg-ink-50 px-2 py-0.5 text-ink-600">
           {shipment.status.replace(/_/g, " ").toLowerCase()}
         </span>
       </div>
-      <p className="text-xs text-slate-500">
+      <p className="text-xs text-ink-500">
         {shipment.carrier} {shipment.service}
         {shipment.signatureRequired ? " · signature required" : ""}
       </p>
       {shipment.trackingNumber ? (
-        <p className="text-xs text-slate-500 font-mono">{shipment.trackingNumber}</p>
+        <p className="text-xs text-ink-500 font-mono">{shipment.trackingNumber}</p>
       ) : null}
       {shipment.labelUrl ? (
         <Link
           href={shipment.labelUrl}
           target="_blank"
-          className="inline-block mt-1 text-xs font-semibold text-teal-700 hover:underline"
+          className="inline-block mt-1 text-xs font-semibold text-brand-700 hover:underline"
         >
           View / print label →
         </Link>
@@ -35,8 +35,8 @@ function Row({ shipment }: { shipment: Shipment }) {
 export function ShipmentPanel({ shipments }: { shipments: Shipment[] }) {
   if (shipments.length === 0) return null;
   return (
-    <div className="rounded-xl border border-slate-200 bg-white divide-y divide-slate-100">
-      <div className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
+    <div className="rounded-xl border border-ink-200 bg-white divide-y divide-ink-100">
+      <div className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-ink-400">
         Shipping
       </div>
       {shipments.map((s) => (

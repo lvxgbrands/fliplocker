@@ -52,7 +52,7 @@ export default async function AdminDealDetail({
 
   return (
     <div>
-      <Link href="/admin/deals" className="text-sm text-slate-400 hover:text-slate-600">← All deals</Link>
+      <Link href="/admin/deals" className="text-sm text-ink-400 hover:text-ink-600">← All deals</Link>
 
       {done ? <SuccessNote message={DONE[done]} /> : null}
       <ErrorNote message={error} />
@@ -60,7 +60,7 @@ export default async function AdminDealDetail({
       <div className="flex items-start justify-between gap-4 mt-2 mb-6">
         <div>
           <h1 className="text-2xl font-bold">{cardTitle(deal)}</h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm text-ink-400 mt-1">
             {deal.shortCode} · seller {deal.seller.email} · buyer {deal.buyerEmail}
             {deal.buyer ? " (joined)" : " (invited)"}
           </p>
@@ -70,7 +70,7 @@ export default async function AdminDealDetail({
 
       <div className="grid gap-8 lg:grid-cols-[1fr_340px]">
         <div className="space-y-6">
-          <section className="rounded-xl border border-slate-200 bg-white p-4">
+          <section className="rounded-xl border border-ink-200 bg-white p-4">
             <h2 className="text-sm font-semibold mb-3">Money</h2>
             <dl className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
               <Money label="Sale price" cents={deal.salePriceCents} />
@@ -84,7 +84,7 @@ export default async function AdminDealDetail({
               <Money label="Seller payout" cents={deal.sellerPayoutCents} strong />
             </dl>
             {deal.payments.length > 0 && (
-              <p className="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-500">
+              <p className="mt-3 pt-3 border-t border-ink-100 text-xs text-ink-500">
                 Payment: {deal.payments[0].provider} · {deal.payments[0].state}
                 {deal.payments[0].captureId ? ` · capture ${deal.payments[0].captureId}` : ""}
                 {deal.payments[0].refundId ? ` · refund ${deal.payments[0].refundId}` : ""}
@@ -107,10 +107,10 @@ export default async function AdminDealDetail({
         <aside className="space-y-4 h-fit lg:sticky lg:top-24">
           <ShipmentPanel shipments={deal.shipments} />
 
-          <section className="rounded-xl border border-slate-200 bg-white p-4 space-y-3">
+          <section className="rounded-xl border border-ink-200 bg-white p-4 space-y-3">
             <h2 className="text-sm font-semibold">Manual overrides</h2>
             {terminal ? (
-              <p className="text-xs text-slate-400">This deal is closed — no overrides available.</p>
+              <p className="text-xs text-ink-400">This deal is closed — no overrides available.</p>
             ) : (
               <>
                 {canRegenLabel && (
@@ -140,7 +140,7 @@ export default async function AdminDealDetail({
 
 function Money({ label, cents, strong = false }: { label: string; cents: number; strong?: boolean }) {
   return (
-    <div className={`flex justify-between ${strong ? "font-semibold text-slate-900" : "text-slate-600"}`}>
+    <div className={`flex justify-between ${strong ? "font-semibold text-ink-900" : "text-ink-600"}`}>
       <dt>{label}</dt>
       <dd className="tabular-nums">{formatCents(cents)}</dd>
     </div>
@@ -161,10 +161,10 @@ function Override({
   danger?: boolean;
 }) {
   const cls = accent
-    ? "bg-teal-600 text-white hover:bg-teal-700"
+    ? "bg-brand-600 text-white hover:bg-brand-700"
     : danger
       ? "border border-rose-300 bg-white text-rose-700 hover:bg-rose-50"
-      : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50";
+      : "border border-ink-300 bg-white text-ink-700 hover:bg-ink-50";
   return (
     <form action={action}>
       <input type="hidden" name="dealId" value={dealId} />

@@ -20,13 +20,13 @@ export default async function AdminConfig({
     db.taxRate.findMany({ where: { configId: "default" }, orderBy: { state: "asc" } }),
   ]);
 
-  const input = "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white";
+  const input = "w-full rounded-lg border border-ink-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white";
 
   return (
     <div className="space-y-8 max-w-3xl">
       <div>
         <h1 className="text-2xl font-bold">Fees &amp; configuration</h1>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm text-ink-500 mt-1">
           Every checkout number lives here — edit it without a code change. Fees depend on sale
           price only; the card&apos;s market value is never used.
         </p>
@@ -39,11 +39,11 @@ export default async function AdminConfig({
         <h2 className="font-semibold mb-3">Service fee by plan</h2>
         <div className="grid sm:grid-cols-2 gap-4">
           {fees.map((f) => (
-            <form key={f.plan} action={updateFeeConfigAction} className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
+            <form key={f.plan} action={updateFeeConfigAction} className="rounded-2xl border border-ink-200 bg-white p-4 space-y-3">
               <input type="hidden" name="plan" value={f.plan} />
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">{f.plan}</h3>
-                <span className="text-xs text-slate-400">plan tier</span>
+                <span className="text-xs text-ink-400">plan tier</span>
               </div>
               <Labeled label="Flat floor ($, below crossover)">
                 <input name="floorDollars" type="number" step="0.01" defaultValue={d(f.floorCents)} className={input} />
@@ -61,7 +61,7 @@ export default async function AdminConfig({
                   <option value="SPLIT">Split 50/50</option>
                 </select>
               </Labeled>
-              <button className="w-full rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700">
+              <button className="w-full rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-700">
                 Save {f.plan}
               </button>
             </form>
@@ -71,7 +71,7 @@ export default async function AdminConfig({
 
       <section>
         <h2 className="font-semibold mb-3">Checkout &amp; logistics</h2>
-        <form action={updateCheckoutConfigAction} className="rounded-2xl border border-slate-200 bg-white p-4 grid sm:grid-cols-2 gap-4">
+        <form action={updateCheckoutConfigAction} className="rounded-2xl border border-ink-200 bg-white p-4 grid sm:grid-cols-2 gap-4">
           <Labeled label="Minimum sale price ($)">
             <input name="minDollars" type="number" step="0.01" defaultValue={d(checkout.minSalePriceCents)} className={input} />
           </Labeled>
@@ -97,7 +97,7 @@ export default async function AdminConfig({
           <Labeled label="Review window (hours)">
             <input name="reviewWindowHours" type="number" defaultValue={checkout.reviewWindowHours} className={input} />
           </Labeled>
-          <div className="sm:col-span-2 border-t border-slate-100 pt-3 grid sm:grid-cols-2 gap-4">
+          <div className="sm:col-span-2 border-t border-ink-100 pt-3 grid sm:grid-cols-2 gap-4">
             <Labeled label="Hub name"><input name="hubName" defaultValue={checkout.hubName} className={input} /></Labeled>
             <Labeled label="Hub street"><input name="hubStreet" defaultValue={checkout.hubStreet} className={input} /></Labeled>
             <Labeled label="Hub city"><input name="hubCity" defaultValue={checkout.hubCity} className={input} /></Labeled>
@@ -107,18 +107,18 @@ export default async function AdminConfig({
             </div>
           </div>
           <div className="sm:col-span-2">
-            <button className="rounded-lg bg-teal-600 px-6 py-2 text-sm font-semibold text-white hover:bg-teal-700">Save checkout config</button>
+            <button className="rounded-lg bg-brand-600 px-6 py-2 text-sm font-semibold text-white hover:bg-brand-700">Save checkout config</button>
           </div>
         </form>
       </section>
 
       <section>
         <h2 className="font-semibold mb-3">Per-state tax rates</h2>
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
+        <div className="rounded-2xl border border-ink-200 bg-white p-4 space-y-3">
           {taxes.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {taxes.map((t) => (
-                <span key={t.id} className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1 text-sm">
+                <span key={t.id} className="rounded-lg border border-ink-200 bg-ink-50 px-3 py-1 text-sm">
                   {t.state}: {pct(t.rateBps)}%
                 </span>
               ))}
@@ -127,7 +127,7 @@ export default async function AdminConfig({
           <form action={upsertTaxRateAction} className="flex gap-2 items-end">
             <Labeled label="State"><input name="state" maxLength={2} placeholder="TX" className={`${input} w-24`} /></Labeled>
             <Labeled label="Rate (%)"><input name="percent" type="number" step="0.01" placeholder="8.25" className={`${input} w-28`} /></Labeled>
-            <button className="rounded-lg bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-900">Add / update</button>
+            <button className="rounded-lg bg-ink-800 px-4 py-2 text-sm font-semibold text-white hover:bg-ink-900">Add / update</button>
           </form>
         </div>
       </section>
@@ -138,7 +138,7 @@ export default async function AdminConfig({
 function Labeled({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="block text-xs font-medium text-slate-600 mb-1">{label}</span>
+      <span className="block text-xs font-medium text-ink-600 mb-1">{label}</span>
       {children}
     </label>
   );

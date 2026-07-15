@@ -41,9 +41,9 @@ export default async function AdminOverview() {
             <Link
               key={status}
               href={`/admin/deals?status=${status}`}
-              className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm hover:bg-slate-50"
+              className="rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm hover:bg-ink-50"
             >
-              <span className="text-slate-500">{STATUS_LABELS[status as DealStatus]}</span>{" "}
+              <span className="text-ink-500">{STATUS_LABELS[status as DealStatus]}</span>{" "}
               <strong>{count}</strong>
             </Link>
           ))}
@@ -53,14 +53,14 @@ export default async function AdminOverview() {
       <section>
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-semibold">Recent deals</h2>
-          <Link href="/admin/deals" className="text-sm text-teal-700 hover:underline">View all →</Link>
+          <Link href="/admin/deals" className="text-sm text-brand-700 hover:underline">View all →</Link>
         </div>
-        <div className="rounded-2xl border border-slate-200 bg-white divide-y divide-slate-100">
+        <div className="rounded-2xl border border-ink-200 bg-white divide-y divide-ink-100">
           {recent.map((d) => (
-            <Link key={d.id} href={`/admin/deals/${d.id}`} className="flex items-center justify-between gap-4 px-4 py-3 hover:bg-slate-50 first:rounded-t-2xl last:rounded-b-2xl">
+            <Link key={d.id} href={`/admin/deals/${d.id}`} className="flex items-center justify-between gap-4 px-4 py-3 hover:bg-ink-50 first:rounded-t-2xl last:rounded-b-2xl">
               <div className="min-w-0">
-                <p className="font-medium text-slate-900 truncate">{cardTitle(d)}</p>
-                <p className="text-xs text-slate-400">{d.shortCode} · {d.seller.email}</p>
+                <p className="font-medium text-ink-900 truncate">{cardTitle(d)}</p>
+                <p className="text-xs text-ink-400">{d.shortCode} · {d.seller.email}</p>
               </div>
               <div className="flex items-center gap-3 shrink-0">
                 <span className="text-sm tabular-nums">{formatCents(d.salePriceCents)}</span>
@@ -76,9 +76,9 @@ export default async function AdminOverview() {
 
 function Stat({ label, value, accent = false }: { label: string; value: string; accent?: boolean }) {
   return (
-    <div className={`rounded-2xl border p-4 ${accent ? "border-teal-200 bg-teal-50" : "border-slate-200 bg-white"}`}>
-      <p className="text-xs text-slate-500">{label}</p>
-      <p className={`text-2xl font-bold tabular-nums ${accent ? "text-teal-800" : "text-slate-900"}`}>{value}</p>
+    <div className={`rounded-2xl border p-4 ${accent ? "border-brand-200 bg-brand-50" : "border-ink-200 bg-white"}`}>
+      <p className="text-xs text-ink-500">{label}</p>
+      <p className={`text-2xl font-bold tabular-nums ${accent ? "text-brand-800" : "text-ink-900"}`}>{value}</p>
     </div>
   );
 }

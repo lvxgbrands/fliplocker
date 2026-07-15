@@ -12,11 +12,11 @@ export default async function NewDealPage() {
     <div>
       <VerifyEmailBanner user={user} />
       <div className="mb-6">
-        <Link href="/seller" className="text-sm text-slate-400 hover:text-slate-600">
+        <Link href="/seller" className="text-sm text-ink-400 hover:text-ink-600">
           ← Back to deals
         </Link>
         <h1 className="text-2xl font-bold mt-1">Create a deal</h1>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm text-ink-500 mt-1">
           Enter the card and the price you and your buyer already agreed on. We&apos;ll email them a
           private invitation to review and pay.
         </p>

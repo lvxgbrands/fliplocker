@@ -5,7 +5,7 @@ export default function PrivacyPage() {
   return (
     <>
       <h1>Privacy Policy</h1>
-      <p className="text-slate-500">
+      <p className="text-ink-500">
         <em>Placeholder policy for development. Final Privacy Policy is Client-provided and subject
         to the Client&apos;s attorney review before launch.</em>
       </p>

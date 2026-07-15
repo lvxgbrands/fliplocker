@@ -28,10 +28,10 @@ export default async function LoginPage({
         <SubmitButton>Sign in</SubmitButton>
       </form>
       <div className="flex items-center justify-between text-sm">
-        <Link className="text-slate-500 hover:underline" href="/forgot-password">
+        <Link className="text-ink-500 hover:underline" href="/forgot-password">
           Forgot password?
         </Link>
-        <Link className="font-semibold text-teal-700 hover:underline" href="/register">
+        <Link className="font-semibold text-brand-700 hover:underline" href="/register">
           Create an account
         </Link>
       </div>

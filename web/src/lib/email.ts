@@ -29,38 +29,40 @@ export async function sendEmail({ to, subject, html, dealId }: SendArgs): Promis
 }
 
 // ---------------------------------------------------------------------------
-// Templates — teal/green FlipLocker brand, table-based for email clients.
+// Templates — Bold Blue FlipLocker brand, table-based for email clients.
 // Copy rules: the forbidden terms in scripts/check-copy.mjs must never appear;
 // funds language is always "held securely by our payment processor".
 // ---------------------------------------------------------------------------
 
 const BRAND = {
-  teal: "#0d9488",
-  tealDark: "#0f766e",
-  ink: "#134e4a",
-  bg: "#f0fdfa",
+  blue: "#0b6cff",
+  blueLight: "#7fb1ff",
+  navy: "#09203f",
+  ink: "#0b1220",
+  bg: "#f7f8fa",
+  border: "#e3e7ee",
 };
 
 function layout(title: string, bodyHtml: string, cta?: { label: string; url: string }): string {
   const button = cta
-    ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:28px auto"><tr><td style="border-radius:10px;background:${BRAND.teal}">
-         <a href="${cta.url}" style="display:inline-block;padding:13px 28px;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;color:#ffffff;text-decoration:none">${cta.label}</a>
+    ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:28px auto"><tr><td style="border-radius:12px;background:${BRAND.blue}">
+         <a href="${cta.url}" style="display:inline-block;padding:14px 30px;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;color:#ffffff;text-decoration:none">${cta.label}</a>
        </td></tr></table>
        <p style="font-size:12px;color:#6b7280;text-align:center;word-break:break-all">Or paste this link into your browser:<br>${cta.url}</p>`
     : "";
   return `<!doctype html><html><body style="margin:0;padding:0;background:${BRAND.bg}">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${BRAND.bg};padding:32px 12px">
     <tr><td align="center">
-      <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#ffffff;border-radius:14px;overflow:hidden;border:1px solid #ccfbf1">
-        <tr><td style="background:${BRAND.tealDark};padding:20px 32px">
-          <span style="font-family:Arial,sans-serif;font-size:20px;font-weight:bold;color:#ffffff;letter-spacing:.3px">🔒 FlipLocker</span>
+      <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid ${BRAND.border}">
+        <tr><td style="background:${BRAND.navy};padding:22px 32px;border-bottom:3px solid ${BRAND.blue}">
+          <span style="font-family:Arial,sans-serif;font-size:21px;font-weight:800;letter-spacing:.4px;color:#ffffff">🛡 FLIP<span style="color:${BRAND.blueLight}">LOCKER</span></span>
         </td></tr>
         <tr><td style="padding:32px;font-family:Arial,sans-serif;color:#111827">
           <h1 style="margin:0 0 16px;font-size:20px;color:${BRAND.ink}">${title}</h1>
           ${bodyHtml}
           ${button}
         </td></tr>
-        <tr><td style="padding:18px 32px;background:#f9fafb;border-top:1px solid #f3f4f6">
+        <tr><td style="padding:18px 32px;background:${BRAND.bg};border-top:1px solid ${BRAND.border}">
           <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#6b7280">
             FlipLocker — verified &amp; documented card deals, invitation-only.
             Buyer payments are held securely by our payment processor until verification and delivery are complete.

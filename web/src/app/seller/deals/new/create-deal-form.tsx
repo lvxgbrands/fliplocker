@@ -124,6 +124,7 @@ export function CreateDealForm({ minSalePriceCents }: { minSalePriceCents: numbe
         cardYear: Number(form.get("cardYear")),
         playerName: String(form.get("playerName") || ""),
         gradingCompany: String(form.get("gradingCompany") || ""),
+        grade: String(form.get("grade") || ""),
         certNumber: String(form.get("certNumber") || ""),
         description: String(form.get("description") || ""),
         salePriceDollars: Number(form.get("salePrice")),
@@ -155,11 +156,8 @@ export function CreateDealForm({ minSalePriceCents }: { minSalePriceCents: numbe
           <div className="grid sm:grid-cols-2 gap-4">
             <label className="block">
               <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">Sport</span>
-              <select name="sport" required className={input} defaultValue="">
-                <option value="" disabled>
-                  Select sport…
-                </option>
-                {["Baseball", "Basketball", "Football", "Hockey", "Soccer", "Pokémon / TCG", "Other"].map((s) => (
+              <select name="sport" required className={input} defaultValue="Baseball">
+                {["Baseball", "Basketball", "Football", "Hockey", "Soccer", "Other"].map((s) => (
                   <option key={s} value={s}>
                     {s}
                   </option>
@@ -171,16 +169,13 @@ export function CreateDealForm({ minSalePriceCents }: { minSalePriceCents: numbe
               <input name="cardYear" type="number" min={1900} max={2027} required className={input} placeholder="2018" />
             </label>
             <label className="block sm:col-span-2">
-              <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">Player / character</span>
-              <input name="playerName" required className={input} placeholder="Luka Dončić" />
+              <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">Player</span>
+              <input name="playerName" required className={input} placeholder="Walter Johnson" />
             </label>
             <label className="block">
               <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">Grading company</span>
-              <select name="gradingCompany" required className={input} defaultValue="">
-                <option value="" disabled>
-                  Select grader…
-                </option>
-                {["PSA", "BGS", "SGC", "CGC", "Other"].map((g) => (
+              <select name="gradingCompany" required className={input} defaultValue="PSA">
+                {["PSA", "SGC", "BGS", "CGC", "Other"].map((g) => (
                   <option key={g} value={g}>
                     {g}
                   </option>
@@ -188,8 +183,14 @@ export function CreateDealForm({ minSalePriceCents }: { minSalePriceCents: numbe
               </select>
             </label>
             <label className="block">
+              <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">
+                Grade <span className="font-normal text-ink-400">(optional)</span>
+              </span>
+              <input name="grade" className={input} placeholder="PSA 3" />
+            </label>
+            <label className="block sm:col-span-2">
               <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">Certificate / serial #</span>
-              <input name="certNumber" required className={input} placeholder="82345678" />
+              <input name="certNumber" required className={input} placeholder="38227911" />
             </label>
             <label className="block sm:col-span-2">
               <span className="mb-1.5 block text-[13px] font-semibold text-ink-700">

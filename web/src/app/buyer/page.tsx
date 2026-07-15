@@ -16,21 +16,21 @@ export default async function BuyerDashboard() {
     <div>
       <h1 className="text-2xl font-bold mb-4">Your deals</h1>
       {deals.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center text-slate-500">
+        <div className="rounded-2xl border border-dashed border-ink-300 bg-white p-12 text-center text-ink-500">
           No deals yet. When a seller invites you, the deal shows up here after you claim the
           invitation from your email.
         </div>
       ) : (
-        <div className="rounded-2xl border border-slate-200 bg-white divide-y divide-slate-100">
+        <div className="rounded-2xl border border-ink-200 bg-white divide-y divide-ink-100">
           {deals.map((d) => (
             <Link
               key={d.id}
               href={`/buyer/deals/${d.id}`}
-              className="flex items-center justify-between gap-4 px-4 py-4 hover:bg-slate-50 first:rounded-t-2xl last:rounded-b-2xl"
+              className="flex items-center justify-between gap-4 px-4 py-4 hover:bg-ink-50 first:rounded-t-2xl last:rounded-b-2xl"
             >
               <div className="min-w-0">
-                <p className="font-semibold text-slate-900 truncate">{cardTitle(d)}</p>
-                <p className="text-xs text-slate-400">
+                <p className="font-semibold text-ink-900 truncate">{cardTitle(d)}</p>
+                <p className="text-xs text-ink-400">
                   {d.shortCode} ·{" "}
                   {new Date(d.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                 </p>

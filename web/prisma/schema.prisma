@@ -112,6 +112,7 @@ model Deal {
   cardYear       Int
   playerName     String
   gradingCompany String
+  grade          String? // e.g. "PSA 3" — display-only, shown on the slab plate
   certNumber     String
   description    String?
 
