@@ -26,9 +26,10 @@ export function MarketingShell({
       <a href="#main" className="skip-link">
         Skip to content
       </a>
+      {/* News ticker pinned at the very top; the sticky nav slides under it on scroll. */}
+      {ticker ? <NewsTicker /> : null}
       <MarketingNav dark={dark} />
       <main id="main">{children}</main>
-      {ticker ? <NewsTicker /> : null}
       <MarketingFooter />
     </div>
   );
