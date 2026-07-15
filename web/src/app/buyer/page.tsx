@@ -2,6 +2,7 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/auth";
 import { StatusChip } from "@/components/deal-ui";
+import { DealThumb } from "@/components/deal-photos";
 import { formatCents } from "@/lib/fees";
 import { cardTitle } from "@/lib/deals";
 
@@ -10,6 +11,7 @@ export default async function BuyerDashboard() {
   const deals = await db.deal.findMany({
     where: { buyerId: user.id },
     orderBy: { createdAt: "desc" },
+    include: { media: { where: { kind: { in: ["FRONT_PHOTO", "REAR_PHOTO"] } } } },
   });
 
   return (
@@ -28,12 +30,15 @@ export default async function BuyerDashboard() {
               href={`/buyer/deals/${d.id}`}
               className="flex items-center justify-between gap-4 px-4 py-4 hover:bg-ink-50 first:rounded-t-2xl last:rounded-b-2xl"
             >
-              <div className="min-w-0">
-                <p className="font-semibold text-ink-900 truncate">{cardTitle(d)}</p>
-                <p className="text-xs text-ink-400">
-                  {d.shortCode} ·{" "}
-                  {new Date(d.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                </p>
+              <div className="flex min-w-0 items-center gap-3">
+                <DealThumb media={d.media} />
+                <div className="min-w-0">
+                  <p className="font-semibold text-ink-900 truncate">{cardTitle(d)}</p>
+                  <p className="text-xs text-ink-400">
+                    {d.shortCode} ·{" "}
+                    {new Date(d.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                  </p>
+                </div>
               </div>
               <div className="flex items-center gap-3 shrink-0">
                 <span className="font-semibold tabular-nums">{formatCents(d.salePriceCents)}</span>

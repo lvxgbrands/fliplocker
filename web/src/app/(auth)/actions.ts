@@ -12,7 +12,7 @@ import {
   consumeAuthToken,
   getCurrentUser,
 } from "@/lib/auth";
-import { sendEmail, verifyEmailTemplate, passwordResetTemplate } from "@/lib/email";
+import { sendEmail, emailConfigured, verifyEmailTemplate, passwordResetTemplate } from "@/lib/email";
 import { limitByIp } from "@/lib/rate-limit";
 
 const appUrl = () => process.env.APP_URL || "http://localhost:3000";
@@ -48,10 +48,20 @@ export async function registerAction(formData: FormData) {
     redirect(`/register?error=${encodeURIComponent("An account with that email already exists, sign in instead.")}`);
   }
 
+  // In email-simulator mode (no provider configured) there is no way to deliver
+  // a confirmation link, so mark the account confirmed rather than stranding it
+  // behind an email that never arrives. Real email confirmation resumes
+  // automatically once RESEND_API_KEY is set.
   const user = await db.user.create({
-    data: { name, email, passwordHash: await hashPassword(password), role: "SELLER" },
+    data: {
+      name,
+      email,
+      passwordHash: await hashPassword(password),
+      role: "SELLER",
+      emailVerified: emailConfigured() ? null : new Date(),
+    },
   });
-  await sendVerificationEmail(user.id, email);
+  if (emailConfigured()) await sendVerificationEmail(user.id, email);
   await createSession(user.id);
   redirect("/dashboard?welcome=1");
 }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { User } from "@prisma/client";
 import { Wordmark } from "@/components/brand";
 import { logoutAction } from "@/app/(auth)/actions";
+import { emailConfigured } from "@/lib/email";
 
 const ROLE_LABELS: Record<string, string> = {
   SELLER: "Seller",
@@ -84,7 +85,8 @@ export function PortalShell({
 }
 
 export function VerifyEmailBanner({ user }: { user: User }) {
-  if (user.emailVerified) return null;
+  // Nothing to confirm when no email provider is configured (simulator mode).
+  if (user.emailVerified || !emailConfigured()) return null;
   return (
     <div className="mb-6 flex items-center justify-between gap-4 rounded-xl border border-brand-200 bg-brand-50 px-4 py-3 text-sm text-brand-800">
       <span>Please confirm your email address, check your inbox for the confirmation link.</span>

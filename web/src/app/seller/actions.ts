@@ -7,7 +7,7 @@ import { requireUser } from "@/lib/auth";
 import { getCheckoutConfig, getFeeConfig } from "@/lib/config";
 import { computeQuote } from "@/lib/fees";
 import { newShortCode, newInviteToken, logDealEvent, transitionDeal, cardTitle } from "@/lib/deals";
-import { sendEmail, buyerInviteTemplate } from "@/lib/email";
+import { sendEmail, emailConfigured, buyerInviteTemplate } from "@/lib/email";
 import { generateLeg1Label } from "@/lib/logistics";
 import { revalidatePath } from "next/cache";
 import type { Prisma } from "@prisma/client";
@@ -34,7 +34,7 @@ export type CreateDealInput = z.infer<typeof createDealSchema>;
 
 export async function createDealAction(input: CreateDealInput): Promise<{ error?: string }> {
   const user = await requireUser();
-  if (!user.emailVerified) {
+  if (!user.emailVerified && emailConfigured()) {
     return { error: "Confirm your email before creating a deal, check your inbox for the link." };
   }
 
