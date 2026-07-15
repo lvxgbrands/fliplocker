@@ -280,19 +280,19 @@ export function CtaBand({
 export function RelatedGrid({
   title = "Keep exploring",
   items,
+  bare = false,
 }: {
   title?: string;
   items: { href: string; title: string; desc: string; eyebrow?: string; icon?: LucideIcon }[];
+  /** Render just the card grid, without the section wrapper/background/heading. */
+  bare?: boolean;
 }) {
   if (!items.length) return null;
-  return (
-    <section className="border-t border-ink-200/60 bg-ink-50">
-      <div className="mx-auto max-w-6xl px-4 py-16">
-        <h2 className="mb-8 text-2xl font-bold tracking-tight">{title}</h2>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((it) => {
-            const Icon = it.icon;
-            return (
+  const grid = (
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {items.map((it) => {
+        const Icon = it.icon;
+        return (
               <Link
                 key={it.href}
                 href={it.href}
@@ -310,10 +310,17 @@ export function RelatedGrid({
                   Read more
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" strokeWidth={2.5} />
                 </span>
-              </Link>
-            );
-          })}
-        </div>
+          </Link>
+        );
+      })}
+    </div>
+  );
+  if (bare) return grid;
+  return (
+    <section className="border-t border-ink-200/60 bg-ink-50">
+      <div className="mx-auto max-w-6xl px-4 py-16">
+        {title ? <h2 className="mb-8 text-2xl font-bold tracking-tight">{title}</h2> : null}
+        {grid}
       </div>
     </section>
   );

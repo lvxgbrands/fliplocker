@@ -97,6 +97,44 @@ export const SECURITY_FAQS: QA[] = [
   },
 ];
 
+export const PLATFORM_FAQS: QA[] = [
+  {
+    q: "What does the FlipLocker platform actually do?",
+    a: "It handles the three risky parts of a private card deal: it holds the buyer's payment with our payment processor, documents the card at a neutral hub (video, photos, tamper seal, registry match), and delivers it with insured, signature-required shipping — all on a shared, timestamped timeline.",
+  },
+  {
+    q: "Does the platform decide whether a card is genuine?",
+    a: "No. FlipLocker documents cards; it does not grade them or judge whether they're genuine. Documentation is a neutral record of a card's identity, condition, and chain of custody — not a guarantee of genuineness.",
+  },
+  {
+    q: "Is any of this a marketplace feature?",
+    a: "No. FlipLocker is invitation-only with nothing to browse or buy. The platform only exists to safely close deals two people have already agreed to elsewhere.",
+  },
+  {
+    q: "Where does my payment sit during all of this?",
+    a: "With our payment processor. FlipLocker never takes possession or control of the purchase funds; they're released to the seller only after documented, signature-confirmed delivery and a 48-hour review window.",
+  },
+];
+
+export const SOLUTIONS_FAQS: QA[] = [
+  {
+    q: "How do I know which package or path is right for me?",
+    a: "It depends on volume and stakes: social sellers and first-timers usually start with Single, active sellers and mid-volume collectors fit Plus, and breakers and high-value dealers fit Pro. Every path uses the same core protection — held payment, hub documentation, signature delivery.",
+  },
+  {
+    q: "Do buyers and sellers use FlipLocker differently?",
+    a: "The seller creates the deal and ships to the hub; the buyer reviews the checkout, pays, and receives the documented card with a signature. Both watch the same transparency timeline, and both are protected by the held payment.",
+  },
+  {
+    q: "Can FlipLocker handle a very expensive card?",
+    a: "Yes. High-value deals get insured legs, a logged tamper seal, and — on Pro — white-glove documentation and extended coverage options. The per-deal fee is still based on the sale price only.",
+  },
+  {
+    q: "What if it's my first time dealing with a stranger?",
+    a: "The process has guardrails built in: nothing releases to the seller until documented, signed-for delivery, and a mismatch at the hub triggers an automatic buyer refund. See the first-time deals guide.",
+  },
+];
+
 export const ABOUT_FAQS: QA[] = [
   {
     q: "Why was FlipLocker built?",
