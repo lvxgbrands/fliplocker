@@ -123,9 +123,26 @@ textarea:focus-visible,
   .ticker-track {
     animation: ticker 26s linear infinite;
   }
+  /* Slower cadence for the longer news headlines. */
+  .ticker-slow {
+    animation-duration: 64s;
+  }
   @keyframes ticker {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
+  }
+  /* Pause the news marquee on hover/focus so headlines can be read & clicked. */
+  .news-ticker:hover .ticker-track,
+  .news-ticker:focus-within .ticker-track {
+    animation-play-state: paused;
+  }
+}
+
+/* Reduced motion: no marquee animation — show a readable, scrollable strip. */
+@media (prefers-reduced-motion: reduce) {
+  .news-ticker .ticker-track {
+    flex-wrap: nowrap;
+    overflow-x: auto;
   }
 }
 

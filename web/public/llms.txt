@@ -1,0 +1,50 @@
+# FlipLocker
+
+> FlipLocker (fliplocker.app) is an invitation-only documentation and logistics platform for peer-to-peer graded trading-card deals that people negotiate off-platform (Instagram, X, Discord, or in person). It is not a marketplace: there are no public listings to browse or buy. FlipLocker handles the payment, hub documentation, and insured signature delivery for a deal two people have already agreed to.
+
+## What FlipLocker is (and is not)
+
+- FlipLocker documents and ships cards. It does **not** authenticate or grade cards, and it is **not** an escrow service, a bank, or a licensed money transmitter.
+- Buyer payments are held by our payment processor (PayPal), never by FlipLocker. FlipLocker's account receives only its service fee.
+- Cards are described as "documented" — never as "authenticated," "verified," or "guaranteed genuine."
+- Sport coverage is currently baseball only.
+
+## How a deal works
+
+1. A seller and buyer agree on a card and price off-platform.
+2. The seller creates the deal on FlipLocker and privately invites the buyer.
+3. The buyer reviews an itemized checkout and pays through PayPal; funds are held by the payment processor.
+4. The seller ships the card to the FlipLocker documentation hub (insured Leg 1).
+5. The hub inspects, films (a 15-second video), photographs, and tamper-seals the card, logging everything to the deal.
+6. The card ships to the buyer with insured, signature-required delivery (Leg 2).
+7. After a 48-hour buyer review window, the seller's payout is released.
+
+## Pricing
+
+- The FlipLocker service fee is a function of the **sale price only** — a card's comp or market value is never used.
+- Three packages: **Single** (pay-per-deal, no subscription), **Plus** (mid tier), and **Pro** (top tier).
+- Plus and Pro can be billed monthly or annually; annual billing saves 17%.
+- Every line item is shown at checkout before anyone pays.
+
+## Key pages
+
+- Home: https://fliplocker.app/
+- Platform overview: https://fliplocker.app/platform
+- Solutions by audience: https://fliplocker.app/solutions
+- How it works: https://fliplocker.app/how-it-works
+- Pricing: https://fliplocker.app/pricing
+- Security & limits: https://fliplocker.app/security
+- Insights (blog): https://fliplocker.app/insights
+- FAQ: https://fliplocker.app/faq
+- About: https://fliplocker.app/about
+- Contact: https://fliplocker.app/contact
+
+## Legal
+
+- Terms & Conditions: https://fliplocker.app/terms
+- Privacy: https://fliplocker.app/privacy
+- Disclaimer: https://fliplocker.app/disclaimer
+
+## Contact
+
+- Support email: support@fliplocker.app
