@@ -4,7 +4,7 @@ import { chromium } from "playwright";
 import fs from "fs";
 
 const BASE = "http://localhost:3000";
-const SHOTS = new URL("./shots/", import.meta.url).pathname;
+const SHOTS = "/tmp/claude-0/-home-user-CardDoc/38a044e7-bf00-51a7-9140-00d321784f23/scratchpad/e2e-shots/";
 fs.mkdirSync(SHOTS, { recursive: true });
 
 const SELLER = { name: "Dana Rivera", email: "dana.rivera@example.com", pass: "demo-pass-1234" };
@@ -30,7 +30,7 @@ async function makeCardImage(page, path, label, hue) {
     <rect x="90" y="120" width="420" height="420" rx="12" fill="hsl(${hue},35%,88%)"/>
     <circle cx="300" cy="300" r="120" fill="hsl(${hue},55%,55%)"/>
     <text x="300" y="640" font-family="Arial" font-size="52" font-weight="bold" text-anchor="middle" fill="#1e293b">${label}</text>
-    <text x="300" y="700" font-family="Arial" font-size="30" text-anchor="middle" fill="#475569">PSA 10 · CERT 82345678</text>
+    <text x="300" y="700" font-family="Arial" font-size="30" text-anchor="middle" fill="#475569">PSA 3 · CERT 38227911</text>
   </svg>`;
   await page.setContent(`<body style="margin:0">${svg}</body>`);
   const el = page.locator("svg");
@@ -44,8 +44,8 @@ const browser = await chromium.launch({
 const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
 
 // ---- 0. Prepare demo card photos ----
-await makeCardImage(page, `${SHOTS}card-front.png`, "LUKA DONČIĆ — FRONT", 170);
-await makeCardImage(page, `${SHOTS}card-rear.png`, "LUKA DONČIĆ — REAR", 200);
+await makeCardImage(page, `${SHOTS}card-front.png`, "BAKER — FRONT", 170);
+await makeCardImage(page, `${SHOTS}card-rear.png`, "BAKER — REAR", 200);
 console.log("✔ demo card photos rendered");
 
 // ---- 1. Landing ----
@@ -79,17 +79,18 @@ console.log("✔ AC1b: email verified via emailed link");
 // ---- 4. Seller creates the deal ----
 await page.click("text=Create your first deal");
 await page.waitForURL("**/seller/deals/new");
-await page.selectOption('select[name="sport"]', "Basketball");
-await page.fill('input[name="cardYear"]', "2018");
-await page.fill('input[name="playerName"]', "Luka Dončić");
+await page.selectOption('select[name="sport"]', "Baseball");
+await page.fill('input[name="cardYear"]', "1909");
+await page.fill('input[name="playerName"]', "Frank Baker");
 await page.selectOption('select[name="gradingCompany"]', "PSA");
-await page.fill('input[name="certNumber"]', "82345678");
-await page.fill('textarea[name="description"]', "2018 Donruss Optic Rated Rookie, PSA 10. Price agreed on IG.");
-await page.fill('input[name="salePrice"]', "450");
+await page.fill('input[name="certNumber"]', "38227911");
+  await page.fill('input[name="grade"]', "PSA 3");
+await page.fill('textarea[name="description"]', "1909 T206 Frank Baker, PSA 3. Price agreed on IG.");
+await page.fill('input[name="salePrice"]', "385");
 await page.fill('input[name="buyerEmail"]', BUYER.email);
 const fileInputs = page.locator('input[type="file"]');
-await fileInputs.nth(0).setInputFiles(`${SHOTS}card-front.png`);
-await fileInputs.nth(1).setInputFiles(`${SHOTS}card-rear.png`);
+await fileInputs.nth(0).setInputFiles("/home/user/CardDoc/web/public/cards/baker-front.png");
+await fileInputs.nth(1).setInputFiles("/home/user/CardDoc/web/public/cards/baker-back.png");
 await page.waitForTimeout(600); // let the live quote preview load
 await shot(page, "create-deal-filled");
 const preview = await page.textContent("body");
@@ -123,7 +124,7 @@ await bpage.fill('input[name="password"]', BUYER.pass);
 await bpage.click('button:has-text("Create account")');
 await bpage.waitForURL("**/buyer/deals/**");
 const review = await bpage.textContent("body");
-for (const expect of ["Luka Dončić", "PSA", "82345678", "peer-to-peer", "service fee", "Outbound shipping", "Total"]) {
+for (const expect of ["Frank Baker", "PSA", "38227911", "peer-to-peer", "service fee", "Outbound shipping", "Total"]) {
   if (!review.includes(expect)) fail(`buyer review page missing "${expect}"`);
 }
 await shot(bpage, "buyer-deal-review");

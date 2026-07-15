@@ -4,10 +4,36 @@ Next.js 15 (App Router) + TypeScript · Prisma + PostgreSQL · Tailwind.
 
 Implements the **complete deal lifecycle** end-to-end — seller create → buyer
 pay → seller ship → hub verify → deliver → fund release → complete — across four
-role portals (seller, buyer, hub facilitator, admin). Every external service
-(payments, shipping, SMS, email, media storage) sits behind an adapter with a
-**simulator mode**, so the whole flow is demoable with zero third-party
-credentials and flips to the real provider via env vars — no code change.
+role portals (seller, buyer, hub facilitator, admin), plus a conversion-focused
+marketing site. Every external service (payments, shipping, SMS, email, media
+storage) sits behind an adapter with a **simulator mode**, so the whole flow is
+demoable with zero third-party credentials and flips to the real provider via
+env vars — no code change.
+
+## Brand — "Bold Blue" sports-tech identity
+
+- **Palette:** brand blue `#0B6CFF` (ramp 50–950, accent `#1B75FF`, deep
+  `#0757D6`), navy depth `#09203F`/`#050E1D`, cool ink neutrals (page `#F7F8FA`,
+  borders `#E3E7EE`, text `#0B1220`), win-green `#16A34A` for payout states. All
+  defined as Tailwind theme tokens in `src/app/globals.css`.
+- **Type:** Archivo (display/headlines/money), Inter (UI/body), Barlow Condensed
+  (uppercase `.kicker` ticker labels — the signature sportsbook detail),
+  JetBrains Mono (money/certs/tracking). Loaded via `next/font`.
+- **Logo:** `src/components/brand.tsx` — a bold-blue crest shield with an
+  interlocked "F" + reversed-"L" monogram that sweeps into a check (protected
+  transaction). `LockMark` (mark), `Wordmark` (FLIP/LOCKER, light+dark),
+  `AppIcon`; favicon at `src/app/icon.svg`.
+
+### Card art (placeholder — swap for real photos anytime)
+
+`node scripts/generate-card-art.mjs` renders original **T206-style**
+(public-domain design) front/back art for the demo roster into
+`public/cards/{slug}-front.png` and `{slug}-back.png` (needs `npm i -D
+playwright`). These are original layered-SVG artworks, not photo copies. The
+filenames are stable: **drop a real photo over `public/cards/{slug}-front.png`
+(and `-back.png`) and it appears everywhere with zero code changes.** The demo
+seed copies these into local media storage so the signed-URL flow renders them
+exactly like a real upload.
 
 ## Run staging
 

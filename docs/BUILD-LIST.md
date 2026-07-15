@@ -58,10 +58,12 @@ All transitions write a `deal_events` row. Guard transitions server-side (no sta
 - [x] Seller portal shell + Create Deal flow (front/rear photo presigned upload, description, price, buyer email, validation)
 - [x] Deal dashboard (seller) with status chips
 - [x] Buyer invitation email on deal creation (email service wired, first template)
-- [ ] Brand: name candidates + domain screening deck; logo/color/type direction
+- [x] Brand: name candidates + domain screening deck; logo/color/type direction
 - [ ] **Demo Fri 7/10:** brand deck + live create-deal on staging
 
 ## Week 2 — Buyer Flow & Payments (7/13–7/19)
+
+> **Brand applied (Bold Blue):** blue/navy/ink token system, Archivo + Barlow Condensed + Inter + JetBrains Mono, shield logo, and a conversion marketing site (home/how-it-works/pricing/security) are live across every surface. Baseball-only demo roster (real T206 cards, prices, stats) with in-house T206-style placeholder art in `public/cards/` — see web/README.md.
 
 - [x] Buyer invitation claim → registration → deal binds to buyer_id
 - [x] Buyer deal review page (photos, description, cost breakdown incl. fee + shipping)
@@ -71,7 +73,7 @@ All transitions write a `deal_events` row. Guard transitions server-side (no sta
 - [ ] Void-on-decline / void-on-timeout job
 - [x] "Payment received — ship now" seller alert
 - [x] Transparency timeline component (both portals) reading `deal_events`
-- [ ] Apply final brand: name, logo, palette, email templates restyled
+- [x] Apply final brand: name, logo, palette, email templates restyled
 - [ ] **Demo Fri 7/17:** core loop end-to-end in sandbox
 - [ ] **★ 7/21 client View Demo milestone** — rehearse Monday 7/20
 

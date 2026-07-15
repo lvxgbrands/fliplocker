@@ -16,7 +16,7 @@ const LIMITS = [
   "FlipLocker is not a grading service and does not perform forensic (chemical, paper, ink, or microscopic) examination.",
   "A genuine certificate number reprinted onto a counterfeit slab can pass a registry lookup — verification is an administrative data-match, not a guarantee of genuineness.",
   "A slab that has been opened and resealed may not be detectable by inspection alone.",
-  "Cards are described as verified and documented — never as “authenticated,” “guaranteed genuine,” or “fraud-proof.”",
+  "Cards are described as verified and documented — never as guaranteed genuine, fraud-proof, or forensically examined.",
 ];
 
 export default function Security() {

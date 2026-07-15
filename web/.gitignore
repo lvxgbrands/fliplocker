@@ -45,3 +45,7 @@ next-env.d.ts
 
 # local dev media storage
 /.data/
+
+# e2e screenshot output
+/e2e/shots/
+/e2e/shots2/

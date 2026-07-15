@@ -6,7 +6,7 @@ import { chromium } from "playwright";
 import fs from "fs";
 
 const BASE = "http://localhost:3000";
-const SHOTS = new URL("./shots2/", import.meta.url).pathname;
+const SHOTS = "/tmp/claude-0/-home-user-CardDoc/38a044e7-bf00-51a7-9140-00d321784f23/scratchpad/e2e-shots2/";
 fs.mkdirSync(SHOTS, { recursive: true });
 const EXE = "/opt/pw-browsers/chromium";
 
@@ -42,8 +42,8 @@ const seller = await browser.newContext({ viewport: { width: 1280, height: 900 }
 const sp = await seller.newPage();
 
 // Demo media
-await svgImage(sp, `${SHOTS}front.png`, "LUKA — FRONT", 170);
-await svgImage(sp, `${SHOTS}rear.png`, "LUKA — REAR", 200);
+await svgImage(sp, `${SHOTS}front.png`, "BAKER — FRONT", 170);
+await svgImage(sp, `${SHOTS}rear.png`, "BAKER — REAR", 200);
 await svgImage(sp, `${SHOTS}hub1.png`, "HUB REF 1", 150);
 await svgImage(sp, `${SHOTS}hub2.png`, "HUB REF 2", 260);
 
@@ -76,16 +76,17 @@ console.log("✔ seller registered + verified");
 // 2. Create deal
 await sp.click("text=Create your first deal");
 await sp.waitForURL("**/seller/deals/new");
-await sp.selectOption('select[name="sport"]', "Basketball");
-await sp.fill('input[name="cardYear"]', "2018");
-await sp.fill('input[name="playerName"]', "Luka Dončić");
+await sp.selectOption('select[name="sport"]', "Baseball");
+await sp.fill('input[name="cardYear"]', "1909");
+await sp.fill('input[name="playerName"]', "Frank Baker");
 await sp.selectOption('select[name="gradingCompany"]', "PSA");
-await sp.fill('input[name="certNumber"]', "82345678");
-await sp.fill('input[name="salePrice"]', "450");
+await sp.fill('input[name="certNumber"]', "38227911");
+  await sp.fill('input[name="grade"]', "PSA 3");
+await sp.fill('input[name="salePrice"]', "385");
 await sp.fill('input[name="buyerEmail"]', BUYER.email);
 const sf = sp.locator('input[type="file"]');
-await sf.nth(0).setInputFiles(`${SHOTS}front.png`);
-await sf.nth(1).setInputFiles(`${SHOTS}rear.png`);
+await sf.nth(0).setInputFiles("/home/user/CardDoc/web/public/cards/baker-front.png");
+await sf.nth(1).setInputFiles("/home/user/CardDoc/web/public/cards/baker-back.png");
 await sp.waitForTimeout(500);
 await sp.click('button:has-text("Create deal & invite buyer")');
 await sp.waitForURL((u) => u.search.includes("created=1"), { timeout: 30000 });

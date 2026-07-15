@@ -53,7 +53,7 @@ export const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "What does verification cover — and what does it not?",
-    a: "The hub confirms a physical card matching the seller's listing, in a slab whose certificate number is valid and active in the grading company's registry, and documents it on a 15-second video and two photos with a logged tamper seal. This is an administrative data-match and documentation service. It is not forensic authentication: FlipLocker does not chemically or microscopically examine a card and cannot, for example, detect a genuine certificate number reprinted onto a counterfeit slab, or a slab that was opened and resealed. Cards are verified and documented — not graded or guaranteed genuine.",
+    a: "The hub confirms a physical card matching the seller's listing, in a slab whose certificate number is valid and active in the grading company's registry, and documents it on a 15-second video and two photos with a logged tamper seal. This is an administrative data-match and documentation service. It is not a forensic examination: FlipLocker does not chemically or microscopically examine a card and cannot, for example, detect a genuine certificate number reprinted onto a counterfeit slab, or a slab that was opened and resealed. Cards are verified and documented — not graded or guaranteed genuine.",
   },
   {
     q: "What are the fees?",
