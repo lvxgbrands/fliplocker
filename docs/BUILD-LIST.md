@@ -51,50 +51,54 @@ All transitions write a `deal_events` row. Guard transitions server-side (no sta
 
 - [ ] Kickoff w/ client: fee schedule values, hub ship-from address, PayPal business account, final-name shortlist
 - [ ] Start PayPal Commerce Platform / delayed-disbursement application ← **DO THIS DAY 1**
-- [ ] Repo scaffold: Next.js + TS + Prisma + CI (lint, typecheck, test on push)
+- [x] Repo scaffold: Next.js + TS + Prisma + CI (lint, typecheck, test on push)
 - [ ] Staging environment + Postgres + S3 buckets (staging/prod)
-- [ ] Schema v1 migrated (tables above)
-- [ ] Auth: register, login, email verification, password reset, role guard middleware
-- [ ] Seller portal shell + Create Deal flow (front/rear photo presigned upload, description, price, buyer email, validation)
-- [ ] Deal dashboard (seller) with status chips
-- [ ] Buyer invitation email on deal creation (email service wired, first template)
-- [ ] Brand: name candidates + domain screening deck; logo/color/type direction
+- [x] Schema v1 migrated (tables above)
+- [x] Auth: register, login, email verification, password reset, role guard middleware
+- [x] Seller portal shell + Create Deal flow (front/rear photo presigned upload, description, price, buyer email, validation)
+- [x] Deal dashboard (seller) with status chips
+- [x] Buyer invitation email on deal creation (email service wired, first template)
+- [x] Brand: name candidates + domain screening deck; logo/color/type direction
 - [ ] **Demo Fri 7/10:** brand deck + live create-deal on staging
 
 ## Week 2 — Buyer Flow & Payments (7/13–7/19)
 
-- [ ] Buyer invitation claim → registration → deal binds to buyer_id
-- [ ] Buyer deal review page (photos, description, cost breakdown incl. fee + shipping)
-- [ ] Accept / Decline endpoints + state transitions + seller notifications
-- [ ] Fee engine + `fee_schedule` config table
-- [ ] PayPal sandbox: order create (authorize) → capture on accept; webhook handler (PAYMENT.CAPTURE.COMPLETED etc.)
+> **Brand applied (Bold Blue):** blue/navy/ink token system, Archivo + Barlow Condensed + Inter + JetBrains Mono, shield logo, and a conversion marketing site (home/how-it-works/pricing/security) are live across every surface. Baseball-only demo roster (real T206 cards, prices, stats) with in-house T206-style placeholder art in `public/cards/` — see web/README.md.
+
+- [x] Buyer invitation claim → registration → deal binds to buyer_id
+- [x] Buyer deal review page (photos, description, cost breakdown incl. fee + shipping)
+- [x] Accept / Decline endpoints + state transitions + seller notifications
+- [x] Fee engine + `fee_schedule` config table
+- [x] PayPal sandbox: order create (authorize) → capture on accept; webhook handler (PAYMENT.CAPTURE.COMPLETED etc.)
 - [ ] Void-on-decline / void-on-timeout job
-- [ ] "Payment received — ship now" seller alert
-- [ ] Transparency timeline component (both portals) reading `deal_events`
-- [ ] Apply final brand: name, logo, palette, email templates restyled
+- [x] "Payment received — ship now" seller alert
+- [x] Transparency timeline component (both portals) reading `deal_events`
+- [x] Apply final brand: name, logo, palette, email templates restyled
 - [ ] **Demo Fri 7/17:** core loop end-to-end in sandbox
 - [ ] **★ 7/21 client View Demo milestone** — rehearse Monday 7/20
 
 ## Week 3 — Shipping & Hub (7/20–7/26)
 
-- [ ] EasyPost integration: Leg 1 label purchase on PAID, PDF in seller portal
-- [ ] Tracking webhooks → `deal_events` + status transitions (IN_TRANSIT_TO_HUB, RECEIVED_AT_HUB…)
-- [ ] Facilitator portal: inbound queue, check-in by tracking #
-- [ ] Unboxing video upload (multipart to S3, playable in portal for buyer/seller/admin)
-- [ ] Two still-photo uploads + verification confirm / flag-mismatch action
-- [ ] Repack step → Leg 2 label with **USPS Signature Confirmation**
-- [ ] All shipping/hub notification emails
+> **Build note:** External services (shipping/USPS, SMS, and the signature-delivery + timer webhooks) are implemented behind adapters with a **simulator mode** so the full lifecycle is demoable now; each flips to the real provider via env vars (`SHIPPING_MODE`, `TWILIO_*`, `EASYPOST_API_KEY`) with no code change. Real-provider webhook wiring and a 3+ cycle QA pass are finalized once provider credentials are in hand.
+
+- [x] EasyPost integration: Leg 1 label purchase on PAID, PDF in seller portal
+- [x] Tracking webhooks → `deal_events` + status transitions (IN_TRANSIT_TO_HUB, RECEIVED_AT_HUB…)
+- [x] Facilitator portal: inbound queue, check-in by tracking #
+- [x] Unboxing video upload (multipart to S3, playable in portal for buyer/seller/admin)
+- [x] Two still-photo uploads + verification confirm / flag-mismatch action
+- [x] Repack step → Leg 2 label with **USPS Signature Confirmation**
+- [x] All shipping/hub notification emails
 - [ ] **Demo Fri 7/24:** payment-to-doorstep logistics + hub flow
 
 ## Week 4 — Fund Release, Admin, Hardening (7/27–8/2)
 
-- [ ] Signature-delivery webhook → release seller disbursement + platform fee (or fallback path) → FUNDS_RELEASED → COMPLETE
-- [ ] Refund/cancel flows incl. FLAGGED mismatch → admin-triggered refund
-- [ ] Admin dashboard: deals table + detail, fee config UI, user management, manual overrides, basic reports (volume, fees collected)
+- [x] Signature-delivery webhook → release seller disbursement + platform fee (or fallback path) → FUNDS_RELEASED → COMPLETE
+- [x] Refund/cancel flows incl. FLAGGED mismatch → admin-triggered refund
+- [x] Admin dashboard: deals table + detail, fee config UI, user management, manual overrides, basic reports (volume, fees collected)
 - [ ] Full E2E QA: 3+ complete deal cycles on staging incl. exception paths
 - [ ] Mobile responsive pass; accessibility sanity pass
-- [ ] Security review: authz on every endpoint, webhook signature verification, rate limits, media access control (signed URLs only)
-- [ ] ToS + Privacy pages
+- [x] Security review: authz on every endpoint, webhook signature verification, rate limits, media access control (signed URLs only)
+- [x] ToS + Privacy pages
 - [ ] Production env provisioned; secrets, domains, SSL
 - [ ] **Demo Fri 7/31:** full lifecycle + admin
 - [ ] **★ 8/1 final invoice**
