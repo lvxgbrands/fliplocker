@@ -1,12 +1,22 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   MessageSquareText, FilePlus2, Mail, CreditCard, Tag, Building2,
-  BadgeCheck, Truck, PenLine, PartyPopper, ArrowRight,
+  BadgeCheck, Truck, PenLine, PartyPopper,
 } from "lucide-react";
 import { buttonClass } from "@/components/ui";
-import { MarketingNav, MarketingFooter, SectionKicker } from "@/components/marketing";
+import { MarketingShell, PageHero, AnswerBlock, CtaBand } from "@/components/marketing-ui";
+import { FaqSection } from "@/components/faq-section";
+import { pageMetadata } from "@/lib/seo";
+import { HOW_IT_WORKS_FAQS } from "@/lib/faqs";
 
-export const metadata = { title: "How it works — FlipLocker" };
+export const metadata: Metadata = pageMetadata({
+  title: "How it works — from social handshake to signed delivery",
+  description:
+    "The eight steps of a FlipLocker deal: agree off-platform, invite the buyer, hold the payment, ship to the hub, document the card, deliver with a signature, and release the seller's payout after a review window.",
+  path: "/how-it-works",
+  keywords: ["how FlipLocker works", "card deal process", "held payment", "hub documentation"],
+});
 
 const STEPS = [
   { icon: MessageSquareText, t: "Agree the deal off-platform", b: "Buyer and seller settle on the card and price wherever they met — social media, a show, a group chat. FlipLocker never lists or brokers the sale." },
@@ -21,22 +31,23 @@ const STEPS = [
 
 export default function HowItWorks() {
   return (
-    <div className="min-h-screen bg-white">
-      <MarketingNav />
-      <section className="border-b border-ink-200/60 bg-ink-50">
-        <div className="mx-auto max-w-3xl px-4 py-16 text-center">
-          <SectionKicker>How it works</SectionKicker>
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-            From a social-media handshake to a signed delivery
-          </h1>
-          <p className="mx-auto mt-4 max-w-xl text-lg text-ink-500">
-            Eight steps, fully documented and timestamped on a transparency timeline both parties can
-            watch in real time.
-          </p>
-        </div>
+    <MarketingShell>
+      <PageHero
+        kicker="How it works"
+        title="From a social handshake to a signed delivery"
+        lede="Eight steps, fully documented and timestamped on a transparency timeline both parties can watch in real time."
+      />
+
+      <section className="mx-auto max-w-3xl px-4 pt-14">
+        <AnswerBlock label="The short version">
+          A seller and buyer agree on a card off-platform. The seller creates the deal and invites the buyer,
+          who pays — with funds held by our payment processor. The seller ships to the FlipLocker hub, the card
+          is documented, and it&apos;s delivered to the buyer with a required signature. After a 48-hour review
+          window, the seller is paid.
+        </AnswerBlock>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 py-20">
+      <section className="mx-auto max-w-3xl px-4 py-16">
         <ol className="relative space-y-0">
           {STEPS.map((s, i) => (
             <li key={s.t} className="relative flex gap-5 pb-10 last:pb-0">
@@ -47,9 +58,7 @@ export default function HowItWorks() {
                 <s.icon className="h-5 w-5" strokeWidth={2} />
               </span>
               <div className="pt-1.5">
-                <div className="flex items-center gap-3">
-                  <span className="kicker text-[11px] text-brand-600">Step {i + 1}</span>
-                </div>
+                <span className="kicker text-[11px] text-brand-600">Step {i + 1}</span>
                 <h3 className="mt-1 text-lg font-bold text-ink-900">{s.t}</h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-ink-500">{s.b}</p>
               </div>
@@ -60,8 +69,8 @@ export default function HowItWorks() {
         <div className="mt-8 flex flex-wrap items-center gap-3 rounded-2xl border border-ink-200/70 bg-ink-50 p-6">
           <BadgeCheck className="h-6 w-6 text-brand-600" strokeWidth={2} />
           <p className="flex-1 text-sm text-ink-600">
-            If a card ever fails inspection, the deal is flagged, the buyer is automatically refunded,
-            and the documentation is shared with both parties.
+            If a card ever fails inspection, the deal is flagged, the buyer is automatically refunded, and the
+            documentation is shared with both parties.
           </p>
           <Link href="/register" className={buttonClass("primary", "md")}>
             Create a deal <PenLine className="h-4 w-4" strokeWidth={2.4} />
@@ -69,16 +78,14 @@ export default function HowItWorks() {
         </div>
       </section>
 
-      <section className="hero-dark relative overflow-hidden">
-        <div className="dotgrid-blue absolute inset-0" aria-hidden />
-        <div className="relative mx-auto max-w-4xl px-4 py-16 text-center">
-          <h2 className="text-3xl font-extrabold tracking-tight text-white">Ready when your buyer is</h2>
-          <Link href="/register" className={buttonClass("primary", "lg", "mt-6")}>
-            Get started <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-          </Link>
-        </div>
-      </section>
-      <MarketingFooter />
-    </div>
+      <FaqSection items={HOW_IT_WORKS_FAQS} kicker="How it works — FAQ" title="Common questions about the flow" />
+
+      <CtaBand
+        title="Ready when your buyer is"
+        body="Create a deal, invite your buyer, and watch every step on a shared timeline."
+        primary={{ href: "/register", label: "Get started" }}
+        secondary={{ href: "/platform", label: "Explore the platform" }}
+      />
+    </MarketingShell>
   );
 }

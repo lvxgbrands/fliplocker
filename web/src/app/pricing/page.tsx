@@ -22,7 +22,7 @@ export const metadata: Metadata = pageMetadata({
   description:
     "Three FlipLocker packages — Single, Plus, and Pro — with monthly or annual billing (save 17% annually). The per-deal service fee is based on the sale price only, never a card's market value.",
   path: "/pricing",
-  keywords: ["FlipLocker pricing", "card deal fees", "trading card escrow alternative", "service fee"],
+  keywords: ["FlipLocker pricing", "card deal fees", "trading card deal protection", "service fee"],
 });
 
 const pct = (bps: number) => `${(bps / 100).toFixed(bps % 100 ? 2 : 0)}%`;

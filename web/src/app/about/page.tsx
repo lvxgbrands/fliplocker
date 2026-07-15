@@ -16,7 +16,7 @@ export const metadata: Metadata = pageMetadata({
 });
 
 const VALUES = [
-  { icon: Scale, t: "Honesty over hype", b: "We say documented, never authenticated. We publish our limits instead of hiding them. An accurate promise is worth more than an impressive one." },
+  { icon: Scale, t: "Honesty over hype", b: "We say documented, never guaranteed genuine. We publish our limits instead of hiding them. An accurate promise is worth more than an impressive one." },
   { icon: Eye, t: "Transparency by default", b: "Both parties watch the same timestamped timeline. There is no hidden state, no separate stories — one shared source of truth for every deal." },
   { icon: Lock, t: "Safety through structure", b: "We don't ask people to trust strangers. We build a process that protects both sides even when trust isn't there: held payment, documentation, signature." },
   { icon: Users, t: "For the community", b: "FlipLocker is built by people who deal cards, for people who deal cards — starting with baseball, the category we know best." },
