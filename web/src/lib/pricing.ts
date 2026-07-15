@@ -143,18 +143,21 @@ export const COMPARISON: CompareSection[] = [
 
 // ---- Price math -----------------------------------------------------------
 
-/** Effective per-month price for a billing cadence (annual applies the 17% discount). */
-export function effectiveMonthly(pkg: Package, billing: Billing): number {
-  if (pkg.priceMonthly === 0) return 0;
-  return billing === "annual"
-    ? Math.round(pkg.priceMonthly * (1 - ANNUAL_SAVINGS) * 100) / 100
-    : pkg.priceMonthly;
-}
-
-/** Total charged per year for a billing cadence. */
+/** Total charged per year when billed annually (17% off the monthly-rate year). */
 export function annualTotal(pkg: Package): number {
   if (pkg.priceMonthly === 0) return 0;
   return Math.round(pkg.priceMonthly * 12 * (1 - ANNUAL_SAVINGS));
+}
+
+/**
+ * Effective per-month price for a billing cadence. For annual billing this is
+ * derived from the annual total so that (effective monthly × 12) equals the
+ * "billed yearly" figure shown to the user.
+ */
+export function effectiveMonthly(pkg: Package, billing: Billing): number {
+  if (pkg.priceMonthly === 0) return 0;
+  if (billing === "monthly") return pkg.priceMonthly;
+  return Math.round((annualTotal(pkg) / 12) * 100) / 100;
 }
 
 export function formatUsd(n: number): string {

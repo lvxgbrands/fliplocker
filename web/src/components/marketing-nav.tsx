@@ -65,14 +65,21 @@ function MegaPanel({
 
   return (
     <div
-      className={`absolute left-1/2 top-full z-40 w-[min(56rem,calc(100vw-2rem))] -translate-x-1/2 pt-3`}
+      className={`grid gap-2 overflow-hidden rounded-2xl border p-3 shadow-lift sm:grid-cols-[1.6fr_1fr] ${
+        dark ? "border-white/10 bg-navy-900/95 backdrop-blur-xl" : "border-ink-200/70 bg-white"
+      }`}
     >
-      <div
-        className={`grid gap-2 overflow-hidden rounded-2xl border p-3 shadow-lift sm:grid-cols-[1.6fr_1fr] ${
-          dark ? "border-white/10 bg-navy-900/95 backdrop-blur-xl" : "border-ink-200/70 bg-white"
-        }`}
-      >
         <div className={`grid gap-1 ${columns.length > 1 ? "sm:grid-cols-2" : ""} p-1`}>
+          <Link
+            href={item.href}
+            onClick={onNavigate}
+            className={`col-span-full mx-1 mb-1 flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors ${
+              dark ? "bg-white/5 text-white hover:bg-white/10" : "bg-ink-50 text-ink-900 hover:bg-ink-100"
+            }`}
+          >
+            {item.label} overview
+            <ArrowRight className="h-3.5 w-3.5 text-brand-400" strokeWidth={2.5} />
+          </Link>
           {columns.map((col) => (
             <div key={col.heading} className="min-w-0">
               <p className={`kicker px-3 pb-1 pt-2 text-[10px] ${dark ? "text-brand-300/70" : "text-ink-400"}`}>
@@ -103,7 +110,6 @@ function MegaPanel({
           </span>
         </Link>
       </div>
-    </div>
   );
 }
 
@@ -149,7 +155,10 @@ export function MarketingNav({ dark = false }: { dark?: boolean }) {
     closeTimer.current = setTimeout(() => setOpen(null), 120);
   };
 
+  const activeMega = open ? TOP_NAV.find((i) => i.label === open && i.mega) : undefined;
+
   return (
+    <>
     <header
       ref={navRef}
       className={`sticky top-0 z-40 border-b backdrop-blur-md ${
@@ -159,7 +168,7 @@ export function MarketingNav({ dark = false }: { dark?: boolean }) {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen(null);
       }}
     >
-      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-4">
+      <div className="relative mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-4">
         <Wordmark dark={dark} />
 
         {/* Desktop nav */}
@@ -184,32 +193,41 @@ export function MarketingNav({ dark = false }: { dark?: boolean }) {
               return (
                 <li
                   key={item.label}
-                  className="relative"
                   onMouseEnter={() => openNow(item.label)}
                   onMouseLeave={closeSoon}
                 >
-                  <button
-                    type="button"
+                  {/* The label navigates to the section overview; hover/focus opens the mega panel. */}
+                  <Link
+                    href={item.href}
                     aria-expanded={open === item.label}
                     aria-haspopup="true"
-                    onClick={() => setOpen(open === item.label ? null : item.label)}
                     onFocus={() => openNow(item.label)}
+                    onClick={() => setOpen(null)}
                     className={`inline-flex items-center gap-1 ${base}`}
                   >
                     {item.label}
                     <ChevronDown
                       className={`h-3.5 w-3.5 transition-transform duration-200 ${open === item.label ? "rotate-180" : ""}`}
                       strokeWidth={2.5}
+                      aria-hidden
                     />
-                  </button>
-                  {open === item.label ? (
-                    <MegaPanel item={item} dark={dark} onNavigate={() => setOpen(null)} />
-                  ) : null}
+                  </Link>
                 </li>
               );
             })}
           </ul>
         </nav>
+
+        {/* Mega panel — anchored to the nav bar, centered, so it never clips the viewport. */}
+        {activeMega ? (
+          <div
+            className="absolute left-1/2 top-full z-40 hidden w-[calc(100vw-2rem)] max-w-[56rem] -translate-x-1/2 pt-3 lg:block"
+            onMouseEnter={() => openNow(activeMega.label)}
+            onMouseLeave={closeSoon}
+          >
+            <MegaPanel item={activeMega} dark={dark} onNavigate={() => setOpen(null)} />
+          </div>
+        ) : null}
 
         {/* Actions */}
         <div className="flex items-center gap-2">
@@ -237,8 +255,11 @@ export function MarketingNav({ dark = false }: { dark?: boolean }) {
           </button>
         </div>
       </div>
+    </header>
 
-      {/* Mobile drawer */}
+    {/* Mobile drawer — rendered OUTSIDE <header> so the header's backdrop-blur
+        doesn't become the containing block for this position:fixed overlay
+        (it must stay viewport-relative to fill the screen). */}
       {drawer ? (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div
@@ -327,6 +348,6 @@ export function MarketingNav({ dark = false }: { dark?: boolean }) {
           </div>
         </div>
       ) : null}
-    </header>
+    </>
   );
 }
