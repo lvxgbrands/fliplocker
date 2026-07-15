@@ -86,7 +86,7 @@ await sp.fill('input[name="salePrice"]', "425");
 await sp.fill('input[name="buyerEmail"]', BUYER.email);
 const sf = sp.locator('input[type="file"]');
 await sf.nth(0).setInputFiles("/home/user/CardDoc/web/public/cards/griffey.jpg");
-await sf.nth(1).setInputFiles("/home/user/CardDoc/web/public/cards/griffey.jpg");
+await sf.nth(1).setInputFiles("/home/user/CardDoc/web/public/cards/griffey-back.jpg");
 await sp.waitForTimeout(500);
 await sp.click('button:has-text("Create deal & invite buyer")');
 await sp.waitForURL((u) => u.search.includes("created=1"), { timeout: 30000 });

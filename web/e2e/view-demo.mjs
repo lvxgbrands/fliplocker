@@ -90,7 +90,7 @@ await page.fill('input[name="salePrice"]', "425");
 await page.fill('input[name="buyerEmail"]', BUYER.email);
 const fileInputs = page.locator('input[type="file"]');
 await fileInputs.nth(0).setInputFiles("/home/user/CardDoc/web/public/cards/griffey.jpg");
-await fileInputs.nth(1).setInputFiles("/home/user/CardDoc/web/public/cards/griffey.jpg");
+await fileInputs.nth(1).setInputFiles("/home/user/CardDoc/web/public/cards/griffey-back.jpg");
 await page.waitForTimeout(600); // let the live quote preview load
 await shot(page, "create-deal-filled");
 const preview = await page.textContent("body");
@@ -124,7 +124,7 @@ await bpage.fill('input[name="password"]', BUYER.pass);
 await bpage.click('button:has-text("Create account")');
 await bpage.waitForURL("**/buyer/deals/**");
 const review = await bpage.textContent("body");
-for (const expect of ["Ken Griffey Jr.", "PSA", "38227911", "peer-to-peer", "service fee", "Outbound shipping", "Total"]) {
+for (const expect of ["Ken Griffey Jr.", "PSA", "24810881", "peer-to-peer", "service fee", "Outbound shipping", "Total"]) {
   if (!review.includes(expect)) fail(`buyer review page missing "${expect}"`);
 }
 await shot(bpage, "buyer-deal-review");

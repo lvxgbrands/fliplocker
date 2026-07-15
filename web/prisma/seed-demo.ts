@@ -37,12 +37,12 @@ const ROSTER: [string, string, string, number, string, string, number, string, D
 const CODE = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
 const code = (i: number) => `DEMO-${String(i).padStart(2, "0")}${CODE[i % CODE.length]}${CODE[(i * 7) % CODE.length]}`;
 
-// Copies the real card photo into local media storage so the signed-URL flow
-// renders it exactly like a seller upload. One photo per card (front).
-function copyMedia(slug: string): string | null {
-  const src = path.join(CARDS_DIR, `${slug}.jpg`);
+// Copies a real card photo into local media storage so the signed-URL flow
+// renders it exactly like a seller upload. face: "" (front) or "-back".
+function copyMedia(slug: string, face: "" | "-back"): string | null {
+  const src = path.join(CARDS_DIR, `${slug}${face}.jpg`);
   if (!fs.existsSync(src)) return null;
-  const key = `deal-photos/demo/${slug}.jpg`;
+  const key = `deal-photos/demo/${slug}${face}.jpg`;
   const dest = path.join(UPLOAD_ROOT, key);
   fs.mkdirSync(path.dirname(dest), { recursive: true });
   fs.copyFileSync(src, dest);
@@ -114,7 +114,8 @@ async function main() {
     const [slug, player, team, year, grade, cert, priceCents, statLine, status] = ROSTER[i];
     const q = computeQuote({ salePriceCents: priceCents, feeConfig: feeFree, checkout, taxRateBps: 0 });
     const paid = !["DECLINED"].includes(status);
-    const frontKey = copyMedia(slug);
+    const frontKey = copyMedia(slug, "");
+    const rearKey = copyMedia(slug, "-back");
 
     const deal = await db.deal.create({
       data: {
@@ -144,7 +145,10 @@ async function main() {
         completedAt: status === "COMPLETE" ? new Date() : null,
         flagReason: status === "FLAGGED" ? "Corner wear not visible in the listing photos." : null,
         media: {
-          create: frontKey ? [{ kind: "FRONT_PHOTO" as const, storageKey: frontKey, contentType: "image/jpeg" }] : [],
+          create: [
+            ...(frontKey ? [{ kind: "FRONT_PHOTO" as const, storageKey: frontKey, contentType: "image/jpeg" }] : []),
+            ...(rearKey ? [{ kind: "REAR_PHOTO" as const, storageKey: rearKey, contentType: "image/jpeg" }] : []),
+          ],
         },
       },
     });

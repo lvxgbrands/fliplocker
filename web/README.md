@@ -26,12 +26,14 @@ env vars — no code change.
 
 ### Card photos
 
-Real card photos live in `public/cards/{slug}.jpg` (e.g. `griffey.jpg`,
-`bojackson.jpg`, `ripken.jpg`). The marketing showcase (`src/lib/marketing.ts`)
-and the demo roster (`prisma/seed-demo.ts`) reference these by slug, and the
-seed copies each into local media storage so the signed-URL flow renders it
-exactly like a seller upload. **To change a card image, drop a new photo at
-`public/cards/{slug}.jpg` — no code changes.** (Source images were resized with
+Real card photos live in `public/cards/{slug}.jpg` (front) and
+`public/cards/{slug}-back.jpg` (back) — e.g. `griffey.jpg` + `griffey-back.jpg`.
+The demo roster (`prisma/seed-demo.ts`) seeds both a `FRONT_PHOTO` and a
+`REAR_PHOTO` per deal so the deal pages document front and back; the marketing
+showcase (`src/lib/marketing.ts`) shows the front. The seed copies each into
+local media storage so the signed-URL flow renders it exactly like a seller
+upload. **To change a card image, drop a new photo at `public/cards/{slug}.jpg`
+or `{slug}-back.jpg` — no code changes.** (Source images were resized with
 `sharp`.)
 
 ## Run staging
