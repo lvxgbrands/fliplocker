@@ -77,24 +77,26 @@ All transitions write a `deal_events` row. Guard transitions server-side (no sta
 
 ## Week 3 — Shipping & Hub (7/20–7/26)
 
-- [ ] EasyPost integration: Leg 1 label purchase on PAID, PDF in seller portal
-- [ ] Tracking webhooks → `deal_events` + status transitions (IN_TRANSIT_TO_HUB, RECEIVED_AT_HUB…)
-- [ ] Facilitator portal: inbound queue, check-in by tracking #
-- [ ] Unboxing video upload (multipart to S3, playable in portal for buyer/seller/admin)
-- [ ] Two still-photo uploads + verification confirm / flag-mismatch action
-- [ ] Repack step → Leg 2 label with **USPS Signature Confirmation**
-- [ ] All shipping/hub notification emails
+> **Build note:** External services (shipping/USPS, SMS, and the signature-delivery + timer webhooks) are implemented behind adapters with a **simulator mode** so the full lifecycle is demoable now; each flips to the real provider via env vars (`SHIPPING_MODE`, `TWILIO_*`, `EASYPOST_API_KEY`) with no code change. Real-provider webhook wiring and a 3+ cycle QA pass are finalized once provider credentials are in hand.
+
+- [x] EasyPost integration: Leg 1 label purchase on PAID, PDF in seller portal
+- [x] Tracking webhooks → `deal_events` + status transitions (IN_TRANSIT_TO_HUB, RECEIVED_AT_HUB…)
+- [x] Facilitator portal: inbound queue, check-in by tracking #
+- [x] Unboxing video upload (multipart to S3, playable in portal for buyer/seller/admin)
+- [x] Two still-photo uploads + verification confirm / flag-mismatch action
+- [x] Repack step → Leg 2 label with **USPS Signature Confirmation**
+- [x] All shipping/hub notification emails
 - [ ] **Demo Fri 7/24:** payment-to-doorstep logistics + hub flow
 
 ## Week 4 — Fund Release, Admin, Hardening (7/27–8/2)
 
-- [ ] Signature-delivery webhook → release seller disbursement + platform fee (or fallback path) → FUNDS_RELEASED → COMPLETE
-- [ ] Refund/cancel flows incl. FLAGGED mismatch → admin-triggered refund
-- [ ] Admin dashboard: deals table + detail, fee config UI, user management, manual overrides, basic reports (volume, fees collected)
+- [x] Signature-delivery webhook → release seller disbursement + platform fee (or fallback path) → FUNDS_RELEASED → COMPLETE
+- [x] Refund/cancel flows incl. FLAGGED mismatch → admin-triggered refund
+- [x] Admin dashboard: deals table + detail, fee config UI, user management, manual overrides, basic reports (volume, fees collected)
 - [ ] Full E2E QA: 3+ complete deal cycles on staging incl. exception paths
 - [ ] Mobile responsive pass; accessibility sanity pass
-- [ ] Security review: authz on every endpoint, webhook signature verification, rate limits, media access control (signed URLs only)
-- [ ] ToS + Privacy pages
+- [x] Security review: authz on every endpoint, webhook signature verification, rate limits, media access control (signed URLs only)
+- [x] ToS + Privacy pages
 - [ ] Production env provisioned; secrets, domains, SSL
 - [ ] **Demo Fri 7/31:** full lifecycle + admin
 - [ ] **★ 8/1 final invoice**

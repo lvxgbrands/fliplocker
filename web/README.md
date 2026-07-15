@@ -1,77 +1,99 @@
 # FlipLocker — web app
 
-Next.js 15 (App Router) + TypeScript · Prisma + PostgreSQL · Tailwind. This build covers the
-**View Demo milestone**: the core transaction loop (seller → invite → buyer → payment → ship-now
-alert) end-to-end.
+Next.js 15 (App Router) + TypeScript · Prisma + PostgreSQL · Tailwind.
+
+Implements the **complete deal lifecycle** end-to-end — seller create → buyer
+pay → seller ship → hub verify → deliver → fund release → complete — across four
+role portals (seller, buyer, hub facilitator, admin). Every external service
+(payments, shipping, SMS, email, media storage) sits behind an adapter with a
+**simulator mode**, so the whole flow is demoable with zero third-party
+credentials and flips to the real provider via env vars — no code change.
 
 ## Run staging
 
 ```bash
 cd web
 npm install
-cp .env.example .env          # then fill in values (defaults work for local staging)
-npx prisma migrate dev        # applies schema to DATABASE_URL
-npm run db:seed               # checkout config, FREE/PRO fee config, demo accounts
-npm run build && npm start    # or: npm run dev
+cp .env.example .env                       # defaults work for local staging
+npx prisma migrate dev                      # apply schema to DATABASE_URL
+npm run db:seed                             # config + FREE/PRO fees + demo accounts
+DEV_CONTROLS=on DEV_MAILBOX=on npm run build
+DEV_CONTROLS=on DEV_MAILBOX=on npm start    # or: npm run dev
 ```
 
-Demo accounts seeded (password `fliplocker-demo`): `seller.demo@fliplocker.app`,
-`buyer.demo@fliplocker.app`, `admin.demo@fliplocker.app`, `hub.demo@fliplocker.app`.
+Demo accounts (password `fliplocker-demo`): `seller.demo@fliplocker.app`,
+`buyer.demo@fliplocker.app`, `hub.demo@fliplocker.app`, `admin.demo@fliplocker.app`.
 
-## Demo script (matches the 7/21 acceptance criteria)
+`DEV_CONTROLS=on` shows staging buttons that simulate carrier scans and timer
+expiry (real deployments get these from carrier webhooks + the cron job).
+`DEV_MAILBOX=on` exposes captured email/SMS at `/dev/mailbox`.
 
-1. **Seller**: register at `/register` → verify email (link lands in `/dev/mailbox` on staging)
-   → **Create deal** (card details, front/rear photos, price ≥ configured minimum, buyer email).
-2. **Invitation**: buyer invite email is sent on creation (see `/dev/mailbox` when no Resend key).
-3. **Buyer**: open the invite link → claim (new account or sign-in) → review photos, details, and
-   the itemized checkout → **Accept & Pay**.
-4. **Payment**: PayPal checkout (sandbox or simulator — see below). Funds are held by the
-   processor; FlipLocker receives only its service fee (`platform_fees`).
-5. **Seller alert**: "Payment received — ship now" email + dashboard banner; both portals show the
-   live deal timeline.
+## The lifecycle (and where it lives)
 
-An automated browser walkthrough of the whole path exists in the session scratchpad
-(`walkthrough.mjs`) and was used to verify this flow.
+| Stage | Who | Route | State |
+|---|---|---|---|
+| Create deal, invite buyer | Seller | `/seller/deals/new` | `CREATED → BUYER_NOTIFIED` |
+| Claim invite, review, Accept & Pay | Buyer | `/invite/[token]`, `/buyer/deals/[id]` | `ACCEPTED → PAID` |
+| ToS gate + Leg 1 label to hub | Seller | `/seller/deals/[id]` | `AWAITING_SELLER_SHIPMENT` |
+| Carrier → hub | (carrier/sim) | — | `IN_TRANSIT_TO_HUB → RECEIVED_AT_HUB` |
+| Check-in, video + 2 photos + tamper seal, Pass/Fail | Facilitator | `/hub`, `/hub/deals/[id]` | `VERIFIED` or `FLAGGED` |
+| Repack + Leg 2 (signature, never waived) | Facilitator | `/hub/deals/[id]` | `REPACKED → IN_TRANSIT_TO_BUYER` |
+| Delivered & signed; 48h review | (carrier/sim) → Buyer | `/buyer/deals/[id]` | `DELIVERED_SIGNED` |
+| Approve / auto-complete → payout + fee released | Buyer / timer | — | `FUNDS_RELEASED → COMPLETE` |
+
+Exception paths: buyer **Decline**, 72-hour **ship-timeout** auto-cancel+refund,
+hub **Fail** → `FLAGGED` + auto-refund, buyer **Report Issue** → `FLAGGED` for
+admin, admin manual **cancel/refund/regenerate-label/release**. Every transition
+is guarded server-side and appended to `deal_events` (the transparency timeline).
+
+Two browser walkthroughs in `e2e/` drive this whole path against the real app.
 
 ## Configuration (never hardcoded)
 
-All money/checkout numbers live in DB config tables, editable without code changes:
+All money/logistics numbers live in DB config, editable in **Admin → Fees &
+config** with no code change:
 
-- `fee_config` (per plan FREE/PRO): flat **floor** below a **crossover price**, **percent (bps)**
-  at/above it, **who pays** (BUYER / SELLER / SPLIT). Fee is a function of **sale price only** —
-  comp/market value is never collected and has no column.
-- `checkout_config`: minimum sale price, flat outbound shipping & signature line, insurance
-  (cents per started $100, carrier pass-through), tax enable/default + per-state `tax_rates`.
+- `fee_config` (per plan FREE/PRO): flat **floor** below a **crossover price**,
+  **percent (bps)** at/above it, **who pays** (BUYER/SELLER/SPLIT). Fee is a
+  function of **sale price only** — comp/market value is never collected and has
+  no column.
+- `checkout_config`: min price, outbound shipping & signature line, insurance
+  ($/started-$100 pass-through), seller label charge, tax enable/default +
+  per-state `tax_rates`, hub ship-to address, ship-timer + review-window hours,
+  media-purge days.
 
-Seed values mirror the client's current calculator (Free 4%/$10 floor, Pro 2%/$5 floor,
-min $160, shipping $9.50, insurance $0.50/$100) — placeholders until final numbers are set.
+Seed values mirror the client's calculator (Free 4%/$10, Pro 2%/$5, min $160,
+shipping $9.50, insurance $0.50/$100) — placeholders until final numbers are set.
 
-## PayPal modes (`PAYPAL_MODE`)
+## Service modes (all default to simulator)
 
-- `simulator` (default): no external calls; the approval page is served locally so the full loop
-  is demoable with zero credentials. Same interface, same records.
-- `sandbox`: real PayPal Orders v2 against `api-m.sandbox.paypal.com` — set `PAYPAL_CLIENT_ID`,
-  `PAYPAL_CLIENT_SECRET` (and `PAYPAL_WEBHOOK_ID` for signature-verified webhooks). Orders are
-  created with `payment_instruction.disbursement_mode=DELAYED` and `platform_fees` = the service
-  fee, per the multiparty architecture (funds held by PayPal, never by FlipLocker).
-- `live`: same as sandbox against production (post PayPal program approval).
+| Service | Env | simulator (default) | real |
+|---|---|---|---|
+| Payments | `PAYPAL_MODE` | local approval page, records identical | `sandbox`/`live` PayPal Orders v2 multiparty (`platform_fees`, DELAYED disbursement) |
+| Shipping | `SHIPPING_MODE` | USPS-style tracking + rendered labels at `/labels/[id]` | `easypost` (`EASYPOST_API_KEY`), signature on Leg 2 |
+| Email | `RESEND_API_KEY` | captured in `email_outbox` → `/dev/mailbox` | Resend |
+| SMS | `TWILIO_*` | captured in `sms_outbox` → `/dev/mailbox` | Twilio |
+| Media | `S3_BUCKET` | local `.data/uploads`, signed view URLs | S3 presigned PUT/GET |
 
-## Email
+Funds are always held by the payment processor; FlipLocker's account receives
+only its service fee.
 
-`RESEND_API_KEY` set → real sends via Resend. Unset (staging) → every message is captured in
-`email_outbox` and browsable at `/dev/mailbox` (disable with `DEV_MAILBOX=off`). All sends are
-archived to `email_outbox` either way.
+## Jobs
 
-## Media storage
+`POST /api/jobs/tick` (bearer `CRON_SECRET`) processes due timers: 72h ship
+auto-cancel+refund, 48h review auto-complete+release, and 30-day hub-media purge.
+Point Vercel Cron / any scheduler at it.
 
-`S3_BUCKET` set → real S3 presigned PUT/GET. Unset → a local adapter serves the same
-presign → PUT → confirm flow with files under `web/.data/uploads` and signed view URLs.
+## Guardrails & tests
 
-## Guardrails
-
-- `npm run check:copy` — fails the build if forbidden terminology appears in `src/` or `prisma/`
-  (see `docs/COMPLIANCE-NOTES.md`; approved framing is "held securely by our payment processor").
-- Deal state machine (`src/lib/deals.ts`) guards every transition server-side and appends a
-  `deal_events` row — the transparency timeline is derived, never hand-written.
-- No public marketplace surface: deals are reachable only by owner (seller), bound buyer, or
-  invite token. There is no browse/search/listing route.
+- `npm run test` — 24 Vitest unit tests (fee engine, quote math, state machine).
+- `npm run check:copy` — fails if forbidden terminology appears in `src/` or
+  `prisma/` (see `docs/COMPLIANCE-NOTES.md`; funds are "held securely by our
+  payment processor").
+- `npm run typecheck` / `npm run lint`.
+- CI (`.github/workflows/ci.yml`) runs all of the above + a production build.
+- Security: role + ownership authz on every action/route, rate limiting on auth
+  and uploads, signed-URL-only media, PayPal webhook signature verification,
+  baseline security headers.
+- No public marketplace surface: deals are reachable only by owner, bound buyer,
+  or invite token. No browse/search/listing route exists.
