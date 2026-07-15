@@ -19,21 +19,20 @@ env vars — no code change.
 - **Type:** Archivo (display/headlines/money), Inter (UI/body), Barlow Condensed
   (uppercase `.kicker` ticker labels — the signature sportsbook detail),
   JetBrains Mono (money/certs/tracking). Loaded via `next/font`.
-- **Logo:** `src/components/brand.tsx` — a bold-blue crest shield with an
-  interlocked "F" + reversed-"L" monogram that sweeps into a check (protected
-  transaction). `LockMark` (mark), `Wordmark` (FLIP/LOCKER, light+dark),
-  `AppIcon`; favicon at `src/app/icon.svg`.
+- **Logo:** the client-provided shield mark at
+  `public/brand/fliplocker-logo.svg` (a two-blue crest with an "F" + check),
+  rendered by `LockMark`/`AppIcon` in `src/components/brand.tsx`; `Wordmark`
+  keeps the FLIP/LOCKER text (light + dark); favicon at `src/app/icon.svg`.
 
-### Card art (placeholder — swap for real photos anytime)
+### Card photos
 
-`node scripts/generate-card-art.mjs` renders original **T206-style**
-(public-domain design) front/back art for the demo roster into
-`public/cards/{slug}-front.png` and `{slug}-back.png` (needs `npm i -D
-playwright`). These are original layered-SVG artworks, not photo copies. The
-filenames are stable: **drop a real photo over `public/cards/{slug}-front.png`
-(and `-back.png`) and it appears everywhere with zero code changes.** The demo
-seed copies these into local media storage so the signed-URL flow renders them
-exactly like a real upload.
+Real card photos live in `public/cards/{slug}.jpg` (e.g. `griffey.jpg`,
+`bojackson.jpg`, `ripken.jpg`). The marketing showcase (`src/lib/marketing.ts`)
+and the demo roster (`prisma/seed-demo.ts`) reference these by slug, and the
+seed copies each into local media storage so the signed-URL flow renders it
+exactly like a seller upload. **To change a card image, drop a new photo at
+`public/cards/{slug}.jpg` — no code changes.** (Source images were resized with
+`sharp`.)
 
 ## Run staging
 

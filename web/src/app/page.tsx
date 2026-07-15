@@ -86,13 +86,13 @@ export default async function Home() {
           {/* Floating slab cluster */}
           <div className="relative hidden h-[420px] lg:block" aria-hidden>
             <div className="absolute left-4 top-8 w-52 rotate-[-6deg] transition-transform duration-500 hover:rotate-0">
-              <SlabFloat slug="baker" grade="PSA 3" />
+              <SlabFloat slug="ripken" grade="PSA 9" />
             </div>
             <div className="absolute right-2 top-0 z-10 w-56 rotate-[5deg] transition-transform duration-500 hover:rotate-0">
-              <SlabFloat slug="johnson" grade="PSA 1" />
+              <SlabFloat slug="griffey" grade="PSA 8" />
             </div>
             <div className="absolute bottom-0 left-24 z-20 w-52 rotate-[2deg] transition-transform duration-500 hover:rotate-0">
-              <SlabFloat slug="seymour" grade="PSA 3" />
+              <SlabFloat slug="bojackson" grade="PSA 9" />
             </div>
           </div>
         </div>
@@ -260,7 +260,7 @@ function SlabFloat({ slug, grade }: { slug: string; grade: string }) {
         <Check className="h-3 w-3 text-brand-400" strokeWidth={3} />
       </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={`/cards/${slug}-front.png`} alt="" className="aspect-[3/4] w-full object-cover" />
+      <img src={`/cards/${slug}.jpg`} alt="" className="aspect-[3/4] w-full object-cover" />
     </div>
   );
 }

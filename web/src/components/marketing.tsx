@@ -92,7 +92,7 @@ export function ShowcaseSlab({ card }: { card: ShowcaseCard }) {
         <div className="overflow-hidden rounded-lg shadow-inner">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={`/cards/${card.slug}-front.png`}
+            src={`/cards/${card.slug}.jpg`}
             alt={`${card.player} — ${card.meta}`}
             className="aspect-[3/4] w-full object-cover"
           />

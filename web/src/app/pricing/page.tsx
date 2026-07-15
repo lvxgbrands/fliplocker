@@ -8,6 +8,9 @@ import { MarketingNav, MarketingFooter, SectionKicker } from "@/components/marke
 
 export const metadata = { title: "Pricing — FlipLocker" };
 
+// Reads live fee/checkout config from the DB — render per request, not at build.
+export const dynamic = "force-dynamic";
+
 const pct = (bps: number) => `${(bps / 100).toFixed(bps % 100 ? 2 : 0)}%`;
 
 export default async function Pricing() {

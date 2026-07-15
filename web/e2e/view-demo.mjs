@@ -80,17 +80,17 @@ console.log("✔ AC1b: email verified via emailed link");
 await page.click("text=Create your first deal");
 await page.waitForURL("**/seller/deals/new");
 await page.selectOption('select[name="sport"]', "Baseball");
-await page.fill('input[name="cardYear"]', "1909");
-await page.fill('input[name="playerName"]', "Frank Baker");
+await page.fill('input[name="cardYear"]', "1989");
+await page.fill('input[name="playerName"]', "Ken Griffey Jr.");
 await page.selectOption('select[name="gradingCompany"]', "PSA");
-await page.fill('input[name="certNumber"]', "38227911");
-  await page.fill('input[name="grade"]', "PSA 3");
-await page.fill('textarea[name="description"]', "1909 T206 Frank Baker, PSA 3. Price agreed on IG.");
-await page.fill('input[name="salePrice"]', "385");
+await page.fill('input[name="certNumber"]', "24810881");
+  await page.fill('input[name="grade"]', "PSA 8");
+await page.fill('textarea[name="description"]', "1989 Upper Deck Ken Griffey Jr. rookie, PSA 8. Price agreed on IG.");
+await page.fill('input[name="salePrice"]', "425");
 await page.fill('input[name="buyerEmail"]', BUYER.email);
 const fileInputs = page.locator('input[type="file"]');
-await fileInputs.nth(0).setInputFiles("/home/user/CardDoc/web/public/cards/baker-front.png");
-await fileInputs.nth(1).setInputFiles("/home/user/CardDoc/web/public/cards/baker-back.png");
+await fileInputs.nth(0).setInputFiles("/home/user/CardDoc/web/public/cards/griffey.jpg");
+await fileInputs.nth(1).setInputFiles("/home/user/CardDoc/web/public/cards/griffey.jpg");
 await page.waitForTimeout(600); // let the live quote preview load
 await shot(page, "create-deal-filled");
 const preview = await page.textContent("body");
@@ -124,7 +124,7 @@ await bpage.fill('input[name="password"]', BUYER.pass);
 await bpage.click('button:has-text("Create account")');
 await bpage.waitForURL("**/buyer/deals/**");
 const review = await bpage.textContent("body");
-for (const expect of ["Frank Baker", "PSA", "38227911", "peer-to-peer", "service fee", "Outbound shipping", "Total"]) {
+for (const expect of ["Ken Griffey Jr.", "PSA", "38227911", "peer-to-peer", "service fee", "Outbound shipping", "Total"]) {
   if (!review.includes(expect)) fail(`buyer review page missing "${expect}"`);
 }
 await shot(bpage, "buyer-deal-review");

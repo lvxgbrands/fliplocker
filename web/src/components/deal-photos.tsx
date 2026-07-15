@@ -18,9 +18,9 @@ export async function DealPhotos({ media, deal }: { media: DealMedia[]; deal?: S
   );
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className={photos.length > 1 ? "grid grid-cols-2 gap-4" : "max-w-[280px]"}>
       {photos.map((p) => (
-        <SlabFrame key={p.kind} deal={deal} face={p.kind === "FRONT_PHOTO" ? "Front" : "Rear"}>
+        <SlabFrame key={p.kind} deal={deal} face={photos.length > 1 ? (p.kind === "FRONT_PHOTO" ? "Front" : "Rear") : undefined}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={p.url}

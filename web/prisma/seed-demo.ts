@@ -13,34 +13,36 @@ const db = new PrismaClient();
 const CARDS_DIR = path.join(process.cwd(), "public", "cards");
 const UPLOAD_ROOT = path.join(process.cwd(), ".data", "uploads");
 
-// slug, player, team, grade, cert, priceCents, statLine, status
-const ROSTER: [string, string, string, string, string, number, string, DealStatus][] = [
-  ["johnson", "Walter Johnson", "Washington", "PSA 1", "21076544", 245000,
-    "The Big Train — 417 W, 2.17 ERA, 3,509 K, first HOF class of 1936.", "COMPLETE"],
-  ["collins", "Eddie Collins", "Philadelphia Athletics", "PSA 2", "60043187", 52500,
-    "3,315 career hits, .333 average, 1914 AL MVP, HOF 1939.", "COMPLETE"],
-  ["evers", "Johnny Evers", "Chicago Cubs", "PSA 3", "44810226", 43000,
-    "1914 NL MVP, of Tinker-to-Evers-to-Chance fame, HOF 1946.", "DELIVERED_SIGNED"],
-  ["baker", "Frank 'Home Run' Baker", "Philadelphia Athletics", "PSA 3", "38227911", 38500,
-    "4x AL home-run leader 1911-14, .307 career average, HOF 1955.", "IN_TRANSIT_TO_BUYER"],
-  ["bender", "Chief Bender", "Philadelphia Athletics", "PSA 3", "55190438", 36000,
-    "212 wins, .625 win pct, 3 World Series titles, HOF 1953.", "AWAITING_SELLER_SHIPMENT"],
-  ["huggins", "Miller Huggins", "St. Louis", "PSA 3", "29385660", 29000,
-    "Led the Yankees to 6 pennants and 3 titles as manager, HOF 1964.", "RECEIVED_AT_HUB"],
-  ["chase", "Hal Chase", "New York Highlanders", "PSA 3", "71062945", 21000,
-    "Premier defensive first baseman of the deadball era, .291 career.", "FLAGGED"],
-  ["seymour", "Cy Seymour", "Cincinnati", "PSA 3", "83415072", 16500,
-    "1905 NL batting champion at .377 — outhit Honus Wagner that year.", "DECLINED"],
+// slug, player, team, year, grade, cert, priceCents, statLine, status
+// Real cards from the client's own collection (photos in public/cards/{slug}.jpg).
+const ROSTER: [string, string, string, number, string, string, number, string, DealStatus][] = [
+  ["griffey", "Ken Griffey Jr.", "Seattle Mariners", 1989, "PSA 8", "24810881", 42500,
+    "The Kid — 630 HR, 10x Gold Glove, 1997 AL MVP, HOF 2016 (99.3%).", "COMPLETE"],
+  ["ohtani", "Shohei Ohtani", "Los Angeles Dodgers", 2024, "PSA 10", "77120346", 52000,
+    "Unanimous 3x MVP; first 50-HR / 50-SB season in MLB history.", "COMPLETE"],
+  ["bojackson", "Bo Jackson", "Kansas City Royals", 1989, "PSA 9", "30556214", 18500,
+    "Two-sport phenom; 1989 MLB All-Star Game MVP.", "DELIVERED_SIGNED"],
+  ["ripken", "Cal Ripken Jr.", "Baltimore Orioles", 1989, "PSA 9", "19204773", 16500,
+    "The Iron Man — 2,632 consecutive games, 3,184 hits, HOF 2007.", "IN_TRANSIT_TO_BUYER"],
+  ["griffin", "Konnor Griffin", "Pittsburgh Pirates", 2025, "GEM MT 10", "60050231", 31000,
+    "2025 Topps Now rookie — top-of-the-draft phenom prospect.", "AWAITING_SELLER_SHIPMENT"],
+  ["misiorowski", "Jacob Misiorowski", "Milwaukee Brewers", 2025, "GEM MT 10", "60050194", 24000,
+    "2025 Topps Now rookie — 100+ mph flamethrower.", "RECEIVED_AT_HUB"],
+  ["murakami", "Munetaka Murakami", "Tokyo (NPB)", 2025, "PSA 9", "88041127", 17500,
+    "NPB single-season home-run record holder; among the fastest to 200 HR.", "FLAGGED"],
+  ["valdez", "Esmerlyn Valdez", "Pittsburgh Pirates", 2025, "PSA 8", "60050288", 16000,
+    "2025 Topps Now — go-ahead grand slam fuels a doubleheader sweep.", "DECLINED"],
 ];
 
 const CODE = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
 const code = (i: number) => `DEMO-${String(i).padStart(2, "0")}${CODE[i % CODE.length]}${CODE[(i * 7) % CODE.length]}`;
 
-function copyMedia(slug: string, face: "front" | "rear"): string | null {
-  const srcName = face === "front" ? `${slug}-front.png` : `${slug}-back.png`;
-  const src = path.join(CARDS_DIR, srcName);
+// Copies the real card photo into local media storage so the signed-URL flow
+// renders it exactly like a seller upload. One photo per card (front).
+function copyMedia(slug: string): string | null {
+  const src = path.join(CARDS_DIR, `${slug}.jpg`);
   if (!fs.existsSync(src)) return null;
-  const key = `deal-photos/demo/${slug}-${face}.png`;
+  const key = `deal-photos/demo/${slug}.jpg`;
   const dest = path.join(UPLOAD_ROOT, key);
   fs.mkdirSync(path.dirname(dest), { recursive: true });
   fs.copyFileSync(src, dest);
@@ -109,11 +111,10 @@ async function main() {
   await db.deal.deleteMany({ where: { shortCode: { startsWith: "DEMO-" } } });
 
   for (let i = 0; i < ROSTER.length; i++) {
-    const [slug, player, team, grade, cert, priceCents, statLine, status] = ROSTER[i];
+    const [slug, player, team, year, grade, cert, priceCents, statLine, status] = ROSTER[i];
     const q = computeQuote({ salePriceCents: priceCents, feeConfig: feeFree, checkout, taxRateBps: 0 });
     const paid = !["DECLINED"].includes(status);
-    const frontKey = copyMedia(slug, "front");
-    const rearKey = copyMedia(slug, "rear");
+    const frontKey = copyMedia(slug);
 
     const deal = await db.deal.create({
       data: {
@@ -124,8 +125,8 @@ async function main() {
         inviteToken: `demo-invite-${slug}-${i}`,
         status,
         sport: "Baseball",
-        cardYear: 1909,
-        playerName: `${player} (T206), ${team}`,
+        cardYear: year,
+        playerName: `${player}, ${team}`,
         gradingCompany: "PSA",
         grade,
         certNumber: cert,
@@ -143,10 +144,7 @@ async function main() {
         completedAt: status === "COMPLETE" ? new Date() : null,
         flagReason: status === "FLAGGED" ? "Corner wear not visible in the listing photos." : null,
         media: {
-          create: [
-            ...(frontKey ? [{ kind: "FRONT_PHOTO" as const, storageKey: frontKey, contentType: "image/png" }] : []),
-            ...(rearKey ? [{ kind: "REAR_PHOTO" as const, storageKey: rearKey, contentType: "image/png" }] : []),
-          ],
+          create: frontKey ? [{ kind: "FRONT_PHOTO" as const, storageKey: frontKey, contentType: "image/jpeg" }] : [],
         },
       },
     });
