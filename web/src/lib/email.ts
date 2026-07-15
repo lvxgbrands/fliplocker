@@ -12,6 +12,14 @@ interface SendArgs {
   dealId?: string;
 }
 
+// True when a real email provider is configured. When false the app is in
+// email-simulator mode: messages are captured to the outbox but never
+// delivered, so the email-confirmation step is auto-completed instead of
+// blocking.
+export function emailConfigured(): boolean {
+  return Boolean(process.env.RESEND_API_KEY);
+}
+
 export async function sendEmail({ to, subject, html, dealId }: SendArgs): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.EMAIL_FROM || "FlipLocker <deals@fliplocker.app>";

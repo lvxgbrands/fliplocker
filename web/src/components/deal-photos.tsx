@@ -9,6 +9,20 @@ type SlabDeal = Pick<Deal, "gradingCompany" | "grade" | "certNumber">;
  * the image shows the grader, grade, and cert like a slab label, and the photo
  * sits inside a white bevel. Media access is signed-URL only.
  */
+/** Small card-front thumbnail for deal-list rows. Falls back to an empty frame. */
+export async function DealThumb({ media }: { media: Pick<DealMedia, "kind" | "storageKey">[] }) {
+  const front = media.find((m) => m.kind === "FRONT_PHOTO") ?? media.find((m) => m.kind === "REAR_PHOTO");
+  const url = front ? await mediaViewUrl(front.storageKey) : null;
+  return (
+    <span className="flex h-12 w-9 shrink-0 items-center justify-center overflow-hidden rounded-md border border-ink-200 bg-ink-100">
+      {url ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={url} alt="" className="h-full w-full object-cover" />
+      ) : null}
+    </span>
+  );
+}
+
 export async function DealPhotos({ media, deal }: { media: DealMedia[]; deal?: SlabDeal }) {
   const photos = await Promise.all(
     media

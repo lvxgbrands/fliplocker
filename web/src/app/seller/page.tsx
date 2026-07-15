@@ -7,6 +7,7 @@ import { VerifyEmailBanner } from "@/components/shell";
 import { buttonClass, EmptyState, Stat } from "@/components/ui";
 import { formatCents } from "@/lib/fees";
 import { cardTitle } from "@/lib/deals";
+import { DealThumb } from "@/components/deal-photos";
 import { SuccessNote } from "@/components/form-ui";
 
 const ACTIVE_STATUSES = [
@@ -25,6 +26,7 @@ export default async function SellerDashboard({
   const deals = await db.deal.findMany({
     where: { sellerId: user.id },
     orderBy: { createdAt: "desc" },
+    include: { media: { where: { kind: { in: ["FRONT_PHOTO", "REAR_PHOTO"] } } } },
   });
 
   const shipNow = deals.filter((d) => d.status === "AWAITING_SELLER_SHIPMENT" || d.status === "PAID");
@@ -42,7 +44,9 @@ export default async function SellerDashboard({
             : params.verification_sent
               ? "Confirmation email sent, check your inbox."
               : params.welcome
-                ? "Welcome to FlipLocker! We sent a confirmation link to your email."
+                ? user.emailVerified
+                  ? "Welcome to FlipLocker! Your account is ready."
+                  : "Welcome to FlipLocker! We sent a confirmation link to your email."
                 : undefined
         }
       />
@@ -106,14 +110,17 @@ export default async function SellerDashboard({
                 href={`/seller/deals/${d.id}`}
                 className="group flex items-center justify-between gap-4 px-5 py-4 transition-colors hover:bg-brand-50/40"
               >
-                <div className="min-w-0">
-                  <p className="truncate font-semibold text-ink-900 group-hover:text-brand-800">
-                    {cardTitle(d)}
-                  </p>
-                  <p className="mt-0.5 text-xs text-ink-400">
-                    <span className="font-mono">{d.shortCode}</span> · buyer {d.buyerEmail} ·{" "}
-                    {new Date(d.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                  </p>
+                <div className="flex min-w-0 items-center gap-3">
+                  <DealThumb media={d.media} />
+                  <div className="min-w-0">
+                    <p className="truncate font-semibold text-ink-900 group-hover:text-brand-800">
+                      {cardTitle(d)}
+                    </p>
+                    <p className="mt-0.5 text-xs text-ink-400">
+                      <span className="font-mono">{d.shortCode}</span> · buyer {d.buyerEmail} ·{" "}
+                      {new Date(d.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                    </p>
+                  </div>
                 </div>
                 <div className="flex shrink-0 items-center gap-3">
                   <span className="font-mono text-sm font-semibold tabular-nums text-ink-900">

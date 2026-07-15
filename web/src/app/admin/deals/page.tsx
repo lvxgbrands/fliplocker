@@ -2,6 +2,7 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/auth";
 import { StatusChip } from "@/components/deal-ui";
+import { DealThumb } from "@/components/deal-photos";
 import { cardTitle, STATUS_LABELS } from "@/lib/deals";
 import { formatCents } from "@/lib/fees";
 import type { DealStatus, Prisma } from "@prisma/client";
@@ -21,7 +22,7 @@ export default async function AdminDeals({
     where,
     orderBy: { createdAt: "desc" },
     take: 100,
-    include: { seller: true },
+    include: { seller: true, media: { where: { kind: { in: ["FRONT_PHOTO", "REAR_PHOTO"] } } } },
   });
 
   return (
@@ -58,10 +59,15 @@ export default async function AdminDeals({
             {deals.map((d) => (
               <tr key={d.id} className="hover:bg-ink-50">
                 <td className="px-4 py-2.5">
-                  <Link href={`/admin/deals/${d.id}`} className="font-medium text-brand-700 hover:underline">
-                    {d.shortCode}
-                  </Link>
-                  <p className="text-xs text-ink-400 truncate max-w-[220px]">{cardTitle(d)}</p>
+                  <div className="flex items-center gap-3">
+                    <DealThumb media={d.media} />
+                    <div className="min-w-0">
+                      <Link href={`/admin/deals/${d.id}`} className="font-medium text-brand-700 hover:underline">
+                        {d.shortCode}
+                      </Link>
+                      <p className="text-xs text-ink-400 truncate max-w-[220px]">{cardTitle(d)}</p>
+                    </div>
+                  </div>
                 </td>
                 <td className="px-4 py-2.5 hidden sm:table-cell text-ink-500">{d.seller.email}</td>
                 <td className="px-4 py-2.5 text-right tabular-nums">{formatCents(d.salePriceCents)}</td>
