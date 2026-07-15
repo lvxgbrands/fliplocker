@@ -23,6 +23,7 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run check:copy
+      - run: npm run test
       - run: npm run build
         env:
           DATABASE_URL: "postgresql://postgres@127.0.0.1:5432/ci_placeholder"
