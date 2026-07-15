@@ -406,3 +406,15 @@ model NewsletterSubscriber {
   @@index([createdAt])
   @@map("newsletter_subscribers")
 }
+
+// ---------- Uploaded media bytes (local/simulator storage mode) ----------
+// When no S3/blob store is configured, uploaded files (card photos, hub
+// photos/videos) are stored here in Postgres instead of on disk, so uploads
+// work on a read-only serverless filesystem. Served via /api/media (signed).
+model UploadBlob {
+  key       String   @id
+  bytes     Bytes
+  createdAt DateTime @default(now())
+
+  @@map("upload_blobs")
+}

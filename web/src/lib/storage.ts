@@ -2,15 +2,14 @@ import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } fro
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { createHmac, randomBytes } from "crypto";
 import path from "path";
-import fs from "fs/promises";
+import { db } from "@/lib/db";
 
 // Media storage with presigned uploads. Two modes, same client-side flow
 // (request presign -> browser PUTs the file -> confirm):
 //   - S3 mode (S3_BUCKET set): real presigned S3 PUT/GET URLs.
-//   - Local mode (staging demo): "presigned" URLs point at our own
-//     /api/uploads/local PUT handler, files land in web/.data/uploads.
-
-const LOCAL_ROOT = path.join(process.cwd(), ".data", "uploads");
+//   - Local mode (no S3): "presigned" URLs point at our own /api/uploads/local
+//     PUT handler, and bytes are stored in Postgres (upload_blobs) so uploads
+//     work on a read-only serverless filesystem.
 
 function s3Configured(): boolean {
   return Boolean(process.env.S3_BUCKET);
@@ -75,20 +74,22 @@ export function verifyLocalSig(key: string, sig: string): boolean {
   return localSig(key) === sig;
 }
 
-function safeLocalPath(key: string): string {
-  const p = path.normalize(path.join(LOCAL_ROOT, key));
-  if (!p.startsWith(LOCAL_ROOT)) throw new Error("Invalid storage key");
-  return p;
-}
-
+// Local mode stores uploaded bytes in Postgres (upload_blobs) so they survive on
+// a read-only serverless filesystem. Keys are opaque and access is signed-URL
+// only, so no path traversal surface exists.
 export async function localWrite(key: string, data: Buffer): Promise<void> {
-  const p = safeLocalPath(key);
-  await fs.mkdir(path.dirname(p), { recursive: true });
-  await fs.writeFile(p, data);
+  const bytes = new Uint8Array(data);
+  await db.uploadBlob.upsert({
+    where: { key },
+    create: { key, bytes },
+    update: { bytes },
+  });
 }
 
 export async function localRead(key: string): Promise<Buffer> {
-  return fs.readFile(safeLocalPath(key));
+  const blob = await db.uploadBlob.findUnique({ where: { key } });
+  if (!blob) throw new Error("Not found");
+  return Buffer.from(blob.bytes);
 }
 
 /** Permanently delete a stored object (used by the 30-day media purge). */
@@ -99,5 +100,5 @@ export async function mediaViewKeyDelete(key: string): Promise<void> {
     await s3().send(new DeleteObjectCommand({ Bucket: process.env.S3_BUCKET, Key: key }));
     return;
   }
-  await fs.rm(safeLocalPath(key), { force: true });
+  await db.uploadBlob.deleteMany({ where: { key } });
 }
