@@ -1,6 +1,17 @@
 # FlipLocker, Session Handoff & Status
 
-Last updated: 2026-07-15. This doc is the pickup point for a new session. Read it first for full context.
+Last updated: 2026-07-20. This doc is the pickup point for a new session. Read it first for full context.
+
+## UNMERGED WORK, read this first
+
+Branch **`claude/continuation-jyy1qz`** (pushed to origin, NOT yet merged to main, no PR open) carries two completed, verified changes that are not live until merged and deployed:
+
+1. **Demo-data production gating + real admin from secrets** (`web/src/lib/demo.ts`, both seed scripts). SEED_DEMO on/off; unset = on until ADMIN_EMAIL+ADMIN_PASSWORD are set, then auto-off with teardown of demo accounts/deals on the next deploy. Verified end to end against a local Postgres. Details in section 3 below.
+2. **Mobile overflow fixes.** Deal-detail headers (all four portals) now wrap instead of forcing horizontal scroll on narrow phones; admin Deals/Users tables scroll inside their card instead of clipping columns (`overflow-hidden` -> `overflow-x-auto`). Verified with `web/e2e/mobile-overflow-scan.mjs` (new, committed): logs in as all four demo roles, renders every route including all nine deal states at 360/375/390px, fails on real overflow. 0 bad / 156 checks.
+
+**First action for a new session:** merge this branch to main (client-facing mobile bug is fixed on it) unless the user says otherwise, then continue any new work from main.
+
+Likely next build items discussed with the client (Phase 2, not yet started): member subscriptions (recurring billing; `User.plan` + fee tiers already exist), open single-use offer links (first-buyer-to-pay wins + public trust page + waitlist), fee engine v2 (bracket handling fees, insurance formula, processor pass-through line), Cabrella shipping/insurance adapter (their API V2 supports labels + insurance; follow the existing `shipping.ts` simulator/easypost adapter pattern), live counters, seller profiles, dispute evidence export.
 
 ---
 
