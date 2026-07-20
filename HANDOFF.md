@@ -1,6 +1,17 @@
 # FlipLocker, Session Handoff & Status
 
-Last updated: 2026-07-15. This doc is the pickup point for a new session. Read it first for full context.
+Last updated: 2026-07-20. This doc is the pickup point for a new session. Read it first for full context.
+
+## RECENTLY MERGED, read this first
+
+Branch **`claude/continuation-jyy1qz`** has been **merged to main** (via `claude/merge-continuation-jyy1qz-5o0rhj`) and is live once the deploy completes. It carried two completed, verified changes:
+
+1. **Demo-data production gating + real admin from secrets** (`web/src/lib/demo.ts`, both seed scripts). SEED_DEMO on/off; unset = on until ADMIN_EMAIL+ADMIN_PASSWORD are set, then auto-off with teardown of demo accounts/deals on the next deploy. Verified end to end against a local Postgres. Details in section 3 below.
+2. **Mobile overflow fixes.** Deal-detail headers (all four portals) now wrap instead of forcing horizontal scroll on narrow phones; admin Deals/Users tables scroll inside their card instead of clipping columns (`overflow-hidden` -> `overflow-x-auto`). Verified with `web/e2e/mobile-overflow-scan.mjs` (new, committed): logs in as all four demo roles, renders every route including all nine deal states at 360/375/390px, fails on real overflow. 0 bad / 156 checks.
+
+**First action for a new session:** continue any new work from main; the two changes above are already in it.
+
+Likely next build items discussed with the client (Phase 2, not yet started): member subscriptions (recurring billing; `User.plan` + fee tiers already exist), open single-use offer links (first-buyer-to-pay wins + public trust page + waitlist), fee engine v2 (bracket handling fees, insurance formula, processor pass-through line), Cabrella shipping/insurance adapter (their API V2 supports labels + insurance; follow the existing `shipping.ts` simulator/easypost adapter pattern), live counters, seller profiles, dispute evidence export.
 
 ---
 
@@ -74,8 +85,13 @@ DB storage is fine for the demo and light use, but hub inspection **videos** wil
 - **Cloudflare R2 / S3** (zero code change): set `S3_BUCKET`, `S3_ENDPOINT`, `S3_REGION`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`. R2 has a free tier with no egress fees.
 - **Vercel Blob** (needs a small code adapter): create a Blob store in the Vercel dashboard (auto-adds `BLOB_READ_WRITE_TOKEN`).
 
-### 3. Security hardening (demo data + accounts)
-- Demo accounts use a shared, publicly-known password (`fliplocker-demo`) and re-seed on **every** deploy. Gate the demo accounts + 9 demo deals out of production (behind a flag / `VERCEL_ENV` check) before real customers use it, and seed a real admin from env-var secrets.
+### 3. Security hardening (demo data + accounts) — DONE, needs the env set at launch
+Implemented in `web/src/lib/demo.ts` (gate) plus `web/prisma/seed.ts` and `web/prisma/seed-demo.ts`. The four shared-password demo accounts + 9 demo deals are now gated, and a real admin is seeded from secrets. To lock down a real launch, set in Vercel env:
+
+- `ADMIN_EMAIL` + `ADMIN_PASSWORD` (and optional `ADMIN_NAME`): seeds a real admin on each deploy (password refreshed from the env, so rotating it takes effect). This alone flips demo data OFF by default.
+- Optionally `SEED_DEMO=off` to force it, or `SEED_DEMO=on` to keep the demo data on the hosted sales demo even with a real admin present.
+
+Behavior of the gate (`SEED_DEMO`): `on`/`off` force it; when unset it is ON by default but auto-OFF once `ADMIN_EMAIL`+`ADMIN_PASSWORD` are set. When OFF, the next deploy also tears down any demo accounts/deals that already exist (deals first, then accounts, FK-safe). Base config (checkout + FREE/PRO fees) is always seeded regardless. The current hosted demo has none of these env vars set, so it keeps its demo data unchanged.
 
 ### 4. Custom domain (optional)
 - Add your domain in Vercel, then update `APP_URL` so email/invite links point at it.

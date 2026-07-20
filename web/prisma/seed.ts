@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { DEMO_ACCOUNTS, DEMO_PASSWORD, demoDataEnabled, realAdminConfigured } from "../src/lib/demo";
 
 const db = new PrismaClient();
 
@@ -56,22 +57,38 @@ async function main() {
     },
   });
 
-  // Demo accounts (staging only), password: fliplocker-demo
-  const passwordHash = await bcrypt.hash("fliplocker-demo", 10);
-  for (const [email, role, name] of [
-    ["seller.demo@fliplocker.app", "SELLER", "Dana Seller"],
-    ["buyer.demo@fliplocker.app", "BUYER", "Blake Buyer"],
-    ["admin.demo@fliplocker.app", "ADMIN", "Avery Admin"],
-    ["hub.demo@fliplocker.app", "FACILITATOR", "Harper Hub"],
-  ] as const) {
+  // Real admin, seeded from secrets. Configuring ADMIN_EMAIL + ADMIN_PASSWORD is
+  // the way to have an administrator on a real client launch (no shared password).
+  // The env password is the source of truth: it is refreshed on every deploy so
+  // rotating the secret takes effect.
+  if (realAdminConfigured()) {
+    const email = process.env.ADMIN_EMAIL!.trim().toLowerCase();
+    const passwordHash = await bcrypt.hash(process.env.ADMIN_PASSWORD!, 10);
+    const name = process.env.ADMIN_NAME?.trim() || "Administrator";
     await db.user.upsert({
       where: { email },
-      update: {},
-      create: { email, role, name, passwordHash, emailVerified: new Date() },
+      update: { role: "ADMIN", passwordHash, emailVerified: new Date() },
+      create: { email, role: "ADMIN", name, passwordHash, emailVerified: new Date() },
     });
+    console.log(`Seeded real admin from env secrets: ${email}`);
   }
 
-  console.log("Seeded checkout config, fee config (FREE/PRO), and demo accounts.");
+  // Demo accounts (sales demo only), shared password: fliplocker-demo. Gated out
+  // of a real production, see src/lib/demo.ts. The nine demo deals live in
+  // seed-demo.ts, which also tears down this data when demo mode is off.
+  if (demoDataEnabled()) {
+    const passwordHash = await bcrypt.hash(DEMO_PASSWORD, 10);
+    for (const { email, role, name } of DEMO_ACCOUNTS) {
+      await db.user.upsert({
+        where: { email },
+        update: {},
+        create: { email, role, name, passwordHash, emailVerified: new Date() },
+      });
+    }
+    console.log("Seeded checkout config, fee config (FREE/PRO), and demo accounts.");
+  } else {
+    console.log("Seeded checkout config and fee config (FREE/PRO); demo accounts skipped (SEED_DEMO off).");
+  }
 }
 
 main()

@@ -44,7 +44,7 @@ export default async function AdminDeals({
         ))}
       </div>
 
-      <div className="rounded-2xl border border-ink-200 bg-white overflow-hidden">
+      <div className="rounded-2xl border border-ink-200 bg-white overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-ink-50 text-ink-500 text-left text-xs uppercase tracking-wide">
             <tr>

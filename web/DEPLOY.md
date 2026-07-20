@@ -11,8 +11,8 @@ its connection string into `DATABASE_URL`.
 ```bash
 # from web/ with DATABASE_URL pointing at the new DB:
 npx prisma migrate deploy      # apply migrations
-npm run db:seed                # base config + FREE/PRO fees + demo accounts
-npm run seed:demo              # OPTIONAL: populated demo data for a live walkthrough
+npm run db:seed                # base config + FREE/PRO fees (+ demo accounts and real admin, per env; see "Real client launch" below)
+npm run seed:demo              # populated demo data for a live walkthrough (skipped/torn down when demo is gated off)
 ```
 
 ## 2. Environment variables
@@ -36,6 +36,12 @@ Staging (demo without third-party accounts) — leave provider keys blank and se
 - `PAYPAL_MODE=simulator`, `SHIPPING_MODE=simulator`
 - `DEV_MAILBOX=on` (captured email/SMS at `/dev/mailbox`)
 - `DEV_CONTROLS=on` (carrier/timer simulation buttons) — **turn OFF for anything client-facing beyond an internal demo**
+
+Real client launch (lock down the demo data):
+- Set `ADMIN_EMAIL` + `ADMIN_PASSWORD` (optional `ADMIN_NAME`) to seed a real administrator from secrets on each deploy. This alone turns the demo data OFF by default.
+- The four shared-password demo accounts and nine demo deals are then not seeded, and any that already exist are torn down on the next deploy. Base config (checkout + FREE/PRO fees) is always seeded.
+- To keep the demo data on the hosted sales demo even with a real admin present, set `SEED_DEMO=on`; to force it off regardless, set `SEED_DEMO=off`.
+- Also turn `DEV_MAILBOX` and `DEV_CONTROLS` off.
 
 Turn services on one at a time (no code change):
 - **Payments** → `PAYPAL_MODE=sandbox`, `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `PAYPAL_WEBHOOK_ID` (+ `PAYPAL_BN_CODE`, `PAYPAL_MERCHANT_ID` for multiparty). Register the webhook at `POST $APP_URL/api/webhooks/paypal`.
