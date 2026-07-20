@@ -95,6 +95,9 @@ function eventsFor(status: DealStatus) {
 // mode is off so toggling SEED_DEMO=off (or configuring a real admin) on an
 // existing database actually clears the demo data rather than leaving it behind.
 async function teardown() {
+  // Offers cascade-delete their media/waitlist/events; clearing them first also
+  // frees the demo seller account so it can be removed below (FK restrict).
+  await db.offer.deleteMany({ where: { shortCode: { startsWith: "OF-DEMO" } } });
   const { count } = await db.deal.deleteMany({ where: { shortCode: { startsWith: "DEMO-" } } });
   let removedAccounts = 0;
   for (const email of DEMO_EMAILS) {
@@ -207,6 +210,99 @@ async function main() {
 
   const counts = await db.deal.groupBy({ by: ["status"], _count: { _all: true }, where: { shortCode: { startsWith: "DEMO-" } } });
   console.log("Seeded demo deals:", counts.map((c) => `${c.status}=${c._count._all}`).join(", "));
+
+  // ---- Demo open offers (gated, owned by seller.demo) ----
+  // One OPEN with a waitlist, one RESERVED (a hold in progress), and one CLAIMED
+  // linked to the COMPLETE demo deal, so all three offer states are visible.
+  await db.offer.deleteMany({ where: { shortCode: { startsWith: "OF-DEMO" } } });
+  const offerMedia = (slug: string) => [
+    ...(mediaKey(slug, "") ? [{ kind: "FRONT_PHOTO" as const, storageKey: mediaKey(slug, "")!, contentType: "image/jpeg" }] : []),
+    ...(mediaKey(slug, "-back") ? [{ kind: "REAR_PHOTO" as const, storageKey: mediaKey(slug, "-back")!, contentType: "image/jpeg" }] : []),
+  ];
+
+  const openOffer = await db.offer.create({
+    data: {
+      linkToken: "demo-offer-open",
+      shortCode: "OF-DEMO01",
+      sellerId: seller.id,
+      status: "OPEN",
+      sport: "Baseball",
+      cardYear: 2025,
+      playerName: "Munetaka Murakami, Tokyo (NPB)",
+      gradingCompany: "PSA",
+      grade: "PSA 9",
+      certNumber: "88041127",
+      description: "NPB single-season home-run record holder; among the fastest to 200 HR.",
+      salePriceCents: 21000,
+      media: { create: offerMedia("murakami") },
+      waitlist: { create: [
+        { email: "collector1@example.com", name: "Sam Collector" },
+        { email: "collector2@example.com", name: "Jordan Fan" },
+      ] },
+    },
+  });
+  await db.offerEvent.createMany({ data: [
+    { offerId: openOffer.id, actor: "seller", type: "OFFER_CREATED", message: "Open offer created by Dana Seller." },
+    { offerId: openOffer.id, actor: "buyer", type: "WAITLIST_JOINED", message: "A buyer joined the waitlist." },
+  ] });
+
+  const reservedOffer = await db.offer.create({
+    data: {
+      linkToken: "demo-offer-reserved",
+      shortCode: "OF-DEMO02",
+      sellerId: seller.id,
+      status: "RESERVED",
+      sport: "Baseball",
+      cardYear: 1989,
+      playerName: "Bo Jackson, Kansas City Royals",
+      gradingCompany: "PSA",
+      grade: "PSA 9",
+      certNumber: "30556214",
+      description: "Two-sport phenom; 1989 MLB All-Star Game MVP.",
+      salePriceCents: 22000,
+      reservedById: buyer.id,
+      reservedAt: new Date(),
+      reservedUntil: new Date(Date.now() + 25 * 60 * 1000),
+      media: { create: offerMedia("bojackson") },
+      waitlist: { create: [{ email: "collector3@example.com", name: "Riley Chase" }] },
+    },
+  });
+  await db.offerEvent.createMany({ data: [
+    { offerId: reservedOffer.id, actor: "seller", type: "OFFER_CREATED", message: "Open offer created by Dana Seller." },
+    { offerId: reservedOffer.id, actor: "buyer", type: "RESERVED", message: "A buyer reserved this offer and started checkout." },
+  ] });
+
+  const completeDeal = await db.deal.findFirst({ where: { shortCode: { startsWith: "DEMO-" }, status: "COMPLETE" } });
+  if (completeDeal) {
+    const claimedOffer = await db.offer.create({
+      data: {
+        linkToken: "demo-offer-sold",
+        shortCode: "OF-DEMO03",
+        sellerId: seller.id,
+        status: "CLAIMED",
+        sport: "Baseball",
+        cardYear: completeDeal.cardYear,
+        playerName: completeDeal.playerName,
+        gradingCompany: completeDeal.gradingCompany,
+        grade: completeDeal.grade,
+        certNumber: completeDeal.certNumber,
+        description: completeDeal.description,
+        salePriceCents: completeDeal.salePriceCents,
+        claimedById: buyer.id,
+        claimedDealId: completeDeal.id,
+        claimedAt: new Date(),
+        media: { create: offerMedia("griffey") },
+        waitlist: { create: [{ email: "collector4@example.com", name: "Casey Missed" }] },
+      },
+    });
+    await db.deal.update({ where: { id: completeDeal.id }, data: { offerId: claimedOffer.id } });
+    await db.offerEvent.createMany({ data: [
+      { offerId: claimedOffer.id, actor: "seller", type: "OFFER_CREATED", message: "Open offer created by Dana Seller." },
+      { offerId: claimedOffer.id, actor: "system", type: "CLAIMED", message: `Sold: first buyer to pay won this offer (deal ${completeDeal.shortCode}).` },
+    ] });
+  }
+  console.log("Seeded demo open offers: OPEN, RESERVED, CLAIMED.");
+
   console.log("Demo logins (password fliplocker-demo): seller.demo@fliplocker.app, buyer.demo@fliplocker.app, admin.demo@fliplocker.app");
 }
 

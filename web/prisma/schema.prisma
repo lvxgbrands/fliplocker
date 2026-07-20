@@ -38,6 +38,7 @@ model User {
   sellerDeals       Deal[]          @relation("SellerDeals")
   buyerDeals        Deal[]          @relation("BuyerDeals")
   hubInspections    HubInspection[] @relation("FacilitatorInspections")
+  offers            Offer[]         @relation("SellerOffers")
 
   @@map("users")
 }
@@ -148,8 +149,12 @@ model Deal {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
+  // Set when this deal was spawned from an open offer link (first-buyer-to-pay).
+  offerId String?
+
   seller     User            @relation("SellerDeals", fields: [sellerId], references: [id])
   buyer      User?           @relation("BuyerDeals", fields: [buyerId], references: [id])
+  offer      Offer?          @relation(fields: [offerId], references: [id])
   media      DealMedia[]
   payments   Payment[]
   shipments  Shipment[]
@@ -159,6 +164,7 @@ model Deal {
   @@index([sellerId])
   @@index([buyerId])
   @@index([status])
+  @@index([offerId])
   @@map("deals")
 }
 
@@ -343,6 +349,9 @@ model CheckoutConfig {
   shipTimerHours         Int      @default(72)
   reviewWindowHours      Int      @default(48)
   mediaPurgeDays         Int      @default(30)
+  // Open offer links: how long the first buyer's exclusive checkout hold lasts
+  // before the offer re-opens to the waitlist (minutes).
+  offerHoldMinutes       Int      @default(30)
   updatedAt              DateTime @updatedAt
 
   taxRates TaxRate[]
@@ -417,4 +426,110 @@ model UploadBlob {
   createdAt DateTime @default(now())
 
   @@map("upload_blobs")
+}
+
+// ---------- Open offer links (Phase 2) ----------
+// A seller posts a public, single-use offer for a card at a fixed price and
+// shares one link. The first buyer to reserve and pay wins: the reservation is
+// an exclusive checkout hold, and a paid Deal is spawned on capture. Other
+// interested buyers join the waitlist and are re-invited if the hold lapses or
+// the winning deal later falls through.
+
+enum OfferStatus {
+  OPEN // available; first buyer to reserve + pay wins
+  RESERVED // one buyer holds an exclusive checkout window
+  CLAIMED // sold; a paid Deal exists
+  CANCELLED // withdrawn by the seller (or expired)
+}
+
+model Offer {
+  id        String      @id @default(cuid())
+  linkToken String      @unique // public, unguessable share link
+  shortCode String      @unique // human-friendly reference, e.g. OF-7G2K9Q
+  sellerId  String
+  status    OfferStatus @default(OPEN)
+
+  // Card details (fee is f(sale_price) only, mirrors Deal, no comp/market value).
+  sport          String
+  cardYear       Int
+  playerName     String
+  gradingCompany String
+  grade          String? // e.g. "PSA 3", display-only
+  certNumber     String
+  description    String?
+
+  salePriceCents Int
+
+  // Optional listing expiry (a listing can be time-boxed).
+  expiresAt DateTime?
+
+  // Exclusive checkout hold: the first buyer to reserve gets a window to pay.
+  reservedById  String?
+  reservedAt    DateTime?
+  reservedUntil DateTime?
+  pendingDealId String? // in-flight deal for the current reservation
+
+  // Claim (won): the buyer who paid first + the deal that carried the payment.
+  claimedById   String?
+  claimedDealId String?
+  claimedAt     DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  seller   User            @relation("SellerOffers", fields: [sellerId], references: [id])
+  deals    Deal[]
+  media    OfferMedia[]
+  waitlist OfferWaitlist[]
+  events   OfferEvent[]
+
+  @@index([sellerId])
+  @@index([status])
+  @@map("offers")
+}
+
+model OfferMedia {
+  id          String    @id @default(cuid())
+  offerId     String
+  kind        MediaKind // FRONT_PHOTO / REAR_PHOTO used for offers
+  storageKey  String
+  contentType String
+  createdAt   DateTime  @default(now())
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@unique([offerId, kind])
+  @@map("offer_media")
+}
+
+model OfferWaitlist {
+  id         String    @id @default(cuid())
+  offerId    String
+  email      String
+  name       String?
+  userId     String? // set when a signed-in buyer joins
+  notifiedAt DateTime? // last time this address was invited back to the offer
+  createdAt  DateTime  @default(now())
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@unique([offerId, email])
+  @@index([offerId])
+  @@map("offer_waitlist")
+}
+
+// Append-only transparency timeline for an offer (powers the public trust page).
+model OfferEvent {
+  id        String   @id @default(cuid())
+  offerId   String
+  type      String
+  actor     String // system | seller | buyer
+  message   String
+  payload   Json?
+  createdAt DateTime @default(now())
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@index([offerId, createdAt])
+  @@map("offer_events")
 }

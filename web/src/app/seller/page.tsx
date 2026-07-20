@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PackageOpen, Plus, Wallet, ArrowUpRight, Layers, PackageCheck } from "lucide-react";
+import { PackageOpen, Plus, Wallet, ArrowUpRight, Layers, PackageCheck, Tag } from "lucide-react";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/auth";
 import { StatusChip } from "@/components/deal-ui";
@@ -87,11 +87,16 @@ export default async function SellerDashboard({
         </div>
       )}
 
-      <div className="mb-5 mt-8 flex items-center justify-between">
+      <div className="mb-5 mt-8 flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold">Your deals</h1>
-        <Link href="/seller/deals/new" className={buttonClass("primary", "md")}>
-          <Plus className="h-4 w-4" strokeWidth={2.5} /> Create deal
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link href="/seller/offers" className={buttonClass("secondary", "md")}>
+            <Tag className="h-4 w-4" strokeWidth={2.4} /> Open offers
+          </Link>
+          <Link href="/seller/deals/new" className={buttonClass("primary", "md")}>
+            <Plus className="h-4 w-4" strokeWidth={2.5} /> Create deal
+          </Link>
+        </div>
       </div>
 
       {deals.length === 0 ? (

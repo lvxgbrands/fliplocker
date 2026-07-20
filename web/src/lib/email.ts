@@ -191,3 +191,55 @@ export function dealDeclinedSellerTemplate(args: { url: string; cardTitle: strin
     ),
   };
 }
+
+// ---- Open offer links ----
+
+export function offerSoldSellerTemplate(args: {
+  url: string;
+  cardTitle: string;
+  shortCode: string;
+  sellerPayoutCents: number;
+}) {
+  return {
+    subject: `Your open offer sold, ship now (${args.shortCode})`,
+    html: layout(
+      "Your open offer sold 🎉",
+      `<p style="font-size:14px;line-height:1.6">A buyer was first to pay for your open offer <strong>${args.shortCode}</strong>, <strong>${args.cardTitle}</strong>. Their payment is held securely by our payment processor.</p>
+       <p style="font-size:14px;line-height:1.6">Your payout of <strong>${money(args.sellerPayoutCents)}</strong> is released after the card is documented at the hub and delivery is signed for.</p>
+       <p style="font-size:14px;line-height:1.6"><strong>Next step:</strong> open the deal and generate your prepaid Leg&nbsp;1 shipping label to the FlipLocker hub. A 72-hour ship window applies once the label is issued.</p>`,
+      { label: "Open the deal", url: args.url }
+    ),
+  };
+}
+
+export function offerWaitlistJoinedTemplate(args: {
+  url: string;
+  cardTitle: string;
+  shortCode: string;
+}) {
+  return {
+    subject: `You're on the waitlist for ${args.shortCode}`,
+    html: layout(
+      "You're on the waitlist",
+      `<p style="font-size:14px;line-height:1.6">Thanks, you're on the waitlist for <strong>${args.cardTitle}</strong> (offer <strong>${args.shortCode}</strong>).</p>
+       <p style="font-size:14px;line-height:1.6">This is an open offer: the first buyer to pay wins. If the current buyer's hold lapses or their deal falls through, we'll email everyone on the waitlist and the first to pay next takes the card.</p>`,
+      { label: "View the offer", url: args.url }
+    ),
+  };
+}
+
+export function offerReopenedTemplate(args: {
+  url: string;
+  cardTitle: string;
+  shortCode: string;
+}) {
+  return {
+    subject: `Available again: ${args.cardTitle} (${args.shortCode})`,
+    html: layout(
+      "This offer is available again",
+      `<p style="font-size:14px;line-height:1.6"><strong>${args.cardTitle}</strong> (offer <strong>${args.shortCode}</strong>) is open again. The previous buyer did not complete the purchase.</p>
+       <p style="font-size:14px;line-height:1.6">First buyer to pay wins, so move quickly. Your payment is held securely by our payment processor while the card is documented at the FlipLocker hub, then delivered to you with signature confirmation.</p>`,
+      { label: "Reserve and pay now", url: args.url }
+    ),
+  };
+}

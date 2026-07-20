@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { releaseFunds, refundDeal } from "@/lib/settlement";
+import { sweepOfferReservations } from "@/lib/offers-service";
 import { mediaViewKeyDelete } from "@/lib/storage";
 
 // Time-driven transitions. Run by the scheduled job (/api/jobs/tick) and by the
@@ -14,10 +15,11 @@ export interface TimerRunResult {
   shipTimeouts: number;
   reviewAutoCompletes: number;
   mediaPurged: number;
+  offerHoldsReleased: number;
 }
 
 export async function runDueTimers({ forceDealId, now = new Date() }: RunArgs = {}): Promise<TimerRunResult> {
-  const result: TimerRunResult = { shipTimeouts: 0, reviewAutoCompletes: 0, mediaPurged: 0 };
+  const result: TimerRunResult = { shipTimeouts: 0, reviewAutoCompletes: 0, mediaPurged: 0, offerHoldsReleased: 0 };
 
   // 1. 72-hour ship timeout: paid but never scanned to the carrier -> refund + cancel.
   const shipOverdue = await db.deal.findMany({
@@ -55,6 +57,12 @@ export async function runDueTimers({ forceDealId, now = new Date() }: RunArgs = 
     await mediaViewKeyDelete(media.storageKey).catch(() => undefined);
     await db.dealMedia.update({ where: { id: media.id }, data: { purgedAt: new Date() } });
     result.mediaPurged++;
+  }
+
+  // 4. Open offer links: release exclusive checkout holds that have lapsed so
+  // the offer re-opens to the waitlist. (Not scoped by forceDealId.)
+  if (!forceDealId) {
+    result.offerHoldsReleased = await sweepOfferReservations(now);
   }
 
   return result;

@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { createOrder, captureOrder, paypalMode } from "@/lib/paypal";
 import { transitionDeal, logDealEvent, cardTitle } from "@/lib/deals";
+import { claimOfferForPaidDeal } from "@/lib/offers-service";
 import {
   sendEmail,
   paymentReceivedSellerTemplate,
@@ -67,6 +68,16 @@ export async function captureAndMarkPaid(orderId: string): Promise<{ dealId: str
 
   if (payment.state === "CAPTURED") return { dealId: deal.id }; // already processed
 
+  // Only capture funds for a deal that is still awaiting this payment. This
+  // guards the open-offer path where a reservation hold could have lapsed and
+  // cancelled the deal, and any stale/duplicate order for a deal that was
+  // already paid via another order, so no buyer is ever charged for a deal that
+  // will not be fulfilled.
+  if (deal.status !== "ACCEPTED") {
+    await db.payment.update({ where: { id: payment.id }, data: { state: "VOIDED" } });
+    throw new Error("This checkout is no longer active. No payment was taken.");
+  }
+
   const capture = await captureOrder(orderId);
   if (capture.status !== "COMPLETED") {
     await db.payment.update({ where: { id: payment.id }, data: { state: "FAILED" } });
@@ -96,13 +107,17 @@ export async function captureAndMarkPaid(orderId: string): Promise<{ dealId: str
   });
 
   const title = cardTitle(deal);
-  const sellerMail = paymentReceivedSellerTemplate({
-    url: `${appUrl()}/seller/deals/${deal.id}`,
-    cardTitle: title,
-    shortCode: deal.shortCode,
-    sellerPayoutCents: deal.sellerPayoutCents,
-  });
-  await sendEmail({ to: deal.seller.email, ...sellerMail });
+  // Offer deals get a dedicated "your open offer sold" note from the claim hook
+  // below, so skip the generic seller alert to avoid a duplicate email.
+  if (!deal.offerId) {
+    const sellerMail = paymentReceivedSellerTemplate({
+      url: `${appUrl()}/seller/deals/${deal.id}`,
+      cardTitle: title,
+      shortCode: deal.shortCode,
+      sellerPayoutCents: deal.sellerPayoutCents,
+    });
+    await sendEmail({ to: deal.seller.email, ...sellerMail });
+  }
 
   const buyerMail = buyerReceiptTemplate({
     url: `${appUrl()}/buyer/deals/${deal.id}`,
@@ -111,6 +126,14 @@ export async function captureAndMarkPaid(orderId: string): Promise<{ dealId: str
     buyerTotalCents: deal.buyerTotalCents,
   });
   await sendEmail({ to: deal.buyerEmail, ...buyerMail });
+
+  // First-buyer-to-pay-wins: atomically claim the parent offer, if any. A hook
+  // failure must not fail the (already captured) payment.
+  if (deal.offerId) {
+    await claimOfferForPaidDeal(deal).catch((e) =>
+      console.error("[offer] claim hook failed", e)
+    );
+  }
 
   return { dealId: deal.id };
 }

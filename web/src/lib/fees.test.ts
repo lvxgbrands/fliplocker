@@ -20,6 +20,7 @@ const checkout: CheckoutConfig = {
   shipTimerHours: 72,
   reviewWindowHours: 48,
   mediaPurgeDays: 30,
+  offerHoldMinutes: 30,
   updatedAt: new Date(),
 };
 

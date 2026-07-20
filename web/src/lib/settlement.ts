@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { getCheckoutConfig } from "@/lib/config";
 import { refundCapture, releaseDisbursement } from "@/lib/paypal";
 import { transitionDeal, cardTitle, type Actor } from "@/lib/deals";
+import { reopenOfferForFallthrough } from "@/lib/offers-service";
 import { sendEmail, genericEmail } from "@/lib/email";
 import { sendSms } from "@/lib/sms";
 import { formatCents } from "@/lib/fees";
@@ -101,5 +102,12 @@ export async function refundDeal(dealId: string, { actor, reason, toStatus }: Re
     );
     await sendEmail({ to: deal.buyerEmail, dealId, ...buyerMail });
     await sendSms({ to: deal.buyer?.phone, dealId, body: `FlipLocker: deal ${deal.shortCode}, you were refunded ${formatCents(captured.grossCents)}.` });
+  }
+
+  // If this deal came from an open offer, re-open the offer to the waitlist.
+  if (deal.offerId) {
+    await reopenOfferForFallthrough(deal).catch((e) =>
+      console.error("[offer] reopen hook failed", e)
+    );
   }
 }
