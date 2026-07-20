@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { LayoutDashboard, ScrollText, SlidersHorizontal, Users } from "lucide-react";
+import { LayoutDashboard, ScrollText, SlidersHorizontal, Users, Tag } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { PortalShell } from "@/components/shell";
 
 const NAV = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
   { href: "/admin/deals", label: "Deals", icon: ScrollText },
+  { href: "/admin/offers", label: "Offers", icon: Tag },
   { href: "/admin/config", label: "Fees & config", icon: SlidersHorizontal },
   { href: "/admin/users", label: "Users", icon: Users },
 ];

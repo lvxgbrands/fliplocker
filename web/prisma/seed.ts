@@ -26,6 +26,7 @@ async function main() {
     shipTimerHours: 72,
     reviewWindowHours: 48,
     mediaPurgeDays: 30,
+    offerHoldMinutes: 30, // open-offer exclusive checkout hold (minutes)
   };
   await db.checkoutConfig.upsert({
     where: { id: "default" },

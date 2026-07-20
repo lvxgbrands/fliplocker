@@ -30,8 +30,10 @@ const registerSchema = z.object({
 });
 
 export async function registerAction(formData: FormData) {
+  const next = String(formData.get("next") || "");
+  const nextQuery = next ? `&next=${encodeURIComponent(next)}` : "";
   if (!(await limitByIp("register", 10, 60_000))) {
-    redirect(`/register?error=${encodeURIComponent("Too many attempts, please wait a minute and try again.")}`);
+    redirect(`/register?error=${encodeURIComponent("Too many attempts, please wait a minute and try again.")}${nextQuery}`);
   }
   const parsed = registerSchema.safeParse({
     name: formData.get("name"),
@@ -39,13 +41,13 @@ export async function registerAction(formData: FormData) {
     password: formData.get("password"),
   });
   if (!parsed.success) {
-    redirect(`/register?error=${encodeURIComponent(parsed.error.issues[0].message)}`);
+    redirect(`/register?error=${encodeURIComponent(parsed.error.issues[0].message)}${nextQuery}`);
   }
   const { name, email, password } = parsed.data;
 
   const existing = await db.user.findUnique({ where: { email } });
   if (existing) {
-    redirect(`/register?error=${encodeURIComponent("An account with that email already exists, sign in instead.")}`);
+    redirect(`/register?error=${encodeURIComponent("An account with that email already exists, sign in instead.")}${nextQuery}`);
   }
 
   // In email-simulator mode (no provider configured) there is no way to deliver
@@ -63,7 +65,9 @@ export async function registerAction(formData: FormData) {
   });
   if (emailConfigured()) await sendVerificationEmail(user.id, email);
   await createSession(user.id);
-  redirect("/dashboard?welcome=1");
+  // Only same-origin paths; reject protocol-relative ("//host") open redirects.
+  const safeNext = next.startsWith("/") && !next.startsWith("//") ? next : "/dashboard?welcome=1";
+  redirect(safeNext);
 }
 
 export async function loginAction(formData: FormData) {

@@ -11,7 +11,19 @@ Branch **`claude/continuation-jyy1qz`** has been **merged to main** (via `claude
 
 **First action for a new session:** continue any new work from main; the two changes above are already in it.
 
-Likely next build items discussed with the client (Phase 2, not yet started): member subscriptions (recurring billing; `User.plan` + fee tiers already exist), open single-use offer links (first-buyer-to-pay wins + public trust page + waitlist), fee engine v2 (bracket handling fees, insurance formula, processor pass-through line), Cabrella shipping/insurance adapter (their API V2 supports labels + insurance; follow the existing `shipping.ts` simulator/easypost adapter pattern), live counters, seller profiles, dispute evidence export.
+Likely next build items discussed with the client (Phase 2): member subscriptions (recurring billing; `User.plan` + fee tiers already exist), ~~open single-use offer links~~ (**built, see below**), fee engine v2 (bracket handling fees, insurance formula, processor pass-through line), Cabrella shipping/insurance adapter (their API V2 supports labels + insurance; follow the existing `shipping.ts` simulator/easypost adapter pattern), live counters, seller profiles, dispute evidence export.
+
+## Open offer links (Phase 2, branch `claude/fliplocker-phase-2-ckzjlc`, PR pending)
+
+A seller posts one public offer for a card at a fixed price and shares a single link. The **first buyer to pay wins**; the rest can join a waitlist.
+
+- **Reservation model (not charge-then-refund).** Clicking "Reserve & pay" takes an **exclusive checkout hold** via an atomic `OPEN -> RESERVED` compare-and-swap (`db.offer.updateMany({ where: { status: "OPEN" }})`, so exactly one concurrent buyer wins, verified). A pending `Deal` is spawned and paid through the **existing** `acceptDealAndCreateOrder` + `captureAndMarkPaid` flow. On capture, a claim hook flips the offer `RESERVED -> CLAIMED`. No losing buyer is ever charged. The hold length is `CheckoutConfig.offerHoldMinutes` (default 30, admin-editable). If the client wants literal "whoever's money lands first" instead, the swap point moves to capture, this is the one design lever to flip.
+- **Re-opens to the waitlist** when a hold lapses (job-tick sweep in `runDueTimers`, plus a self-heal on the next page hit so it works without a cron) or when a claimed deal is later refunded/cancelled (hook in `settlement.refundDeal`). Waitlisters are emailed each time it re-opens.
+- **Public trust page** `/offer/[token]`: card + live cost breakdown (same fee engine, seller's plan tier) + "how FlipLocker protects you" + status-driven CTA (reserve & pay / continue / sold / join waitlist) + public activity from `offer_events`. Anonymous visitors are bounced through `/login?next=` or `/register?next=` (register now threads `next`, same-origin only).
+- **Data model:** `Offer`, `OfferMedia`, `OfferWaitlist`, `OfferEvent`, `OfferStatus` enum; `Deal.offerId` link; `CheckoutConfig.offerHoldMinutes`. Migration `20260720214344_open_offers`. Domain logic in `src/lib/offers.ts` (pure, tested) + `src/lib/offers-service.ts` (DB ops). Import direction: checkout/settlement/timers import offers-service; it never imports them (no cycle).
+- **Surfaces:** seller `/seller/offers` (+ `/seller/offers/new`, copy-link, withdraw), admin `/admin/offers`, public `/offer/[token]`. Money hardening: `captureAndMarkPaid` now only captures when the deal is still `ACCEPTED` (blocks charging a swept/duplicate order).
+- **Demo (gated):** three offers seeded, links `/offer/demo-offer-open`, `/offer/demo-offer-reserved`, `/offer/demo-offer-sold` (the sold one links to the COMPLETE demo deal).
+- **Verify:** `npx tsx scripts/verify-offers.mts` (23 domain checks incl. the 5-way reserve race, claim, reopen, sweep, cancel) and `node e2e/offers.mjs` (browser: seller posts -> buyer reserves & pays in the sandbox simulator -> Sold -> waitlist), against a running app + seeded DB.
 
 ---
 

@@ -9,6 +9,7 @@ const VIDEO_TYPES = ["video/mp4", "video/quicktime", "video/webm"];
 // purpose -> [allowed content types, key prefix]
 const PURPOSES: Record<string, { types: string[]; prefix: string }> = {
   "deal-photo": { types: IMAGE_TYPES, prefix: "deal-photos" },
+  "offer-photo": { types: IMAGE_TYPES, prefix: "offer-photos" },
   "hub-photo": { types: IMAGE_TYPES, prefix: "hub-photos" },
   "hub-video": { types: VIDEO_TYPES, prefix: "hub-videos" },
 };
