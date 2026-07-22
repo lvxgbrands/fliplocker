@@ -1,7 +1,8 @@
 import { db } from "@/lib/db";
 import type { Deal, Prisma } from "@prisma/client";
 import { getCheckoutConfig } from "@/lib/config";
-import { buyLabel, type Address } from "@/lib/shipping";
+import { buyLabel, type Address, type BoughtLabel } from "@/lib/shipping";
+import { insureShipment } from "@/lib/insurance";
 import { transitionDeal, logDealEvent, cardTitle } from "@/lib/deals";
 import { sendEmail, genericEmail } from "@/lib/email";
 import { sendSms } from "@/lib/sms";
@@ -9,6 +10,40 @@ import { formatCents } from "@/lib/fees";
 
 const appUrl = () => process.env.APP_URL || "http://localhost:3000";
 const hours = (n: number) => new Date(Date.now() + n * 3600 * 1000);
+
+// Bind transit coverage for one leg (Cabrella in real mode, synthetic in the
+// simulator) and record it on the deal timeline. Best-effort: a coverage
+// failure must not block the shipment, it is logged for reconciliation.
+async function bindCoverage(
+  deal: Pick<Deal, "id" | "shortCode" | "salePriceCents">,
+  label: BoughtLabel,
+  leg: "TO_HUB" | "TO_BUYER"
+) {
+  const legName = leg === "TO_HUB" ? "Leg 1" : "Leg 2";
+  try {
+    const coverage = await insureShipment({
+      declaredValueCents: deal.salePriceCents,
+      carrier: label.carrier,
+      service: label.service,
+      trackingNumber: label.trackingNumber,
+      leg,
+      reference: deal.shortCode,
+    });
+    await logDealEvent(deal.id, {
+      actor: "system",
+      type: leg === "TO_HUB" ? "LEG1_INSURED" : "LEG2_INSURED",
+      message: `${legName} insured for declared value ${formatCents(deal.salePriceCents)} (coverage ${coverage.certificateId}).`,
+      payload: { provider: coverage.provider, certificateId: coverage.certificateId, premiumCents: coverage.premiumCents, leg },
+    });
+  } catch (e) {
+    await logDealEvent(deal.id, {
+      actor: "system",
+      type: leg === "TO_HUB" ? "LEG1_INSURE_PENDING" : "LEG2_INSURE_PENDING",
+      message: `${legName} coverage could not be bound automatically and will be reconciled.`,
+      payload: { error: (e as Error).message, leg },
+    });
+  }
+}
 
 async function hubAddress(): Promise<Address> {
   const c = await getCheckoutConfig();
@@ -66,6 +101,8 @@ export async function generateLeg1Label(dealId: string) {
       status: "LABEL_CREATED",
     },
   });
+
+  await bindCoverage(deal, label, "TO_HUB");
 
   const deadline = hours(config.shipTimerHours);
   await db.deal.update({ where: { id: dealId }, data: { shipDeadlineAt: deadline } });
@@ -172,6 +209,7 @@ export async function generateLeg2Label(dealId: string) {
         lastScanAt: new Date(),
       },
     });
+    await bindCoverage(deal, label, "TO_BUYER");
   }
 
   const tracking = (await db.shipment.findUniqueOrThrow({ where: { id: shipment.id } })).trackingNumber;

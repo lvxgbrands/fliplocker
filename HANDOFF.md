@@ -64,7 +64,9 @@ Every external service runs in a simulator/local mode when its keys are blank, s
 | Email | `RESEND_API_KEY` set | Captured to outbox (not sent); email confirmation auto-completed |
 | Payments | `PAYPAL_MODE=sandbox` + creds | In-app sandbox simulator page |
 | File storage | `S3_BUCKET` set | Uploads stored in Postgres (`upload_blobs`) |
-| Shipping / SMS / news | provider keys set | Simulated / seeded data |
+| Shipping | `SHIPPING_MODE=shippo` + `SHIPPO_API_KEY` (or `easypost`) | USPS-style tracking + a local label page |
+| Shipment insurance | `INSURANCE_MODE=cabrella` + `CABRELLA_API_KEY` | Flat declared-value pass-through + synthetic coverage certificate |
+| SMS / news | provider keys set | Simulated / seeded data |
 
 Demo `/public` card media uses a `demo-public:` storage key that `mediaViewUrl` resolves to `/public` (works on read-only serverless FS). See `web/src/lib/storage.ts`.
 
@@ -95,6 +97,15 @@ Behavior of the gate (`SEED_DEMO`): `on`/`off` force it; when unset it is ON by 
 
 ### 4. Custom domain (optional)
 - Add your domain in Vercel, then update `APP_URL` so email/invite links point at it.
+
+### 5. Shipping & insurance stack (Shippo / Cabrella / Hiscox)
+The client's chosen stack. Adapters follow the existing `shipping.ts` simulator/adapter pattern, wired and inert until keys are set (simulator stays the default, so there is zero behavior change without them).
+
+- **Shipping, Shippo.** `web/src/lib/shipping.ts` gains a `shippo` mode alongside `simulator`/`easypost`. Set `SHIPPING_MODE=shippo` + `SHIPPO_API_KEY`. Both legs (seller→hub, hub→buyer with signature) buy real labels; the hub→buyer leg requests Signature Confirmation. Tracking events arrive at `POST /api/webhooks/shippo` (optionally secured with `SHIPPO_WEBHOOK_SECRET` as a `?token=`/`X-Shippo-Secret` shared token) and drive the same deal transitions as the carrier simulator. (Pirate Ship was cheaper but has no API, so it is not viable for an integrated flow.)
+- **Shipment insurance, Cabrella.** `web/src/lib/insurance.ts`. Set `INSURANCE_MODE=cabrella` + `CABRELLA_API_KEY` (+ optional `CABRELLA_API_BASE`). Real mode does two things: (1) prices the buyer-facing declared-value line from a live Cabrella quote at deal creation (via `computeQuote`'s `insuranceCentsOverride`; simulator keeps the configured flat formula), and (2) binds per-shipment transit coverage on each leg at label time, recorded on the deal timeline as `LEG1_INSURED` / `LEG2_INSURED` events. Binding is best-effort so an insurer outage never blocks a shipment. The exact Cabrella V2 endpoints/fields are placeholders finalized at onboarding, same "wired for parity" posture as the PayPal/EasyPost adapters. (CIS was cheaper but has heavy onboarding friction.)
+- **Hub inventory, Hiscox — OFFLINE, no integration.** Coverage for cards physically held **at the hub** is a separate standing commercial policy (Hiscox), procured offline. This is intentionally not code; it is distinct from Cabrella's per-shipment transit coverage. Noted in `web/src/lib/insurance.ts`.
+
+Verify locally (running app + seeded DB): `npx tsx scripts/verify-shipping-insurance.mts`.
 
 ---
 
