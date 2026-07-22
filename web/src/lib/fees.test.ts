@@ -117,6 +117,29 @@ describe("computeQuote, guards", () => {
   });
 });
 
+describe("insurance override (Cabrella real mode)", () => {
+  it("uses the override premium instead of the flat formula and adjusts the buyer total", () => {
+    const base = computeQuote({ salePriceCents: 30000, feeConfig: fee({}), checkout, taxRateBps: 0 });
+    const withOverride = computeQuote({ salePriceCents: 30000, feeConfig: fee({}), checkout, taxRateBps: 0, insuranceCentsOverride: 275 });
+    expect(base.insuranceCents).toBe(150); // formula: $300 -> 3 started $100 * $0.50
+    expect(withOverride.insuranceCents).toBe(275);
+    expect(withOverride.buyerTotalCents).toBe(base.buyerTotalCents - base.insuranceCents + 275);
+    expect(base.snapshot.insuranceSource).toBe("formula");
+    expect(withOverride.snapshot.insuranceSource).toBe("cabrella");
+  });
+
+  it("ignores the override when insurance is disabled", () => {
+    const q = computeQuote({
+      salePriceCents: 30000,
+      feeConfig: fee({}),
+      checkout: { ...checkout, insuranceEnabled: false },
+      taxRateBps: 0,
+      insuranceCentsOverride: 275,
+    });
+    expect(q.insuranceCents).toBe(0);
+  });
+});
+
 describe("formatCents", () => {
   it("formats USD", () => {
     expect(formatCents(44100)).toBe("$441.00");

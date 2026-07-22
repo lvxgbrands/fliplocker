@@ -17,6 +17,10 @@ export interface QuoteInput {
   feeConfig: FeeConfig;
   checkout: CheckoutConfig;
   taxRateBps: number; // resolved for the delivery state by getTaxRateBps()
+  // When set (real-mode Cabrella quote), overrides the flat declared-value
+  // pass-through for the insurance line. Omitted in simulator mode, so the
+  // default behavior (configured formula) is unchanged.
+  insuranceCentsOverride?: number;
 }
 
 export interface Quote {
@@ -33,7 +37,7 @@ export interface Quote {
   snapshot: Record<string, unknown>; // config used, stored on the deal record
 }
 
-export function computeQuote({ salePriceCents, feeConfig, checkout, taxRateBps }: QuoteInput): Quote {
+export function computeQuote({ salePriceCents, feeConfig, checkout, taxRateBps, insuranceCentsOverride }: QuoteInput): Quote {
   if (!Number.isInteger(salePriceCents) || salePriceCents <= 0) {
     throw new Error("Sale price must be a positive whole number of cents.");
   }
@@ -65,10 +69,11 @@ export function computeQuote({ salePriceCents, feeConfig, checkout, taxRateBps }
 
   const shippingCents = checkout.outboundShippingCents;
 
-  // Pass-through of the carrier's declared-value coverage, per started $100.
-  const insuranceCents = checkout.insuranceEnabled
-    ? Math.ceil(salePriceCents / 10000) * checkout.insuranceCentsPer100
-    : 0;
+  // Declared-value coverage. Default is the flat pass-through per started $100;
+  // real-mode Cabrella supplies a live premium via insuranceCentsOverride.
+  const insuranceCents = !checkout.insuranceEnabled
+    ? 0
+    : insuranceCentsOverride ?? Math.ceil(salePriceCents / 10000) * checkout.insuranceCentsPer100;
 
   // Tax policy is the Client's (CPA-directed). When enabled, tax applies to the
   // platform's service lines only, never to the peer-to-peer card amount.
@@ -100,6 +105,7 @@ export function computeQuote({ salePriceCents, feeConfig, checkout, taxRateBps }
       outboundShippingCents: checkout.outboundShippingCents,
       insuranceEnabled: checkout.insuranceEnabled,
       insuranceCentsPer100: checkout.insuranceCentsPer100,
+      insuranceSource: insuranceCentsOverride != null ? "cabrella" : "formula",
       taxRateBps,
       quotedAt: new Date().toISOString(),
     },

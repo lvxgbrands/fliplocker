@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { requireUser } from "@/lib/auth";
 import { getCheckoutConfig, getFeeConfig } from "@/lib/config";
 import { computeQuote } from "@/lib/fees";
+import { insuranceMode, quoteInsurancePremiumCents } from "@/lib/insurance";
 import { newShortCode, newInviteToken, logDealEvent, transitionDeal, cardTitle } from "@/lib/deals";
 import { sendEmail, emailConfigured, buyerInviteTemplate } from "@/lib/email";
 import { generateLeg1Label } from "@/lib/logistics";
@@ -57,9 +58,23 @@ export async function createDealAction(input: CreateDealInput): Promise<{ error?
   const checkout = await getCheckoutConfig();
   const feeConfig = await getFeeConfig(user.plan);
 
+  // Real-mode: price the insurance line from a live Cabrella quote. Simulator
+  // mode leaves this undefined so the configured flat pass-through is used.
+  let insuranceCentsOverride: number | undefined;
+  if (insuranceMode() === "cabrella" && checkout.insuranceEnabled) {
+    try {
+      insuranceCentsOverride = await quoteInsurancePremiumCents({
+        declaredValueCents: salePriceCents,
+        centsPer100: checkout.insuranceCentsPer100,
+      });
+    } catch {
+      insuranceCentsOverride = undefined; // fall back to the formula on a quote error
+    }
+  }
+
   let quote;
   try {
-    quote = computeQuote({ salePriceCents, feeConfig, checkout, taxRateBps: 0 });
+    quote = computeQuote({ salePriceCents, feeConfig, checkout, taxRateBps: 0, insuranceCentsOverride });
   } catch (e) {
     return { error: (e as Error).message };
   }
